@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/13 09:27:54 by ludovicdopp      ###   ########.fr       */
+/*   Created: 2023/10/16 16:54:05 by ldoppler          #+#    #+#             */
+/*   Updated: 2023/10/16 17:24:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include "libft/libft.h"
-
-#endif
+int	ft_isalpha(int c)
+{
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	return (0);
+}
