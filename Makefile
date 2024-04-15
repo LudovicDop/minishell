@@ -8,7 +8,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make all -C libft/
-	$(CC) $(FLAGS) $(OBJ) -L./libft -lft -o $(NAME) -lreadline
+	$(CC) $(FLAGS) $(OBJ) -L./libft -lft -lrt -o $(NAME) -lreadline
 	echo "Done!"
 clean : 
 	make clean -C libft/
