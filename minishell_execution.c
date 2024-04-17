@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/17 14:57:22 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/17 15:29:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,22 @@ void    execution_main(t_cmd **cmd)
         ft_print_my_arg((*cmd[i]).arg);
         i++;
     }
-    printf("Value i : %d\n", i);
+    printf("Value i : %d\n\n", i);
     /* Malloc the number of child process */
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
     while (j < i)
     {
         (*cmd)->tab_ref->process_id[j] = fork();
-        printf("OK\n");
+        printf("OK %d\n", j);
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
             //Child process
             printf("\033[1;32mChild process\033[m\n");
+            exit(EXIT_SUCCESS);
         }
         j++;
     }
 
     printf("Parent process\n");
 
-
-    
 }
