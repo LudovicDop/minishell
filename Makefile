@@ -1,6 +1,6 @@
-SRC = minishell_main.c
+SRC = minishell_main.c minishell_execution.c
 CC = cc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g3
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
@@ -8,7 +8,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make all -C libft/
-	$(CC) $(FLAGS) $(OBJ) -L./libft -lft -lrt -o $(NAME) -lreadline
+	$(CC) $(FLAGS) $(OBJ) -L./libft -lft -o $(NAME) -lreadline -ltermcap
 	echo "Done!"
 clean : 
 	make clean -C libft/

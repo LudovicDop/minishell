@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/15 12:50:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:37:27 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,24 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "libft/libft.h"
+# include <curses.h>
+# include <term.h>
+# include <time.h>
 
+typedef struct s_tab
+{
+    pid_t   **pipe_fd;
+    pid_t     *process_id;
+    int     nbre_cmd;
+} t_tab;
+
+typedef struct s_cmd
+{
+    char    *pathname;
+    char    **arg;
+    char    **envp;
+    t_tab   *tab_ref;
+} t_cmd;
+
+void    execution_main(t_cmd **cmd);
 #endif
