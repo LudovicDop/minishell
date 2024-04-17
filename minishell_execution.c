@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/17 16:02:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:48:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void    ft_print_my_arg(char **arg)
 
 void    execution_pipe(t_cmd *cmd)
 {
+    //Child process
     execve(cmd->pathname, cmd->arg, NULL);
 }
 
