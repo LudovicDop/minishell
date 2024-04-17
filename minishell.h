@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/17 14:37:27 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/17 15:50:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 # include <curses.h>
 # include <term.h>
 # include <time.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_tab
 {
-    pid_t   **pipe_fd;
+    int   **pipe_fd;
     pid_t     *process_id;
     int     nbre_cmd;
 } t_tab;
