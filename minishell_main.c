@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/17 14:38:01 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/18 13:17:42 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ int main(int argc, char **argv, char **envp)
     (*cmd[0]).arg = malloc(sizeof(char*) * 5);
     (*cmd[0]).arg[0] = ft_strdup("ping");
     (*cmd[0]).arg[1] = ft_strdup("-c");
-    (*cmd[0]).arg[2] = ft_strdup("5");
+    (*cmd[0]).arg[2] = ft_strdup("3");
     (*cmd[0]).arg[3] = ft_strdup("google.com");
     (*cmd[0]).arg[4] = NULL;
 
     (*cmd[1]).arg = malloc(sizeof(char*) * 3);
     (*cmd[1]).arg[0] = ft_strdup("grep");
-    (*cmd[1]).arg[1] = ft_strdup("rtt");
+    (*cmd[1]).arg[1] = ft_strdup("round-trip");
     (*cmd[1]).arg[2] = NULL;
 
     (*cmd[2]).arg = malloc(sizeof(char*) * 3);
@@ -90,6 +90,13 @@ int main(int argc, char **argv, char **envp)
 
     (*cmd[2]).pathname = malloc(sizeof(char*) * 1);
     (*cmd[2]).pathname = ft_strdup("/usr/bin/wc");  
+
+    int i = 0;
+    while (i < 4)
+    {
+        ((*cmd[i]).last_cmd) = false;
+        i++;
+    }
 
 
     (cmd[3]) = 0;

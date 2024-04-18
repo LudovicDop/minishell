@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/17 16:48:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:50:08 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,19 @@ void    ft_print_my_arg(char **arg)
 void    execution_pipe(t_cmd *cmd)
 {
     //Child process
-    execve(cmd->pathname, cmd->arg, NULL);
+    if (!cmd->last_cmd)
+        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    close(cmd->tab_ref->pipe_fd[0]);
+    close(cmd->tab_ref->pipe_fd[1]);
+    fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
+    if (execve(cmd->pathname, cmd->arg, NULL) < 0)
+    {
+        perror("execve");
+    }
+    else
+    {
+        fprintf(stderr, "\033[1;32mSucces\033[m\n");
+    }
 }
 
 void    execution_main(t_cmd **cmd)
@@ -46,29 +58,38 @@ void    execution_main(t_cmd **cmd)
     }
     printf("Value i : %d\n\n", i);
     /*Malloc my pipes*/
-    (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int*) * 4);
-    for (int i = 0; i < 4; i++)
-    {
-        (*cmd)->tab_ref->pipe_fd[i] = malloc(sizeof(int) * 2);
-    }
-    for (int i = 0; i < 4; i++)
-    {
-        pipe((*cmd)->tab_ref->pipe_fd[i]);
-    }
+    (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int) * 2);
     /* Malloc the number of child process */
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
     while (j < i)
     {
+        pipe((*cmd)->tab_ref->pipe_fd);
         (*cmd)->tab_ref->process_id[j] = fork();
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
             //Child process
-            printf("\033[1;32mChild process %d\033[m\n", j);
+            printf("\033[1;32mChild process %d (id : %d)\033[m\n", j, getpid());
+            if (j + 1 == i)
+            {
+                (*cmd[j]).last_cmd = true;
+            }
             execution_pipe(cmd[j]);
+            fprintf(stderr, "END\n");
+            fprintf(stderr, "\033[1;31mChild process %d end\033[m\n", j);
             exit(EXIT_SUCCESS);
+        }
+        if (j + 1 != i)
+        {
+            printf("ICI\n");
+            dup2((*cmd)->tab_ref->pipe_fd[0], STDIN_FILENO);
+            close((*cmd)->tab_ref->pipe_fd[0]);
+            close((*cmd)->tab_ref->pipe_fd[1]);
         }
         j++;
     }
+    //dup2(STDOUT_FILENO, (*cmd)->tab_ref->pipe_fd[0]);
+    close((*cmd)->tab_ref->pipe_fd[0]);
+    close((*cmd)->tab_ref->pipe_fd[1]);
     wait(NULL);
     printf("Parent process\n");
 }
