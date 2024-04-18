@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/18 12:28:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/18 14:47:28 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "libft/libft.h"
 # include <curses.h>
 # include <term.h>
+# include <fcntl.h>
 # include <time.h>
 # include <sys/types.h>
 # include <sys/wait.h>
