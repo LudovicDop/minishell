@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/19 15:20:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:28:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void    execution_pipe(t_cmd *cmd)
     //Child process
     if (!cmd->last_cmd)
         dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    else
+    else if (cmd->any_redirection)
     {
         printf("OK\n");
-        int fd = open("file", O_RDONLY | O_WRONLY | O_CREAT, 0644);
+        int fd = open(cmd->arg_redirection[1], O_RDONLY | O_WRONLY | O_CREAT, 0644);
         dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
         dup2(fd, STDOUT_FILENO);
     }
