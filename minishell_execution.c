@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/19 14:31:47 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/19 15:20:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,17 @@ void    ft_print_my_redirection(char **arg)
 void    execution_pipe(t_cmd *cmd)
 {
     //Child process
-    //dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    if (!cmd->last_cmd)
+        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    else
+    {
+        printf("OK\n");
+        int fd = open("file", O_RDONLY | O_WRONLY | O_CREAT, 0644);
+        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+        dup2(fd, STDOUT_FILENO);
+    }
     close(cmd->tab_ref->pipe_fd[0]);
-    //close(cmd->tab_ref->pipe_fd[1]);
+    close(cmd->tab_ref->pipe_fd[1]);
     fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
     if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     {
@@ -99,10 +107,6 @@ void    execution_main(t_cmd **cmd)
         }
         j++;
     }
-    /* I should determined the exact size of my buffer in probably another pipe */
-    char buffer[100];
-    read((*cmd)->tab_ref->pipe_fd[0], buffer,sizeof(char) * 100);
-    printf("buffer : %s\n", buffer);
     close((*cmd)->tab_ref->pipe_fd[0]);
     close((*cmd)->tab_ref->pipe_fd[1]);
     wait(NULL);
