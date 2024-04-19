@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/18 14:47:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/19 10:59:26 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_cmd
     char    *pathname;
     char    **arg;
     char    **envp;
+    char    **arg_redirection;
+    bool    any_redirection;
     bool    last_cmd;
     t_tab   *tab_ref;
 } t_cmd;

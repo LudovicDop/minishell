@@ -1,4 +1,4 @@
-SRC = minishell_main.c minishell_execution.c
+SRC = minishell_main.c minishell_execution.c minishell_parsing.c
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
 OBJ = $(SRC:.c=.o)

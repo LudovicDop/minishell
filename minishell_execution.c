@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/18 15:29:05 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/19 14:31:47 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,24 @@ void    ft_print_my_arg(char **arg)
     }
 }
 
+void    ft_print_my_redirection(char **arg)
+{
+    int i;
+
+    i = 0;
+    while (arg[i])
+    {
+        printf("\033[1;33mredirection_cmd_arg : \033[1;36m%s\033[m\033[m\n", arg[i]);
+        i++;
+    }
+}
+
 void    execution_pipe(t_cmd *cmd)
 {
     //Child process
-    if (!cmd->last_cmd)
-        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    //dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
     close(cmd->tab_ref->pipe_fd[0]);
-    close(cmd->tab_ref->pipe_fd[1]);
+    //close(cmd->tab_ref->pipe_fd[1]);
     fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
     if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     {
@@ -54,6 +65,8 @@ void    execution_main(t_cmd **cmd)
     {
         printf("\033[1;31mPATH_NAME : %s \033[m\n", (*cmd[i]).pathname);
         ft_print_my_arg((*cmd[i]).arg);
+        if ((*cmd[i]).any_redirection)
+            ft_print_my_redirection((*cmd[i]).arg_redirection);
         i++;
     }
     printf("Value i : %d\n\n", i);
@@ -74,7 +87,6 @@ void    execution_main(t_cmd **cmd)
                 (*cmd[j]).last_cmd = true;
             }
             execution_pipe(cmd[j]);
-            fprintf(stderr, "END\n");
             fprintf(stderr, "\033[1;31mChild process %d end\033[m\n", j);
             exit(EXIT_SUCCESS);
         }
@@ -87,7 +99,10 @@ void    execution_main(t_cmd **cmd)
         }
         j++;
     }
-    //dup2(STDOUT_FILENO, (*cmd)->tab_ref->pipe_fd[0]);
+    /* I should determined the exact size of my buffer in probably another pipe */
+    char buffer[100];
+    read((*cmd)->tab_ref->pipe_fd[0], buffer,sizeof(char) * 100);
+    printf("buffer : %s\n", buffer);
     close((*cmd)->tab_ref->pipe_fd[0]);
     close((*cmd)->tab_ref->pipe_fd[1]);
     wait(NULL);
