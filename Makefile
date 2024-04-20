@@ -1,5 +1,5 @@
 MAKEFLAGS+=silent
-SRC = minishell_main.c minishell_execution.c minishell_parsing.c
+SRC = minishell_main.c minishell_execution.c minishell_parsing.c minishell_special_carac.c
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3
 OBJ = $(SRC:.c=.o)

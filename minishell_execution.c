@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/19 15:28:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:37:58 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ void    execution_pipe(t_cmd *cmd)
         dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
     else if (cmd->any_redirection)
     {
-        printf("OK\n");
-        int fd = open(cmd->arg_redirection[1], O_RDONLY | O_WRONLY | O_CREAT, 0644);
-        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-        dup2(fd, STDOUT_FILENO);
+        special_carac(cmd);
     }
+    // {
+    //     printf("OK\n");
+    //     int fd = open(cmd->arg_redirection[1], O_RDONLY | O_WRONLY | O_CREAT, 0644);
+    //     dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    //     dup2(fd, STDOUT_FILENO);
+    // }
     close(cmd->tab_ref->pipe_fd[0]);
     close(cmd->tab_ref->pipe_fd[1]);
     fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
