@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/20 14:35:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/21 18:45:30 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ typedef struct s_cmd
     bool    last_cmd;
     t_tab   *tab_ref;
 } t_cmd;
-
+/*utils*/
+int	ft_strcmp(const char *s1, const char *s2);
+/*Minishell main function exec*/
 void    execution_main(t_cmd **cmd);
 void    special_carac(t_cmd *cmd);
 #endif

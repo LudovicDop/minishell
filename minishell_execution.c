@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/20 14:37:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/21 17:30:53 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void    execution_main(t_cmd **cmd)
         }
         if (j + 1 != i)
         {
-            printf("ICI\n");
+            //printf("ICI\n");
             dup2((*cmd)->tab_ref->pipe_fd[0], STDIN_FILENO);
             close((*cmd)->tab_ref->pipe_fd[0]);
             close((*cmd)->tab_ref->pipe_fd[1]);

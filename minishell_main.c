@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/20 14:56:15 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/21 18:57:58 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int main(int argc, char **argv, char **envp)
     (*cmd[4]).pathname = ft_strdup("/usr/bin/uniq");
 
     /*any redirection?*/
-    (*cmd[4]).any_redirection = false;
+    (*cmd[4]).any_redirection = true;
     (*cmd[4]).arg_redirection = malloc(sizeof(char*) * 3);
     
-    (*cmd[4]).arg_redirection[0] = ft_strdup(">");
+    (*cmd[4]).arg_redirection[0] = ft_strdup(">>");
     (*cmd[4]).arg_redirection[1] = ft_strdup("file");
     (*cmd[4]).arg_redirection[2] = NULL;
 
