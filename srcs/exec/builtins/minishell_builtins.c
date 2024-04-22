@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/22 14:33:08 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 16:35:05 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ void    ft_env(t_cmd *cmd)
     int i;
 
     i = 0;
-    //dup2(STDOUT_FILENO, cmd->tab_ref->pipe_fd[1]);
-    printf("helllo\n");
-    printf("%s\n",cmd->tab_ref->envp[i]);
     while (cmd->tab_ref->envp[i])
     {
-        printf("%s",cmd->tab_ref->envp[i]);
+        printf("%s\n",cmd->tab_ref->envp[i]);
         i++;
     }
 }
@@ -61,6 +58,7 @@ int search_builtins_cmd(t_cmd *cmd)
     else if (!ft_strcmp(cmd->arg[0], "env"))
     {
         fprintf(stderr, "\033[36;1mStarting executing env command!\033[m\n");
+        ft_env(cmd);
         return (1);
     }
     else if (!ft_strcmp(cmd->arg[0], "exit"))

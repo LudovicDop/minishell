@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/22 14:19:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 16:31:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int main(int argc, char **argv, char **envp)
     //TO HERE
     
 
-    (*cmd[0]).arg = malloc(sizeof(char*) * 3);
+    (*cmd[0]).arg = malloc(sizeof(char*) * 2);
     (*cmd[0]).arg[0] = ft_strdup("env");
     //(*cmd[0]).arg[1] = ft_strdup("doc");
     (*cmd[0]).arg[1] = NULL;
