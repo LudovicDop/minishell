@@ -6,12 +6,16 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/22 11:45:38 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 12:15:58 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    ft_echo(t_cmd *cmd)
+{
+    printf("%s\n", cmd->arg[1]);
+}
 int search_builtins_cmd(t_cmd *cmd)
 {
     if (!ft_strcmp(cmd->arg[0], "cd"))
@@ -22,6 +26,7 @@ int search_builtins_cmd(t_cmd *cmd)
     else if (!ft_strcmp(cmd->arg[0], "echo"))
     {
         fprintf(stderr, "\033[36;1mStarting executing echo command!\033[m\n");
+        ft_echo(cmd);
         return (1);
     }
     else if (!ft_strcmp(cmd->arg[0], "pwd"))

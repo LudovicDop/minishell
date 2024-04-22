@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/22 11:42:44 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 12:46:33 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include <curses.h>
 # include <term.h>
 # include <fcntl.h>

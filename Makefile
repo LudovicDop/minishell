@@ -1,8 +1,14 @@
-MAKEFLAGS+=silent
-SRC = minishell_main.c minishell_execution.c minishell_parsing.c minishell_special_carac.c \
-minishell_utils.c minishell_builtins.c
-CC = cc
-FLAGS = -Wall -Werror -Wextra -g3
+#MAKEFLAGS+=silent
+HEADER = ./includes/
+LIBFT = ./libft/libft.a
+SRC = srcs/minishell_main.c \
+	  srcs/exec/minishell_execution.c \
+	  srcs/exec/minishell_special_carac.c \
+	  srcs/parsing/minishell_parsing.c \
+	  srcs/exec/builtins/minishell_builtins.c \
+	  srcs/utils/minishell_utils.c
+CC = gcc
+CFLAGS = -g3 -I $(HEADER)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
@@ -10,7 +16,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make all -C libft/
-	$(CC) $(FLAGS) $(OBJ) -L./libft -lft -o $(NAME) -lreadline -ltermcap
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -ltermcap $(LIBFT)
 	echo "Done!"
 clean : 
 	make clean -C libft/
