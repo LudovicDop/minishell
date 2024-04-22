@@ -25,6 +25,6 @@ clean :
 fclean : clean
 	make fclean -C libft/
 	rm -rf $(NAME)
-	echo "Cleaning++ has been carried out"
+	echo "Cleaning++ has been carried out 💔"
 re : fclean all $(NAME)
 .PHONY: all clean fclean re
