@@ -1,2 +1,9 @@
-Hello
-Hello
+string 1 : uniq
+s1[0] : u | s2[0] : c
+string 1 : sort
+s1[0] : s | s2[0] : c
+Nous pouvons y inclure différents remplacements à rechercher.
+s1[0] : g | s2[0] : c
+s1[0] : s | s2[0] : c
+string 1 : grep
+string 1 : sed

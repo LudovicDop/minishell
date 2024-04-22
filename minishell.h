@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/21 18:45:30 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 11:42:44 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ int	ft_strcmp(const char *s1, const char *s2);
 /*Minishell main function exec*/
 void    execution_main(t_cmd **cmd);
 void    special_carac(t_cmd *cmd);
+int search_builtins_cmd(t_cmd *cmd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/21 17:30:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 11:43:21 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,12 @@ void    execution_pipe(t_cmd *cmd)
     {
         special_carac(cmd);
     }
-    // {
-    //     printf("OK\n");
-    //     int fd = open(cmd->arg_redirection[1], O_RDONLY | O_WRONLY | O_CREAT, 0644);
-    //     dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    //     dup2(fd, STDOUT_FILENO);
-    // }
+
     close(cmd->tab_ref->pipe_fd[0]);
     close(cmd->tab_ref->pipe_fd[1]);
     fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
+    if (search_builtins_cmd(cmd))
+        return ;
     if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     {
         perror("execve");
