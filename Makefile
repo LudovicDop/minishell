@@ -17,7 +17,7 @@ all : $(NAME)
 $(NAME) : $(OBJ)
 	make all -C libft/
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -ltermcap $(LIBFT)
-	echo "Done!"
+	echo "Done! 😊"
 clean : 
 	make clean -C libft/
 	rm -rf $(OBJ)
