@@ -6,12 +6,26 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/22 12:15:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 14:33:08 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    ft_env(t_cmd *cmd)
+{
+    int i;
+
+    i = 0;
+    //dup2(STDOUT_FILENO, cmd->tab_ref->pipe_fd[1]);
+    printf("helllo\n");
+    printf("%s\n",cmd->tab_ref->envp[i]);
+    while (cmd->tab_ref->envp[i])
+    {
+        printf("%s",cmd->tab_ref->envp[i]);
+        i++;
+    }
+}
 void    ft_echo(t_cmd *cmd)
 {
     printf("%s\n", cmd->arg[1]);

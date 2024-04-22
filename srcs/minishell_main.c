@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/22 11:30:08 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/22 14:19:12 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv, char **envp)
     /* Command for TEST */
     /* ping -c 5 google.com | grep rtt | wc -w */
     /* 3 different command have to be executed at the same time */
-    cmd = malloc(sizeof(t_cmd) * 2);
+    cmd = malloc(sizeof(t_cmd) * 1);
     glob = malloc(sizeof(t_tab));
     cmd[0] = malloc(sizeof(t_cmd));
     cmd[1] = malloc(sizeof(t_cmd));
@@ -61,6 +61,7 @@ int main(int argc, char **argv, char **envp)
     {
         (*cmd[i]).tab_ref = glob;
     }
+    glob->envp = envp;
     /* cmd->arg will be malloc with 4 because the command ping */
     /* contain 4 arguments (include the name of the program) */
 
@@ -92,14 +93,14 @@ int main(int argc, char **argv, char **envp)
     
 
     (*cmd[0]).arg = malloc(sizeof(char*) * 3);
-    (*cmd[0]).arg[0] = ft_strdup("cd");
-    (*cmd[0]).arg[1] = ft_strdup("doc");
-    (*cmd[0]).arg[2] = NULL;
+    (*cmd[0]).arg[0] = ft_strdup("env");
+    //(*cmd[0]).arg[1] = ft_strdup("doc");
+    (*cmd[0]).arg[1] = NULL;
 
-    (*cmd[1]).arg = malloc(sizeof(char*) * 3);
-    (*cmd[1]).arg[0] = ft_strdup("echo");
-    (*cmd[1]).arg[1] = ft_strdup("hello world");
-    (*cmd[1]).arg[2] = NULL;
+    // (*cmd[1]).arg = malloc(sizeof(char*) * 3);
+    // (*cmd[1]).arg[0] = ft_strdup("echo");
+    // (*cmd[1]).arg[1] = ft_strdup("hello world");
+    // (*cmd[1]).arg[2] = NULL;
     /* For the moment I will just put a NULL value for envp */
 
     /* Nothing to see will init everything to null */
@@ -121,8 +122,8 @@ int main(int argc, char **argv, char **envp)
     // (*cmd[4]).pathname = ft_strdup("/usr/bin/uniq");
 
 
-    (*cmd[0]).pathname = ft_strdup("/usr/bin/cd");
-    (*cmd[1]).pathname = ft_strdup("/bin/echo"); 
+    // (*cmd[0]).pathname = ft_strdup("/usr/bin/cd");
+    // (*cmd[1]).pathname = ft_strdup("/bin/echo"); 
 
 
  
@@ -143,7 +144,7 @@ int main(int argc, char **argv, char **envp)
     // }
 
 
-    (cmd[2]) = 0;
+    (cmd[1]) = 0;
     execution_main(cmd);
     return (0);
 }
