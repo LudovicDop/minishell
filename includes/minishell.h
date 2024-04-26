@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/22 13:43:38 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 00:11:53 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,7 @@ int	ft_strcmp(const char *s1, const char *s2);
 void    execution_main(t_cmd **cmd);
 void    special_carac(t_cmd *cmd);
 int search_builtins_cmd(t_cmd *cmd);
+void    start_parsing(char *tmp, t_cmd **cmd);
+void    free_tab(void   **my_tab);
+void    free_everything(t_cmd **cmd);
 #endif

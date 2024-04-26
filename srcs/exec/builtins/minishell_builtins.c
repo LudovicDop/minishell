@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/22 16:35:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/04/25 22:35:04 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void    ft_echo(t_cmd *cmd)
 }
 int search_builtins_cmd(t_cmd *cmd)
 {
+    //printf("\033[32;1mBEGIN (process : %d)\033[m\n",getpid());
     if (!ft_strcmp(cmd->arg[0], "cd"))
     {
         fprintf(stderr, "\033[36;1mStarting executing cd command!\033[m\n");
@@ -66,5 +67,6 @@ int search_builtins_cmd(t_cmd *cmd)
         fprintf(stderr, "\033[36;1mStarting executing exit command!\033[m\n");
         return (1);
     }
+    //printf("\033[31;1mEXIT\033[m\n");
     return (0);
 }

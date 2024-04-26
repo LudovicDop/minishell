@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/22 14:33:44 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/25 21:56:16 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,26 @@ void    ft_print_my_redirection(char **arg)
     }
 }
 
+/*File fd[1] == Writing && fd[0] == Reading */
 void    execution_pipe(t_cmd *cmd)
 {
     //Child process
     if (!cmd->last_cmd)
         dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    else if (cmd->any_redirection)
+    close(cmd->tab_ref->pipe_fd[0]);
+    close(cmd->tab_ref->pipe_fd[1]);
+    if (cmd->any_redirection)
     {
         special_carac(cmd);
     }
 
-    close(cmd->tab_ref->pipe_fd[0]);
-    close(cmd->tab_ref->pipe_fd[1]);
-    fprintf(stderr, "\033[1;31mBegin execution\033[m\n");
+    //fprintf(stderr, "\033[1;31mBegin execution (process id : %d)\033[m\n",getpid());
     if (search_builtins_cmd(cmd))
         return ;
+    //fprintf(stderr, "\033[32;1mcmd->path : %s && cmd->arg : %s\033[m\n",cmd->pathname, cmd->arg[0]);
     if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     {
         perror("execve");
-    }
-    else
-    {
-        fprintf(stderr, "\033[1;32mSucces\033[m\n");
     }
 }
 
@@ -89,26 +87,22 @@ void    execution_main(t_cmd **cmd)
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
             //Child process
-            printf("\033[1;32mChild process %d (id : %d)\033[m\n", j, getpid());
+            fprintf(stderr, "\033[1;32mChild process %d (id : %d)\033[m\n", j, getpid());
+            if (j != 0)
+            {
+                fprintf(stderr, "\033[31;1mICI (process id : %d)\033[m\n", getpid());
+                dup2((*cmd)->tab_ref->pipe_fd[0], STDIN_FILENO);
+            }
             if (j + 1 == i)
             {
                 (*cmd[j]).last_cmd = true;
             }
             execution_pipe(cmd[j]);
-            fprintf(stderr, "\033[1;31mChild process %d end\033[m\n", j);
             exit(EXIT_SUCCESS);
-        }
-        if (j + 1 != i)
-        {
-            //printf("ICI\n");
-            dup2((*cmd)->tab_ref->pipe_fd[0], STDIN_FILENO);
-            close((*cmd)->tab_ref->pipe_fd[0]);
-            close((*cmd)->tab_ref->pipe_fd[1]);
         }
         j++;
     }
+    wait(NULL);
     close((*cmd)->tab_ref->pipe_fd[0]);
     close((*cmd)->tab_ref->pipe_fd[1]);
-    wait(NULL);
-    printf("Parent process\n");
 }
