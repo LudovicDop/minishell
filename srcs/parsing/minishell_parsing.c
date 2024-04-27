@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/27 00:12:01 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 12:48:04 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void    start_parsing(char *tmp, t_cmd **cmd)
         k++;
         i++;
     }
+    printf("j = %d\n",j + 1);
     (*cmd[j]).arg[k] = NULL;
     printf("\033[31;1mcmd[%d].arg[%d] = %s\033[m\n",j,k, (*cmd[j]).arg[k]);
     (*cmd[0]).pathname = ft_strdup("/sbin/ping");

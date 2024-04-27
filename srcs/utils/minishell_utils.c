@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/27 00:04:30 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 12:55:39 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,31 @@ void    free_tab(void   **my_tab)
     free(my_tab);
 }
 
+void    free_arg(t_cmd **cmd)
+{
+    int i;
+    int j;
+
+    j = 0;
+    i = 0;
+    while (cmd[i])
+    {
+        j = 0;
+        while (cmd[i]->arg[j])
+        {
+            printf("arg : %p\n", &cmd[i]->arg[j]);
+            free(cmd[i]->arg[j]);
+            j++;
+        }
+        free(cmd[i]->arg);
+        i++;
+    }
+}
 void    free_everything(t_cmd **cmd)
 {
-    int i = 0;
-    free_tab((void**)(*cmd)->arg);
+    free((*cmd)->tab_ref->tmp);
+    free((*cmd)->tab_ref);
+    free_arg(cmd);
     free((*cmd)->pathname);
     free_tab((void**)cmd);
-    printf("\033[32;1mcmd : %p\033[m\n", cmd);
-    //free(cmd);
 }

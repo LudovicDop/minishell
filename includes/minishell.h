@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/27 00:11:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 12:43:44 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_tab
     pid_t     *process_id;
     int       nbre_cmd;
     char      **envp;
+    char      *tmp;
 } t_tab;
 
 typedef struct s_cmd
