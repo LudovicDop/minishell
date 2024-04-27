@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/27 12:43:44 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 13:40:59 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 typedef struct s_tab
 {
     int       *pipe_fd;
+    int       *pipe_fd_size;
     pid_t     *process_id;
     int       nbre_cmd;
     char      **envp;

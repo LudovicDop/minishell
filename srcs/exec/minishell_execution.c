@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/25 21:56:16 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/27 14:23:07 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,24 @@ void    ft_print_my_redirection(char **arg)
     }
 }
 
+int size_of_my_pipe(t_cmd *cmd)
+{
+    size_t i;
+    char buffer;
+    while (read(cmd->tab_ref->pipe_fd[0], &buffer, sizeof(char) != EOF))
+    {
+        i++;
+    }
+    return (i);
+}
+
 /*File fd[1] == Writing && fd[0] == Reading */
 void    execution_pipe(t_cmd *cmd)
 {
     //Child process
     if (!cmd->last_cmd)
         dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    close(cmd->tab_ref->pipe_fd_size[0]);
     close(cmd->tab_ref->pipe_fd[0]);
     close(cmd->tab_ref->pipe_fd[1]);
     if (cmd->any_redirection)
@@ -57,6 +69,9 @@ void    execution_pipe(t_cmd *cmd)
     {
         perror("execve");
     }
+    fprintf(stderr, "ICIIIIIIIIIIIIIIIIII\n");
+    fprintf(stderr, "size = %d\n",size_of_my_pipe(cmd));
+    
 }
 
 void    execution_main(t_cmd **cmd)
@@ -66,6 +81,7 @@ void    execution_main(t_cmd **cmd)
 
     i = 0;
     j = 0;
+    fprintf(stderr, "\033[34;1m\nSTART Execution\033[m\n\n");
     /*Just printing the content of my struct*/
     while (cmd[i])
     {
@@ -78,10 +94,12 @@ void    execution_main(t_cmd **cmd)
     printf("Value i : %d\n\n", i);
     /*Malloc my pipes*/
     (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int) * 2);
+    (*cmd)->tab_ref->pipe_fd_size = malloc(sizeof(int) * 2);
     /* Malloc the number of child process */
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
     while (j < i)
     {
+        pipe((*cmd)->tab_ref->pipe_fd_size);
         pipe((*cmd)->tab_ref->pipe_fd);
         (*cmd)->tab_ref->process_id[j] = fork();
         if ((*cmd)->tab_ref->process_id[j] == 0)
