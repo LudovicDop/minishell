@@ -8,7 +8,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/minishell_builtins.c \
 	  srcs/utils/minishell_utils.c
 CC = gcc
-#CFLAGS = -fsanitize=address -g3 -I $(HEADER)
+CFLAGS = -fsanitize=address -g3 -I $(HEADER)
 CFLAGS = -g3 -I $(HEADER)
 OBJ = $(SRC:.c=.o)
 NAME = minishell

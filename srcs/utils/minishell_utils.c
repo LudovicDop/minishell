@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/27 14:29:51 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/28 18:38:03 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ void    free_path(t_cmd **cmd)
 }
 void    free_everything(t_cmd **cmd)
 {
+    free((*cmd)->tab_ref->process_id);
     free((*cmd)->tab_ref->tmp);
     free((*cmd)->tab_ref);
     free_arg(cmd);
-    // free((*cmd)->pathname);
     free_path(cmd);
     free_tab((void**)cmd);
 }
