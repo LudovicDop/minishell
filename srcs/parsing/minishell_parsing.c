@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/28 18:10:10 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/29 16:57:36 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char    *test_good_path_for_exec(char *exec_name, char *path)
     while (split_path[i])
     {
         tmp_bis = ft_strjoin(split_path[i], "/");
-        tmp = ft_strjoin(tmp, exec_name);
+        tmp = ft_strjoin(tmp_bis, exec_name);
+        printf("\033[36;1m==> %s\033[m\n", tmp);
         if (access(tmp, F_OK) == 0)
         {
             printf("\033[32;1mSucces! %s\033[m\n", tmp);
