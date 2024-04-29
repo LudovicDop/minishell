@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/28 18:21:41 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/29 17:23:19 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void    execution_pipe(t_cmd *cmd)
 
 void    execution_main(t_cmd **cmd)
 {
+    int test_content_pipe;
     int i;
     int j;
 
@@ -92,9 +93,9 @@ void    execution_main(t_cmd **cmd)
     // (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int) * 2);
     /* Malloc the number of child process */
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
+    pipe((*cmd)->tab_ref->pipe_fd); 
     while (j < i)
     {
-        pipe((*cmd)->tab_ref->pipe_fd);
         (*cmd)->tab_ref->process_id[j] = fork();
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
