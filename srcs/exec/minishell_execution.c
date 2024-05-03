@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/29 17:23:19 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/03 18:37:18 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,14 @@ void    ft_print_my_redirection(char **arg)
     }
 }
 
-int size_of_my_pipe(t_cmd *cmd)
-{
-    size_t i;
-    char buffer;
-    while (read(cmd->tab_ref->pipe_fd[0], &buffer, sizeof(char) != EOF))
-    {
-        i++;
-    }
-    return (i);
-}
-
 /*File fd[1] == Writing && fd[0] == Reading */
-void    execution_pipe(t_cmd *cmd)
+void    execution_pipe(t_cmd *cmd, int j)
 {
     //Child process
-    if (!cmd->last_cmd)
-        dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    close(cmd->tab_ref->pipe_fd[0]);
-    close(cmd->tab_ref->pipe_fd[1]);
+    // if (!cmd->last_cmd)
+    // {
+    //     dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    // }
     if (cmd->any_redirection)
     {
         special_carac(cmd);
@@ -70,12 +59,26 @@ void    execution_pipe(t_cmd *cmd)
     }
 }
 
+void    close_fd(int **p_fd, int nbre_of_pipe)
+{
+    int i;
+
+    i = 0;
+    while (i < nbre_of_pipe)
+    {
+        close(p_fd[i][0]);
+        close(p_fd[i][1]);
+        i++;
+    }
+}
+/*Objectif gerer plusieurs pipes peut être faire une sorte de buffer pour stock la partie read de mon fd de pipe*/
 void    execution_main(t_cmd **cmd)
 {
-    int test_content_pipe;
+    int fd_in;
     int i;
     int j;
 
+    fd_in = 0;
     i = 0;
     j = 0;
     fprintf(stderr, "\033[34;1m\nSTART Execution\033[m\n\n");
@@ -93,29 +96,28 @@ void    execution_main(t_cmd **cmd)
     // (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int) * 2);
     /* Malloc the number of child process */
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
-    pipe((*cmd)->tab_ref->pipe_fd); 
     while (j < i)
     {
+        pipe((*cmd)->tab_ref->pipe_fd);
         (*cmd)->tab_ref->process_id[j] = fork();
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
             //Child process
             fprintf(stderr, "\033[1;32mChild process %d (id : %d)\033[m\n", j, getpid());
-            if (j != 0)
+            dup2(fd_in, STDIN_FILENO);
+            if (j + 1 != i)
             {
-                fprintf(stderr, "\033[31;1mICI (process id : %d)\033[m\n", getpid());
-                dup2((*cmd)->tab_ref->pipe_fd[0], STDIN_FILENO);
+                dup2((*cmd)->tab_ref->pipe_fd[1], STDOUT_FILENO);
             }
-            if (j + 1 == i)
-            {
-                (*cmd[j]).last_cmd = true;
-            }
-            execution_pipe(cmd[j]);
+            execution_pipe(cmd[j], j);
             exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            wait(NULL);
+            close((*cmd)->tab_ref->pipe_fd[1]);
+            fd_in = (*cmd)->tab_ref->pipe_fd[0];
         }
         j++;
     }
-    wait(NULL);
-    close((*cmd)->tab_ref->pipe_fd[0]);
-    close((*cmd)->tab_ref->pipe_fd[1]);
 }

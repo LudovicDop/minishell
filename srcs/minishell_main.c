@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/04/29 17:42:37 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/03 18:35:47 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void   handle_sigcont(int sig)
 {
     printf("TEST\n");
-} 
+}
 
 char    *get_current_path(void)
 {
@@ -40,7 +40,7 @@ char    *get_current_path(void)
 }
 
 void    pre_alloc(t_cmd **cmd, t_tab *glob, char **envp)
-{ 
+{
     for(int i = 0; i < 3; i++)
     {
         cmd[i] = malloc(sizeof(t_cmd));
@@ -60,16 +60,18 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob, char **envp)
         printf("\033[31;1m(*cmd[%d]).tab_ref : %p\033[m\n", i, &(*cmd[i]).tab_ref);
     }
     printf("\n");
-    glob->envp = envp; 
+    glob->envp = envp;
 }
 
-int main(int argc, char **argv, char **envp) 
+
+/*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
+int main(int argc, char **argv, char **envp)
 {
     t_cmd **cmd;
     t_tab *glob;
 
-    while (1)
-    {
+    // while (1)
+    // {
             /*execve(pathname, argv, envp)*/
 
     /* Command for TEST */
@@ -89,8 +91,9 @@ int main(int argc, char **argv, char **envp)
         fprintf(stderr, "\033[34;1mEXIT\033[m\n");
         fprintf(stderr, "\n");
         free_everything(cmd);
-     }
+    //  }
     return (0);
 }
+
 
 

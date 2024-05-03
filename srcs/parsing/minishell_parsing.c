@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/29 16:57:36 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/04/30 10:52:37 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void    start_parsing(char *tmp, t_cmd **cmd)
     i = 0;
     k = 0;
     j = 0;
+    if (!tmp || *tmp == '\0')
+        return ;
     buffer = ft_split(tmp, ' ');
     if (!buffer || !cmd)
         return;
