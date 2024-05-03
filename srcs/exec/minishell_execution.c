@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/03 18:37:18 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/03 18:56:21 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,13 @@ void    ft_print_my_redirection(char **arg)
 void    execution_pipe(t_cmd *cmd, int j)
 {
     //Child process
-    // if (!cmd->last_cmd)
-    // {
-    //     dup2(cmd->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    // }
     if (cmd->any_redirection)
     {
         special_carac(cmd);
     }
 
-    //fprintf(stderr, "\033[1;31mBegin execution (process id : %d)\033[m\n",getpid());
     if (search_builtins_cmd(cmd))
         return ;
-    //fprintf(stderr, "\033[32;1mcmd->path : %s && cmd->arg : %s\033[m\n",cmd->pathname, cmd->arg[0]);
     if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     {
         perror("execve");
