@@ -6,13 +6,11 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/04/30 10:52:37 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/03 19:44:53 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// ping -c 5 google.com | grep "rtt" 
 
 char    *test_good_path_for_exec(char *exec_name, char *path)
 {
@@ -27,10 +25,8 @@ char    *test_good_path_for_exec(char *exec_name, char *path)
     {
         tmp_bis = ft_strjoin(split_path[i], "/");
         tmp = ft_strjoin(tmp_bis, exec_name);
-        printf("\033[36;1m==> %s\033[m\n", tmp);
         if (access(tmp, F_OK) == 0)
         {
-            printf("\033[32;1mSucces! %s\033[m\n", tmp);
             free(tmp_bis);
             free_tab((void**)split_path);
             return (tmp);
@@ -48,7 +44,6 @@ char    *search_path(t_cmd **cmd)
     int i;
 
     i = 0;
-    printf("\033[36;1mSTART function search_path!\033[m\n");
 
     while ((*cmd)->tab_ref->envp[i])
     {
@@ -60,6 +55,7 @@ char    *search_path(t_cmd **cmd)
     }
     return (NULL);
 }
+
 void    init_env_path(t_cmd **cmd)
 {
     int i;
@@ -73,8 +69,6 @@ void    init_env_path(t_cmd **cmd)
 }
 void    start_parsing(char *tmp, t_cmd **cmd)
 {
-    printf("\033[34;1m\nSTART Parsing\033[m\n");
-    printf("\n");
     int i;
     int k;
     int j;
@@ -93,19 +87,15 @@ void    start_parsing(char *tmp, t_cmd **cmd)
         if (buffer[i] && buffer[i][0] == '|')
         {
             (*cmd[j]).arg[k] = NULL;
-            printf("\033[31;1mcmd[%d].arg[%d] = %s\033[m\n",j,k, (*cmd[j]).arg[k]);
             j++;
             i++;
             k = 0;
         }
         (*cmd[j]).arg[k] =  ft_strdup(buffer[i]);
-        printf("\033[31;1mcmd[%d].arg[%d] = %s (address : %p)\033[m\n",j,k, (*cmd[j]).arg[k], &(*cmd[j]).arg[k]);
         k++;
         i++;
     }
-    printf("j = %d\n",j + 1);
     (*cmd[j]).arg[k] = NULL;
-    printf("\033[31;1mcmd[%d].arg[%d] = %s\033[m\n",j,k, (*cmd[j]).arg[k]);
     cmd[j + 1] = NULL;
     init_env_path(cmd);
     free_tab((void**)buffer);
