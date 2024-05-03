@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/03 18:56:21 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/03 23:48:30 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void    execution_main(t_cmd **cmd)
     fd_in = 0;
     i = 0;
     j = 0;
-    fprintf(stderr, "\033[34;1m\nSTART Execution\033[m\n\n");
     /*Just printing the content of my struct*/
+    fprintf(stderr,"\n");
     while (cmd[i])
     {
         printf("\033[1;31mPATH_NAME : %s \033[m\n", (*cmd[i]).pathname);
@@ -85,10 +85,7 @@ void    execution_main(t_cmd **cmd)
             ft_print_my_redirection((*cmd[i]).arg_redirection);
         i++;
     }
-    printf("Value i : %d\n\n", i);
-    /*Malloc my pipes*/
-    // (*cmd)->tab_ref->pipe_fd = malloc(sizeof(int) * 2);
-    /* Malloc the number of child process */
+    fprintf(stderr,"\n");
     (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
     while (j < i)
     {
@@ -97,7 +94,6 @@ void    execution_main(t_cmd **cmd)
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
             //Child process
-            fprintf(stderr, "\033[1;32mChild process %d (id : %d)\033[m\n", j, getpid());
             dup2(fd_in, STDIN_FILENO);
             if (j + 1 != i)
             {
