@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/03 23:42:45 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/04 11:55:49 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ int main(int argc, char **argv, char **envp)
     t_cmd **cmd;
     t_tab *glob;
 
-    while (1)
-    {
+    // while (1)
+    // {
         cmd = malloc(sizeof(t_cmd));
         glob = malloc(sizeof(t_tab));
         //char *string = getenv("PWD");
         pre_alloc(cmd, glob, envp);
-        (*cmd)->tab_ref->tmp = readline("\033[32;1m@ludovicdoppler\033[m:\033[35;1mminishell$\033[m ");
+        get_prompt(*cmd);
+        // (*cmd)->tab_ref->tmp = readline("\033[32;1m@ludovicdoppler\033[m:\033[35;1mminishell$\033[m ");
+        (*cmd)->tab_ref->tmp = readline((*cmd)->tab_ref->prompt);
         add_history((*cmd)->tab_ref->tmp);
         start_parsing((*cmd)->tab_ref->tmp, cmd);
         execution_main(cmd);
         free_everything(cmd);
-     }
+    //  }
     return (0);
 }
 

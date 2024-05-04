@@ -1,4 +1,4 @@
-MAKEFLAGS+=silent
+#MAKEFLAGS+=silent
 HEADER = ./includes/
 LIBFT = ./libft/libft.a
 SRC = srcs/minishell_main.c \
@@ -6,9 +6,12 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/minishell_special_carac.c \
 	  srcs/parsing/minishell_parsing.c \
 	  srcs/exec/builtins/minishell_builtins.c \
-	  srcs/utils/minishell_utils.c
+	  srcs/utils/minishell_utils.c	\
+	  srcs/utils/minishell_envp.c	\
+	  srcs/utils/minishell_freeing.c \
+	  srcs/utils/minishell_prompt.c
 CC = gcc
-CFLAGS = -fsanitize=address -g3 -I $(HEADER)
+#CFLAGS = -fsanitize=address -g3 -I $(HEADER)
 CFLAGS = -g3 -I $(HEADER)
 OBJ = $(SRC:.c=.o)
 NAME = minishell

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/03 19:44:20 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/04 11:37:12 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,58 +33,29 @@ int	ft_strcmp(const char *s1, const char *s2)
     return (0);
 }
 
-void    free_tab(void   **my_tab)
+char	*ft_strjoin2(char *s1, char *s2)
 {
-    int i;
+	char	*ret;
+	size_t	string_size;
+	int		i;
+	int		j;
 
-    i = 0;
-    if (!my_tab)
-        return ;
-    while (my_tab[i])
-    {
-        free(my_tab[i]);
-        i++;
-    }
-    free(my_tab);
-}
-
-void    free_arg(t_cmd **cmd)
-{
-    int i;
-    int j;
-
-    j = 0;
-    i = 0;
-    while (cmd[i])
-    {
-        j = 0;
-        while (cmd[i]->arg[j])
-        {
-            free(cmd[i]->arg[j]);
-            j++;
-        }
-        free(cmd[i]->arg);
-        i++;
-    }
-}
-
-void    free_path(t_cmd **cmd)
-{  
-    int i;
-
-    i = 0;
-    while (cmd[i])
-    {
-        free(cmd[i]->pathname);
-        i++;
-    }
-}
-void    free_everything(t_cmd **cmd)
-{
-    free((*cmd)->tab_ref->process_id);
-    free((*cmd)->tab_ref->tmp);
-    free((*cmd)->tab_ref);
-    free_arg(cmd);
-    free_path(cmd);
-    free_tab((void**)cmd);
+	j = 0;
+	i = 0;
+	string_size = ft_strlen(s1) + ft_strlen(s2);
+	ret = malloc(sizeof(char) * (string_size + 1));
+	if (ret == NULL)
+		return (NULL);
+	while (s1[j] != '\0')
+	{
+		ret[i++] = s1[j++];
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		ret[i++] = s2[j++];
+	}
+	ret[i] = '\0';
+    free(s1);
+	return (ret);
 }

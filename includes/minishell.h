@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/03 18:11:26 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/04 11:36:12 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 typedef struct s_tab
 {
+    char      *prompt;
     int       pipe_fd[2];
     pid_t     *process_id;
     int       nbre_cmd;
@@ -46,13 +47,24 @@ typedef struct s_cmd
     bool    last_cmd;
     t_tab   *tab_ref;
 } t_cmd;
+
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
+char	*ft_strjoin2(char *s1, char *s2);
 /*Minishell main function exec*/
 void    execution_main(t_cmd **cmd);
+/*Quêtes secondaires*/
 void    special_carac(t_cmd *cmd);
-int search_builtins_cmd(t_cmd *cmd);
+int     search_builtins_cmd(t_cmd *cmd);
+/*Minishell parsing*/
 void    start_parsing(char *tmp, t_cmd **cmd);
+/*Minishell search good path in envp*/
+char    *test_good_path_for_exec(char *exec_name, char *path);
+char    *search_path(t_cmd **cmd);
+void    init_env_path(t_cmd **cmd);
+/*Minishell freeing memory*/
 void    free_tab(void   **my_tab);
 void    free_everything(t_cmd **cmd);
+
+char *get_prompt(t_cmd *cmd);
 #endif
