@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/04 12:15:20 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/05 20:58:02 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob, char **envp)
 {
     for(int i = 0; i < 3; i++)
     {
-        cmd[i] = malloc(sizeof(t_cmd));
+        cmd[i] = ft_calloc(1, sizeof(t_cmd));
     }
     printf("\n");
 
     for (int i = 0; i < 3; i++)
     {
-        (cmd[i])->arg = malloc(sizeof(char*) * 100);
+        (cmd[i])->arg = ft_calloc(100, sizeof(char*));
     }
     for (int i = 0; i < 3; i++)
     {
@@ -42,12 +42,17 @@ int main(int argc, char **argv, char **envp)
     {
         cmd = malloc(sizeof(t_cmd));
         glob = malloc(sizeof(t_tab));
-        //char *string = getenv("PWD");
+        ft_signal();
         pre_alloc(cmd, glob, envp);
-        get_prompt(*cmd);
-        (*cmd)->tab_ref->tmp = readline((*cmd)->tab_ref->prompt);
-        add_history((*cmd)->tab_ref->tmp);
+        get_prompt();
+        (*cmd)->tab_ref->tmp = readline("");
         start_parsing((*cmd)->tab_ref->tmp, cmd);
+        if (!(*cmd)->tab_ref->tmp)
+        {
+            free_everything(cmd);
+            break;
+        }
+        add_history((*cmd)->tab_ref->tmp);
         execution_main(cmd);
         free_everything(cmd);
      }

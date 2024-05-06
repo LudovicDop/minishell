@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/04 11:36:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/05 21:04:33 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <fcntl.h>
 # include <time.h>
 # include <sys/types.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <sys/wait.h>
 
 typedef struct s_tab
@@ -66,5 +68,6 @@ void    init_env_path(t_cmd **cmd);
 void    free_tab(void   **my_tab);
 void    free_everything(t_cmd **cmd);
 
-char *get_prompt(t_cmd *cmd);
+void    get_prompt(void);
+void    ft_signal(void);
 #endif

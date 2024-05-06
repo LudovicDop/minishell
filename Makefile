@@ -9,7 +9,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/minishell_utils.c	\
 	  srcs/utils/minishell_envp.c	\
 	  srcs/utils/minishell_freeing.c \
-	  srcs/utils/minishell_prompt.c
+	  srcs/utils/minishell_prompt.c \
+	  srcs/utils/signal/minishell_signal.c
 CC = gcc
 #CFLAGS = -fsanitize=address -g3 -I $(HEADER)
 CFLAGS = -g3 -I $(HEADER)
