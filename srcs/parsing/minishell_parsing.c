@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/04 11:05:49 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/07 11:15:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@ void    start_parsing(char *tmp, t_cmd **cmd)
         return;
     while (buffer[i])
     {
+        if (buffer[i][0] == '>')
+        {
+            (*cmd[j]).any_redirection = true;
+            (*cmd[j]).arg_redirection[0] = ft_strdup(buffer[i++]);
+            (*cmd[j]).arg_redirection[1] = ft_strdup(buffer[i++]);
+            printf("\033[31;1m(*cmd[%d]).arg_redirection[0] = %s\033[m\n", j, (*cmd[j]).arg_redirection[0]);
+            printf("\033[35;1mExit value : %s\033[m\n", buffer[i]);
+            if (buffer[i] == NULL)
+                break;
+        }
         if (buffer[i] && buffer[i][0] == '|')
         {
             (*cmd[j]).arg[k] = NULL;
