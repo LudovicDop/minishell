@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_freeing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/04 12:04:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/07 10:21:25 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void    free_path(t_cmd **cmd)
 }
 void    free_everything(t_cmd **cmd)
 {
-    free((*cmd)->tab_ref->prompt);
+    //free((*cmd)->tab_ref->prompt);
     free((*cmd)->tab_ref->process_id);
     free((*cmd)->tab_ref->tmp);
     free((*cmd)->tab_ref);
