@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/03 19:30:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/07 12:52:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    ft_env(t_cmd *cmd)
     int i;
 
     i = 0;
+    printf("\033[31;1m envp : %s\033[m\n", cmd->tab_ref->envp[0]);
     while (cmd->tab_ref->envp[i])
     {
         printf("%s\n",cmd->tab_ref->envp[i]);

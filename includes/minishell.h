@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/05 21:04:33 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/07 14:04:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ typedef struct s_cmd
     t_tab   *tab_ref;
 } t_cmd;
 
+typedef struct s_envp
+{
+    char    *key;
+    char    *value;
+    struct s_envp *next;
+} t_envp;
+
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
@@ -70,4 +77,5 @@ void    free_everything(t_cmd **cmd);
 
 void    get_prompt(void);
 void    ft_signal(void);
+char	*ft_strchr_reverse(char *s1, char c);
 #endif

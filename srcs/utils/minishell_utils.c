@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/04 11:37:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/07 14:39:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,31 @@ char	*ft_strjoin2(char *s1, char *s2)
 	ret[i] = '\0';
     free(s1);
 	return (ret);
+}
+
+char	*ft_strchr_reverse(char *s1, char c)
+{
+	int i;
+	int j;
+	int lenght;
+	char *new_string;
+
+	lenght = 0;
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (NULL);
+	while (s1[i++] != '=')
+		lenght++;
+	printf("i = %d\n", i);
+	new_string = malloc(sizeof(char) * lenght + 1);
+	i = 0;
+	while (s1[i])
+	{
+		if (i < lenght)
+			new_string[j++] = s1[i];
+		i++;
+	}
+	new_string[j] = '\0';
+	return (new_string);	
 }

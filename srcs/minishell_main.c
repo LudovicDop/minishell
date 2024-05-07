@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/07 10:46:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:18:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,32 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob, char **envp)
     glob->envp = envp;
 }
 
+char    **init_envp(t_envp *envp_s, char **envp)
+{
+    int i;
 
+    i = 0;
+    if (!envp)
+        return (NULL);
+    while (envp[i])
+    {
+        envp_s = malloc(sizeof(t_envp));
+        envp_s->value = ft_strchr(envp[i], '=');
+        envp_s->key = ft_strchr_reverse(envp[i], '=');
+        printf("\033[31;1m envp_s->key = %s\n", envp_s->key);
+        printf("\033[31;1m envp_s->value = %s\n", envp_s->value);
+        i++;
+    }
+}
 /*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
 int main(int argc, char **argv, char **envp)
 {
     t_cmd **cmd;
     t_tab *glob;
+    t_envp *envp_s;
 
+
+    // init_envp(envp_s, envp);
     while (1)
     {
         cmd = malloc(sizeof(t_cmd));
