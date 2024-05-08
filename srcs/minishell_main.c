@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/07 17:18:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:08:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,57 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob, char **envp)
     glob->envp = envp;
 }
 
+
+void    add_to_my_lst(t_envp **list, t_envp *new_node)
+{
+    t_envp *current;
+
+    if (*list == NULL)
+    {
+        printf("INIT\n");
+        *list = new_node;
+        return ;
+    }
+    current = *list;
+    while (current->next)
+    {
+        current = current->next;
+    }
+    current->next = new_node;
+    
+}
+
+void    read_my_list(t_envp *list)
+{
+    printf("START\n");
+    while (list)
+    {
+        printf("\033[32;1m%s\033[m\033[31;1m%s\033[m\n", list->key, list->value);
+        list = list->next;
+    }
+}
 char    **init_envp(t_envp *envp_s, char **envp)
 {
+    t_envp *new_node;
     int i;
 
+    envp_s = NULL;
     i = 0;
     if (!envp)
         return (NULL);
+    new_node = envp_s;
     while (envp[i])
     {
-        envp_s = malloc(sizeof(t_envp));
-        envp_s->value = ft_strchr(envp[i], '=');
-        envp_s->key = ft_strchr_reverse(envp[i], '=');
-        printf("\033[31;1m envp_s->key = %s\n", envp_s->key);
-        printf("\033[31;1m envp_s->value = %s\n", envp_s->value);
+        new_node = malloc(sizeof(t_envp));
+        new_node->value = ft_strchr(envp[i], '=');
+        new_node->key = ft_strchr_reverse(envp[i], '=');
+        new_node->next = NULL;
+        // printf("\033[31;1m envp_s->key = %s\n", new_node->key);
+        // printf("\033[31;1m envp_s->value = %s\n", new_node->value);
+        add_to_my_lst(&envp_s, new_node);
         i++;
     }
+    read_my_list(envp_s);
 }
 /*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
 int main(int argc, char **argv, char **envp)
@@ -57,25 +92,25 @@ int main(int argc, char **argv, char **envp)
     t_envp *envp_s;
 
 
-    // init_envp(envp_s, envp);
-    while (1)
-    {
-        cmd = malloc(sizeof(t_cmd));
-        glob = malloc(sizeof(t_tab));
-        ft_signal();
-        pre_alloc(cmd, glob, envp);
-        get_prompt();
-        (*cmd)->tab_ref->tmp = readline("");
-        start_parsing((*cmd)->tab_ref->tmp, cmd);
-        add_history((*cmd)->tab_ref->tmp);
-        execution_main(cmd);
-        if (!(*cmd)->tab_ref->tmp)
-        {
-            free_everything(cmd);
-            break;
-        }
-        free_everything(cmd);
-     }
+    init_envp(envp_s, envp);
+    // while (1)
+    // {
+    //     cmd = malloc(sizeof(t_cmd));
+    //     glob = malloc(sizeof(t_tab));
+    //     ft_signal();
+    //     pre_alloc(cmd, glob, envp);
+    //     get_prompt();
+    //     (*cmd)->tab_ref->tmp = readline("");
+    //     start_parsing((*cmd)->tab_ref->tmp, cmd);
+    //     add_history((*cmd)->tab_ref->tmp);
+    //     execution_main(cmd);
+    //     if (!(*cmd)->tab_ref->tmp)
+    //     {
+    //         free_everything(cmd);
+    //         break;
+    //     }
+    //     free_everything(cmd);
+    //  }
     return (0);
 }
 
