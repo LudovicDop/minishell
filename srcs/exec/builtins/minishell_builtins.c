@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 20:01:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:14:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void    ft_env(t_cmd *cmd)
         printf("%s\n", cmd->tab_ref->envp->value);
         cmd->tab_ref->envp = cmd->tab_ref->envp->next;
     }
+    free_envp(&(cmd->tab_ref->envp));
+    free_everything(&cmd);
 }
 void    ft_echo(t_cmd *cmd)
 {
