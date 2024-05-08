@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 18:13:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:06:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,14 @@ char    *test_good_path_for_exec(char *exec_name, char *path)
 
 char    *search_path(t_cmd **cmd)
 {
-    int i;
-
-    i = 0;
-
-    while ((*cmd)->tab_ref->envp[i])
+    while ((*cmd)->tab_ref->envp)
     {
-        if (ft_strncmp((*cmd)->tab_ref->envp[i], "PATH=", sizeof(char) * 5) == 0)
+        if (!ft_strncmp((*cmd)->tab_ref->envp->key, "PATH", sizeof(char) * 5))
         {
-            return ((*cmd)->tab_ref->envp[i] + 5);
+            return ((*cmd)->tab_ref->envp->value);
         }
-        i++;
+        (*cmd)->tab_ref->envp = (*cmd)->tab_ref->envp->next;
     }
-    return (NULL);
 }
 
 void    init_env_path(t_cmd **cmd)

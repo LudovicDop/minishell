@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/07 12:52:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:01:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 void    ft_env(t_cmd *cmd)
 {
-    int i;
-
-    i = 0;
-    printf("\033[31;1m envp : %s\033[m\n", cmd->tab_ref->envp[0]);
-    while (cmd->tab_ref->envp[i])
+    while (cmd->tab_ref->envp)
     {
-        printf("%s\n",cmd->tab_ref->envp[i]);
-        i++;
+        printf("%s",cmd->tab_ref->envp->key);
+        printf("%s\n", cmd->tab_ref->envp->value);
+        cmd->tab_ref->envp = cmd->tab_ref->envp->next;
     }
 }
 void    ft_echo(t_cmd *cmd)

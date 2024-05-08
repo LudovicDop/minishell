@@ -12,8 +12,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/minishell_prompt.c \
 	  srcs/utils/signal/minishell_signal.c
 CC = gcc
-#CFLAGS = -fsanitize=address -g3 -I $(HEADER)
-CFLAGS = -g3 -I $(HEADER)
+CFLAGS = -fsanitize=address -g3 -I $(HEADER)
+#CFLAGS = -g3 -I $(HEADER)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

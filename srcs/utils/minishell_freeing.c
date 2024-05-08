@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 18:13:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:08:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void    free_path(t_cmd **cmd)
 }
 void    free_everything(t_cmd **cmd)
 {
-    //free((*cmd)->tab_ref->prompt);
+    // free_envp((&(*cmd)->tab_ref->envp));
     free((*cmd)->tab_ref->process_id);
     free((*cmd)->tab_ref->tmp);
     free((*cmd)->tab_ref);

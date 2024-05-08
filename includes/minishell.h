@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 18:13:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:49:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_tab
     int       pipe_fd[2];
     pid_t     *process_id;
     int       nbre_cmd;
-    char      **envp;
+    struct s_envp   *envp;
     char      *tmp;
 } t_tab;
 
