@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/05 14:42:52 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/08 17:50:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,6 @@ char    *remove_users(char *string)
     new_path = s1;
     return (new_path);
 }
-
-// char *get_prompt(t_cmd *cmd)
-// {
-//     char    *tmp_user;
-//     char    *tmp_path;
-
-//     tmp_user = NULL;
-//     tmp_path = NULL;
-//     if (!cmd)
-//         return (NULL);
-//     tmp_user = getenv("USER");
-//     tmp_path = getenv("PWD");
-
-//     cmd->tab_ref->prompt = ft_strjoin("\033[32;1m@", tmp_user);
-//     cmd->tab_ref->prompt = ft_strjoin2(cmd->tab_ref->prompt, "\033[m:");
-//     cmd->tab_ref->prompt = ft_strjoin2(cmd->tab_ref->prompt, "\033[35;1m");
-//     cmd->tab_ref->prompt = ft_strjoin2(cmd->tab_ref->prompt, remove_users(tmp_path));
-//     cmd->tab_ref->prompt = ft_strjoin2(cmd->tab_ref->prompt, "$\033[m ");
-    
-//     return (cmd->tab_ref->prompt);
-// }
 
 void get_prompt(void)
 {

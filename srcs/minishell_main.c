@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 17:44:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:50:18 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void    free_envp(t_envp **list)
     {
         to_free = current;
         current = current->next;
-        printf("Freeing : %p\n", to_free);
         free(to_free->key);
         free(to_free->value);
         free(to_free);
@@ -107,24 +106,24 @@ int main(int argc, char **argv, char **envp)
     init_envp(&envp_s, envp);
     read_my_list(envp_s);
     free_envp(&envp_s);
-    // while (1)
-    // {
-    //     cmd = malloc(sizeof(t_cmd));
-    //     glob = malloc(sizeof(t_tab));
-    //     ft_signal();
-    //     pre_alloc(cmd, glob, envp);
-    //     get_prompt();
-    //     (*cmd)->tab_ref->tmp = readline("");
-    //     start_parsing((*cmd)->tab_ref->tmp, cmd);
-    //     add_history((*cmd)->tab_ref->tmp);
-    //     execution_main(cmd);
-    //     if (!(*cmd)->tab_ref->tmp)
-    //     {
-    //         free_everything(cmd);
-    //         break;
-    //     }
-    //     free_everything(cmd);
-    //  }
+    while (1)
+    {
+        cmd = malloc(sizeof(t_cmd));
+        glob = malloc(sizeof(t_tab));
+        ft_signal();
+        pre_alloc(cmd, glob, envp);
+        get_prompt();
+        (*cmd)->tab_ref->tmp = readline("");
+        start_parsing((*cmd)->tab_ref->tmp, cmd);
+        add_history((*cmd)->tab_ref->tmp);
+        execution_main(cmd);
+        if (!(*cmd)->tab_ref->tmp)
+        {
+            free_everything(cmd);
+            break;
+        }
+        free_everything(cmd);
+     }
     return (0);
 }
 
