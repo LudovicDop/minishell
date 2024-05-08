@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 17:08:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:12:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void    add_to_my_lst(t_envp **list, t_envp *new_node)
 
 void    read_my_list(t_envp *list)
 {
-    printf("START\n");
     while (list)
     {
         printf("\033[32;1m%s\033[m\033[31;1m%s\033[m\n", list->key, list->value);
