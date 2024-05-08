@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/07 14:04:44 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:13:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,15 @@ void    start_parsing(char *tmp, t_cmd **cmd);
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
 void    init_env_path(t_cmd **cmd);
+
+void    init_envp(t_envp **envp_s, char **envp);
+void    print_envp(t_envp *list);
+void    add_node_to_envp(t_envp **list, t_envp *new_node);
+
 /*Minishell freeing memory*/
 void    free_tab(void   **my_tab);
 void    free_everything(t_cmd **cmd);
+void    free_envp(t_envp **list);
 
 void    get_prompt(void);
 void    ft_signal(void);

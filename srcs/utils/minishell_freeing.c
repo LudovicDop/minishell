@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/07 10:21:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:13:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,20 @@ void    free_everything(t_cmd **cmd)
     free_arg(cmd);
     free_path(cmd);
     free_tab((void**)cmd);
+}
+
+void    free_envp(t_envp **list)
+{
+    t_envp *current;
+    t_envp *to_free;
+
+    current = *list;
+    while (current)
+    {
+        to_free = current;
+        current = current->next;
+        free(to_free->key);
+        free(to_free->value);
+        free(to_free);
+    }
 }

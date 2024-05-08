@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/04 11:09:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/08 18:13:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,54 @@ void    init_env_path(t_cmd **cmd)
     while (cmd[i])
     {
         (cmd[i]->pathname) = test_good_path_for_exec(cmd[i]->arg[0], search_path(cmd));
+        i++;
+    }
+}
+
+void    add_node_to_envp(t_envp **list, t_envp *new_node)
+{
+    t_envp *current;
+
+    if (*list == NULL)
+    {
+        *list = new_node;
+        return ;
+    }
+    current = *list;
+    while (current->next)
+    {
+        current = current->next;
+    }
+    current->next = new_node;
+    
+}
+
+void    print_envp(t_envp *list)
+{
+    while (list)
+    {
+        printf("\033[32;1m%s\033[m\033[31;1m%s\033[m\n", list->key, list->value);
+        list = list->next;
+    }
+}
+
+void    init_envp(t_envp **envp_s, char **envp)
+{
+    t_envp *new_node;
+    int i;
+
+    *envp_s = NULL;
+    i = 0;
+    if (!envp)
+        ;
+    new_node = *envp_s;
+    while (envp[i])
+    {
+        new_node = malloc(sizeof(t_envp));
+        new_node->value = ft_strdup(ft_strchr(envp[i], '='));
+        new_node->key = ft_strchr_reverse(envp[i], '=');
+        new_node->next = NULL;
+        add_node_to_envp(envp_s, new_node);
         i++;
     }
 }
