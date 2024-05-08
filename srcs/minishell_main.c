@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 17:12:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:44:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void    add_to_my_lst(t_envp **list, t_envp *new_node)
 
     if (*list == NULL)
     {
-        printf("INIT\n");
         *list = new_node;
         return ;
     }
@@ -60,28 +59,42 @@ void    read_my_list(t_envp *list)
         list = list->next;
     }
 }
-char    **init_envp(t_envp *envp_s, char **envp)
+
+void    free_envp(t_envp **list)
+{
+    t_envp *current;
+    t_envp *to_free;
+
+    current = *list;
+    while (current)
+    {
+        to_free = current;
+        current = current->next;
+        printf("Freeing : %p\n", to_free);
+        free(to_free->key);
+        free(to_free->value);
+        free(to_free);
+    }
+}
+void    init_envp(t_envp **envp_s, char **envp)
 {
     t_envp *new_node;
     int i;
 
-    envp_s = NULL;
+    *envp_s = NULL;
     i = 0;
     if (!envp)
-        return (NULL);
-    new_node = envp_s;
+        ;
+    new_node = *envp_s;
     while (envp[i])
     {
         new_node = malloc(sizeof(t_envp));
-        new_node->value = ft_strchr(envp[i], '=');
+        new_node->value = ft_strdup(ft_strchr(envp[i], '='));
         new_node->key = ft_strchr_reverse(envp[i], '=');
         new_node->next = NULL;
-        // printf("\033[31;1m envp_s->key = %s\n", new_node->key);
-        // printf("\033[31;1m envp_s->value = %s\n", new_node->value);
-        add_to_my_lst(&envp_s, new_node);
+        add_to_my_lst(envp_s, new_node);
         i++;
     }
-    read_my_list(envp_s);
 }
 /*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
 int main(int argc, char **argv, char **envp)
@@ -91,7 +104,9 @@ int main(int argc, char **argv, char **envp)
     t_envp *envp_s;
 
 
-    init_envp(envp_s, envp);
+    init_envp(&envp_s, envp);
+    read_my_list(envp_s);
+    free_envp(&envp_s);
     // while (1)
     // {
     //     cmd = malloc(sizeof(t_cmd));
