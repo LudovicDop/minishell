@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/03 23:48:30 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/09 20:20:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void    execution_main(t_cmd **cmd)
         (*cmd)->tab_ref->process_id[j] = fork();
         if ((*cmd)->tab_ref->process_id[j] == 0)
         {
+            printf("\033[32;1mProcess id : %d\033[m\n", getpid());
             //Child process
             dup2(fd_in, STDIN_FILENO);
             if (j + 1 != i)
@@ -104,7 +105,8 @@ void    execution_main(t_cmd **cmd)
         }
         else
         {
-            wait(NULL);
+            printf("wait ici %d\n", (*cmd)->tab_ref->process_id[j]);
+            waitpid((*cmd)->tab_ref->process_id[j], 0, 0);
             close((*cmd)->tab_ref->pipe_fd[1]);
             fd_in = (*cmd)->tab_ref->pipe_fd[0];
         }

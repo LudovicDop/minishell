@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 20:06:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:53:38 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ char    *test_good_path_for_exec(char *exec_name, char *path)
     char    *tmp;
     char    *tmp_bis;
     char    **split_path;
-
+    
+    if (access(exec_name, F_OK) == 0)
+    {
+        return (exec_name);
+    }
     split_path = ft_split(path, ':');
     i = 0;
     while (split_path[i])
