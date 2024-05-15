@@ -6,20 +6,21 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:08:58 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/10/20 10:54:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:21:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
 	i = 0;
-	while (*s != '\0')
-	{
-		s++;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 		i++;
-	}
 	return (i);
 }
