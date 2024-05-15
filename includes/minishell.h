@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 19:49:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:05:05 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 typedef struct s_tab
 {
     char      *prompt;
-    int       pipe_fd[2];
     pid_t     *process_id;
+    int       pipe_fd[2];
     int       nbre_cmd;
     struct s_envp   *envp;
     char      *tmp;
@@ -42,12 +42,12 @@ typedef struct s_tab
 typedef struct s_cmd
 {
     char    *pathname;
-    char    **arg;
-    char    **envp;
-    char    **arg_redirection;
+    char    *arg;
+    char    *arg_redirection;
     bool    any_redirection;
     bool    last_cmd;
     t_tab   *tab_ref;
+    struct  s_cmd *next;
 } t_cmd;
 
 typedef struct s_envp
@@ -66,7 +66,7 @@ void    execution_main(t_cmd **cmd);
 void    special_carac(t_cmd *cmd);
 int     search_builtins_cmd(t_cmd *cmd);
 /*Minishell parsing*/
-void    start_parsing(char *tmp, t_cmd **cmd);
+void    start_parsing(char *input_cmd, t_cmd **cmd);
 /*Minishell search good path in envp*/
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);

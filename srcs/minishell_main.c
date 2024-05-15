@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/08 20:09:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:05:20 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,29 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
     glob->envp = envp_s;
 }
 
+/*Faire un liste chainee pour les cmd*/
 /*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
 int main(int argc, char **argv, char **envp)
 {
-    t_cmd **cmd;
-    t_tab *glob;
+    char *input_cmd;
+    t_cmd *cmd;
     t_envp *envp_s;
 
-
     init_envp(&envp_s, envp);
-    while (1)
-    {
-        cmd = malloc(sizeof(t_cmd));
-        glob = malloc(sizeof(t_tab));
-        ft_signal();
-        pre_alloc(cmd, glob, envp_s);
+    // while (1)
+    // {
         get_prompt();
-        (*cmd)->tab_ref->tmp = readline("");
-        start_parsing((*cmd)->tab_ref->tmp, cmd);
-        add_history((*cmd)->tab_ref->tmp);
-        execution_main(cmd);
-        if (!(*cmd)->tab_ref->tmp)
-        {
-            free_everything(cmd);
-            break;
-        }
-        free_everything(cmd);
-     }
+        input_cmd = readline("");
+        start_parsing(input_cmd, &cmd);
+    //     add_history((*cmd)->tab_ref->tmp);
+    //     execution_main(cmd);
+    //     if (!(*cmd)->tab_ref->tmp)
+    //     {
+    //         free_everything(cmd);
+    //         break;
+    //     }
+    //     free_everything(cmd);
+    //  }
     return (0);
 }
 

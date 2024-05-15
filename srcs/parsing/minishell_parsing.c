@@ -3,55 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/07 11:15:44 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:04:14 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    start_parsing(char *tmp, t_cmd **cmd)
+void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst)
 {
-    int i;
-    int k;
-    int j;
-    char **buffer;
-
-    i = 0;
-    k = 0;
-    j = 0;
-    if (!tmp || *tmp == '\0')
-        return ;
-    buffer = ft_split(tmp, ' ');
-    if (!buffer || !cmd)
-        return;
-    while (buffer[i])
+    if (!(*cmd_lst))
     {
-        if (buffer[i][0] == '>')
+        (*cmd_lst) = new_node;
+        (*cmd_lst)->next = NULL;
+        return ;
+    }
+    while ((*cmd_lst))
+    {
+        (*cmd_lst) = (*cmd_lst)->next;
+    }
+    (*cmd_lst) = new_node;
+    (*cmd_lst)->next = NULL;
+    return ;
+}
+void    refill_my_node(char *input_cmd, t_cmd **new_node)
+{
+    // if (!input_cmd)
+    //     return ;
+    // if (!ft_strcmp(input_cmd, ">"))
+    // {
+    //     (*new_node)->any_redirection = true;
+    //     (*new_node)->arg_redirection = 
+    // }
+}
+
+void    start_parsing(char *input_cmd, t_cmd **cmd)
+{
+    t_cmd *current_node;
+    char **input_cmd_split;
+    int i;
+
+    if (!input_cmd || *input_cmd == '\0')
+        return ;
+    i = 0;
+    input_cmd_split = ft_split(input_cmd, ' ');
+    if (!input_cmd_split)
+        return ;
+    current_node = ft_calloc(sizeof(t_cmd), 1);
+    if (!current_node)
+        return ;
+    while (input_cmd_split[i])
+    {
+        printf("\033[36;1m%s\033[m\n", input_cmd_split[i]);
+        if (input_cmd_split[i][0] == '|')
         {
-            (*cmd[j]).any_redirection = true;
-            (*cmd[j]).arg_redirection[0] = ft_strdup(buffer[i++]);
-            (*cmd[j]).arg_redirection[1] = ft_strdup(buffer[i++]);
-            printf("\033[31;1m(*cmd[%d]).arg_redirection[0] = %s\033[m\n", j, (*cmd[j]).arg_redirection[0]);
-            printf("\033[35;1mExit value : %s\033[m\n", buffer[i]);
-            if (buffer[i] == NULL)
-                break;
+            add_cmd_node(current_node, cmd);
+            current_node = ft_calloc(sizeof(t_cmd), 1);
         }
-        if (buffer[i] && buffer[i][0] == '|')
+        if (!ft_strcmp(input_cmd_split[i], ">"))
         {
-            (*cmd[j]).arg[k] = NULL;
-            j++;
-            i++;
-            k = 0;
+            printf("\033[32;1mRedirection : true!\033[m\n");
+            current_node->any_redirection = true;
+            while (input_cmd_split[i] && ft_strcmp(input_cmd_split[i], "|"))
+            {
+                printf("\033[31;1m%s\033[m\n", input_cmd_split[i]);
+                current_node->arg_redirection = ft_strjoin(current_node->arg_redirection, input_cmd_split[i]); 
+                i++;
+            }
+            if (!input_cmd_split[i])
+                return;
         }
-        (*cmd[j]).arg[k] =  ft_strdup(buffer[i]);
-        k++;
+        refill_my_node(input_cmd_split[i], &current_node);
         i++;
     }
-    (*cmd[j]).arg[k] = NULL;
-    cmd[j + 1] = NULL;
-    init_env_path(cmd);
-    free_tab((void**)buffer);
 }

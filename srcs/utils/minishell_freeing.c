@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_freeing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 20:14:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:12:27 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    free_arg(t_cmd **cmd)
         j = 0;
         while (cmd[i]->arg[j])
         {
-            free(cmd[i]->arg[j]);
+            // free(cmd[i]->arg[j]);
             j++;
         }
         free(cmd[i]->arg);

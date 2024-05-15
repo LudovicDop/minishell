@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/09 20:20:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:36:15 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,48 @@ void    close_fd(int **p_fd, int nbre_of_pipe)
 /*Objectif gerer plusieurs pipes peut être faire une sorte de buffer pour stock la partie read de mon fd de pipe*/
 void    execution_main(t_cmd **cmd)
 {
-    int fd_in;
-    int i;
-    int j;
+    // int fd_in;
+    // int i;
+    // int j;
 
-    fd_in = 0;
-    i = 0;
-    j = 0;
-    /*Just printing the content of my struct*/
-    fprintf(stderr,"\n");
-    while (cmd[i])
-    {
-        printf("\033[1;31mPATH_NAME : %s \033[m\n", (*cmd[i]).pathname);
-        ft_print_my_arg((*cmd[i]).arg);
-        if ((*cmd[i]).any_redirection)
-            ft_print_my_redirection((*cmd[i]).arg_redirection);
-        i++;
-    }
-    fprintf(stderr,"\n");
-    (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
-    while (j < i)
-    {
-        pipe((*cmd)->tab_ref->pipe_fd);
-        (*cmd)->tab_ref->process_id[j] = fork();
-        if ((*cmd)->tab_ref->process_id[j] == 0)
-        {
-            printf("\033[32;1mProcess id : %d\033[m\n", getpid());
-            //Child process
-            dup2(fd_in, STDIN_FILENO);
-            if (j + 1 != i)
-            {
-                dup2((*cmd)->tab_ref->pipe_fd[1], STDOUT_FILENO);
-            }
-            execution_pipe(cmd[j], j);
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-            printf("wait ici %d\n", (*cmd)->tab_ref->process_id[j]);
-            waitpid((*cmd)->tab_ref->process_id[j], 0, 0);
-            close((*cmd)->tab_ref->pipe_fd[1]);
-            fd_in = (*cmd)->tab_ref->pipe_fd[0];
-        }
-        j++;
-    }
+    // fd_in = 0;
+    // i = 0;
+    // j = 0;
+    // /*Just printing the content of my struct*/
+    // fprintf(stderr,"\n");
+    // while (cmd[i])
+    // {
+    //     printf("\033[1;31mPATH_NAME : %s \033[m\n", (*cmd[i]).pathname);
+    //     ft_print_my_arg((*cmd[i]).arg);
+    //     if ((*cmd[i]).any_redirection)
+    //         ft_print_my_redirection((*cmd[i]).arg_redirection);
+    //     i++;
+    // }
+    // fprintf(stderr,"\n");
+    // (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
+    // while (j < i)
+    // {
+    //     pipe((*cmd)->tab_ref->pipe_fd);
+    //     (*cmd)->tab_ref->process_id[j] = fork();
+    //     if ((*cmd)->tab_ref->process_id[j] == 0)
+    //     {
+    //         printf("\033[32;1mProcess id : %d\033[m\n", getpid());
+    //         //Child process
+    //         dup2(fd_in, STDIN_FILENO);
+    //         if (j + 1 != i)
+    //         {
+    //             dup2((*cmd)->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    //         }
+    //         execution_pipe(cmd[j], j);
+    //         exit(EXIT_SUCCESS);
+    //     }
+    //     else
+    //     {
+    //         printf("wait ici %d\n", (*cmd)->tab_ref->process_id[j]);
+    //         waitpid((*cmd)->tab_ref->process_id[j], 0, 0);
+    //         close((*cmd)->tab_ref->pipe_fd[1]);
+    //         fd_in = (*cmd)->tab_ref->pipe_fd[0];
+    //     }
+    //     j++;
+    // }
 }
