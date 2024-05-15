@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/15 16:26:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:05:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int main(int argc, char **argv, char **envp)
         while (cmd)
         {
             printf("\033[32;1m Arg : %s\033[m\n", cmd->arg);
+            if (cmd->any_redirection)
+                printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
             cmd = cmd->next;
         }
     //     add_history((*cmd)->tab_ref->tmp);

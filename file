@@ -1,0 +1,7 @@
+PING google.com (142.250.178.142) 56(84) bytes of data.
+64 bytes from par21s22-in-f14.1e100.net (142.250.178.142): icmp_seq=1 ttl=117 time=12.8 ms
+64 bytes from par21s22-in-f14.1e100.net (142.250.178.142): icmp_seq=2 ttl=117 time=12.7 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 12.724/12.780/12.836/0.056 ms
