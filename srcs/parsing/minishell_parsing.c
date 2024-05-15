@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/15 16:15:29 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:33:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst)
 {
-    printf("\033[35;1mCalling add_cmd_node\033[m\n");
+    t_cmd *new;
+    t_cmd *current;
+
+    new = new_node;
     if (!(*cmd_lst))
     {
-        printf("\033[33;1mInit my list!\033[m\n");
         (*cmd_lst) = new_node;
         (*cmd_lst)->next = NULL;
         return ;
     }
-    printf("davai\n");
-    while ((*cmd_lst))
-    {
-        (*cmd_lst) = (*cmd_lst)->next;
-    }
-    printf("test : %s\n", (*cmd_lst)->arg);
-    (*cmd_lst) = new_node;
-    (*cmd_lst)->next = NULL;
+    current = *cmd_lst;
+    while (current->next)
+        current = current->next;
+    current->next = new;
     return ;
 }
 void    refill_my_node(char *input_cmd, t_cmd **new_node)
@@ -80,4 +78,5 @@ void    start_parsing(char *input_cmd, t_cmd **cmd)
         refill_my_node(input_cmd_split[i], &current_node);
         i++;
     }
+    add_cmd_node(current_node, cmd);
 }
