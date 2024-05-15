@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/15 17:33:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:55:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void    start_parsing(char *input_cmd, t_cmd **cmd)
                 i++;
             }
             if (!input_cmd_split[i])
+            {
+                add_cmd_node(current_node, cmd);
                 return;
+            }
         }
         refill_my_node(input_cmd_split[i], &current_node);
         i++;
