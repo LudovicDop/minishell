@@ -11,7 +11,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/minishell_freeing.c \
 	  srcs/utils/minishell_prompt.c \
 	  srcs/utils/signal/minishell_signal.c
-CC = gcc
+CC = cc
 #CFLAGS = -fsanitize=address -g3 -I $(HEADER) 
 CFLAGS = -g3 -I $(HEADER)
 OBJ = $(SRC:.c=.o)
