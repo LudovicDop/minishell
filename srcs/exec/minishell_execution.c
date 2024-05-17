@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/13 17:36:15 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/17 22:25:53 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,30 @@ void    ft_print_my_redirection(char **arg)
 }
 
 /*File fd[1] == Writing && fd[0] == Reading */
-void    execution_pipe(t_cmd *cmd, int j)
+void    execution_pipe(t_cmd *cmd)
 {
+    char    **tmp_arg;
     //Child process
-    if (cmd->any_redirection)
-    {
-        special_carac(cmd);
-    }
+    // if (cmd->any_redirection)
+    // {
+    //     special_carac(cmd);
+    // }
 
-    if (search_builtins_cmd(cmd))
-        return ;
-    if (execve(cmd->pathname, cmd->arg, NULL) < 0)
-    {
-        perror("execve");
-    }
+    // if (search_builtins_cmd(cmd))
+    //     return ;
+    // if (execve(cmd->pathname, cmd->arg, NULL) < 0)
+    // {
+    //     perror("execve");
+    // }
+    printf("\033[33;1mprocess id : %d\033[m\n",getpid());
+    printf("\033[35;1mpathname : %s\033[m\n",cmd->arg);
+    tmp_arg = ft_split(cmd->arg, ' ');
+    // cmd->pathname = 
+    // if (execve(cmd->pathname, tmp_arg, NULL) < 0)
+    // {
+    //     perror("execve");
+    // }
+    
 }
 
 void    close_fd(int **p_fd, int nbre_of_pipe)
@@ -65,51 +75,45 @@ void    close_fd(int **p_fd, int nbre_of_pipe)
         i++;
     }
 }
+
+
 /*Objectif gerer plusieurs pipes peut être faire une sorte de buffer pour stock la partie read de mon fd de pipe*/
 void    execution_main(t_cmd **cmd)
 {
-    // int fd_in;
-    // int i;
-    // int j;
+    int     i;
+    int     nbre_cmd;
+    t_cmd *tmp;
 
-    // fd_in = 0;
-    // i = 0;
-    // j = 0;
-    // /*Just printing the content of my struct*/
-    // fprintf(stderr,"\n");
-    // while (cmd[i])
-    // {
-    //     printf("\033[1;31mPATH_NAME : %s \033[m\n", (*cmd[i]).pathname);
-    //     ft_print_my_arg((*cmd[i]).arg);
-    //     if ((*cmd[i]).any_redirection)
-    //         ft_print_my_redirection((*cmd[i]).arg_redirection);
-    //     i++;
-    // }
-    // fprintf(stderr,"\n");
-    // (*cmd)->tab_ref->process_id = malloc(sizeof(pid_t) * i);
-    // while (j < i)
-    // {
-    //     pipe((*cmd)->tab_ref->pipe_fd);
-    //     (*cmd)->tab_ref->process_id[j] = fork();
-    //     if ((*cmd)->tab_ref->process_id[j] == 0)
-    //     {
-    //         printf("\033[32;1mProcess id : %d\033[m\n", getpid());
-    //         //Child process
-    //         dup2(fd_in, STDIN_FILENO);
-    //         if (j + 1 != i)
-    //         {
-    //             dup2((*cmd)->tab_ref->pipe_fd[1], STDOUT_FILENO);
-    //         }
-    //         execution_pipe(cmd[j], j);
-    //         exit(EXIT_SUCCESS);
-    //     }
-    //     else
-    //     {
-    //         printf("wait ici %d\n", (*cmd)->tab_ref->process_id[j]);
-    //         waitpid((*cmd)->tab_ref->process_id[j], 0, 0);
-    //         close((*cmd)->tab_ref->pipe_fd[1]);
-    //         fd_in = (*cmd)->tab_ref->pipe_fd[0];
-    //     }
-    //     j++;
-    // }
+    nbre_cmd = 0;
+    i = 0;
+    fprintf(stderr, "\033[31;1mStarting execution_main!\033[m\n");
+    if (!*cmd)
+        return ;
+    tmp = *cmd;
+    while (tmp)
+    {
+        tmp = tmp->next;
+        nbre_cmd++;
+    }
+    tmp = *cmd;
+    tmp->tab_ref->process_id = ft_calloc(nbre_cmd, sizeof(pid_t));
+    /* 0- read && 1- write */
+    while (i < nbre_cmd)
+    {
+        pipe(tmp->tab_ref->pipe_fd);
+        tmp->tab_ref->process_id[i] = fork();
+        if (tmp->tab_ref->process_id[i] == 0)
+        {
+            //Child process 
+            printf("\033[32;1mChild process!\033[m\n");
+            execution_pipe(tmp);
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            //Parent process
+        }
+        tmp = tmp->next;
+        i++;
+    }
 }

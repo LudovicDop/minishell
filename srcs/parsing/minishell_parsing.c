@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/15 17:55:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:26:40 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst)
+void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **envp)
 {
     t_cmd *new;
     t_cmd *current;
 
     new = new_node;
+    new->tab_ref = *global;
+    new->envp_ref = *envp;
     if (!(*cmd_lst))
     {
         (*cmd_lst) = new_node;
@@ -37,14 +39,16 @@ void    refill_my_node(char *input_cmd, t_cmd **new_node)
     printf("\033[36;1m%s\033[m\n", (*new_node)->arg);
 }
 
-void    start_parsing(char *input_cmd, t_cmd **cmd)
+void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
 {
     t_cmd *current_node;
+    t_tab *global;
     char **input_cmd_split;
     int i;
 
     if (!input_cmd || *input_cmd == '\0')
         return ;
+    global = ft_calloc(sizeof(t_envp), 1);
     i = 0;
     input_cmd_split = ft_split(input_cmd, ' ');
     if (!input_cmd_split)
@@ -54,12 +58,11 @@ void    start_parsing(char *input_cmd, t_cmd **cmd)
         return ;
     while (input_cmd_split[i])
     {
-        //printf("\033[36;1m%s\033[m\n", input_cmd_split[i]);
         if (input_cmd_split[i][0] == '|')
         {
             i++;
             printf("\033[31;1mAdding a node!\033[m\n");
-            add_cmd_node(current_node, cmd);
+            add_cmd_node(current_node, cmd, &global, envp);
             current_node = ft_calloc(sizeof(t_cmd), 1);
         }
         if (!ft_strcmp(input_cmd_split[i], ">"))
@@ -74,12 +77,12 @@ void    start_parsing(char *input_cmd, t_cmd **cmd)
             }
             if (!input_cmd_split[i])
             {
-                add_cmd_node(current_node, cmd);
+                add_cmd_node(current_node, cmd, &global, envp);
                 return;
             }
         }
         refill_my_node(input_cmd_split[i], &current_node);
         i++;
     }
-    add_cmd_node(current_node, cmd);
+    add_cmd_node(current_node, cmd, &global, envp);
 }

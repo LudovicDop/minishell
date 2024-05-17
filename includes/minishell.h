@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/13 17:05:05 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/17 22:26:28 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct s_tab
     char      *tmp;
 } t_tab;
 
+typedef struct s_envp
+{
+    char    *key;
+    char    *value;
+    struct s_envp *next;
+} t_envp;
+
 typedef struct s_cmd
 {
     char    *pathname;
@@ -47,15 +54,10 @@ typedef struct s_cmd
     bool    any_redirection;
     bool    last_cmd;
     t_tab   *tab_ref;
+    t_envp  *envp_ref;
     struct  s_cmd *next;
 } t_cmd;
 
-typedef struct s_envp
-{
-    char    *key;
-    char    *value;
-    struct s_envp *next;
-} t_envp;
 
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
@@ -66,7 +68,7 @@ void    execution_main(t_cmd **cmd);
 void    special_carac(t_cmd *cmd);
 int     search_builtins_cmd(t_cmd *cmd);
 /*Minishell parsing*/
-void    start_parsing(char *input_cmd, t_cmd **cmd);
+void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
 /*Minishell search good path in envp*/
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
@@ -74,8 +76,7 @@ void    init_env_path(t_cmd **cmd);
 
 void    init_envp(t_envp **envp_s, char **envp);
 void    print_envp(t_envp *list);
-void    add_node_to_envp(t_envp **list, t_envp *new_node);
-
+void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **envp);
 /*Minishell freeing memory*/
 void    free_tab(void   **my_tab);
 void    free_everything(t_cmd **cmd);

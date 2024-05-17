@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/15 18:14:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:21:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ int main(int argc, char **argv, char **envp)
     // {
         get_prompt();
         input_cmd = readline("");
-        start_parsing(input_cmd, &cmd);
-        while (cmd)
-        {
-            printf("\033[32;1m Arg : %s\033[m\n", cmd->arg);
-            if (cmd->any_redirection)
-                printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
-            cmd = cmd->next;
-        }
+        start_parsing(input_cmd, &cmd, &envp_s);
+        // while (cmd)
+        // {
+        //     printf("\033[32;1m Arg : %s\033[m\n", cmd->arg);
+        //     if (cmd->any_redirection)
+        //         printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
+        //     cmd = cmd->next;
+        // }
     //     add_history((*cmd)->tab_ref->tmp);
-    //     execution_main(cmd);
+    execution_main(&cmd);
     //     if (!(*cmd)->tab_ref->tmp)
     //     {
     //         free_everything(cmd);
