@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/17 22:25:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/21 17:02:37 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ void    execution_pipe(t_cmd *cmd)
     //     perror("execve");
     // }
     printf("\033[33;1mprocess id : %d\033[m\n",getpid());
-    printf("\033[35;1mpathname : %s\033[m\n",cmd->arg);
     tmp_arg = ft_split(cmd->arg, ' ');
-    // cmd->pathname = 
-    // if (execve(cmd->pathname, tmp_arg, NULL) < 0)
-    // {
-    //     perror("execve");
-    // }
+    printf("tmp_arg[0] : %s\n", tmp_arg[0]);
+    cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
+    printf("\033[35;1mpathname : %s\033[m\n",cmd->pathname);
+    if (execve(cmd->pathname, tmp_arg, NULL) < 0)
+    {
+        perror("execve");
+    }
     
 }
 
@@ -82,6 +83,7 @@ void    execution_main(t_cmd **cmd)
 {
     int     i;
     int     nbre_cmd;
+    int     fd_in;
     t_cmd *tmp;
 
     nbre_cmd = 0;
@@ -101,19 +103,34 @@ void    execution_main(t_cmd **cmd)
     while (i < nbre_cmd)
     {
         pipe(tmp->tab_ref->pipe_fd);
+        close(tmp->tab_ref->pipe_fd[0]);
+        close(tmp->tab_ref->pipe_fd[1]);
         tmp->tab_ref->process_id[i] = fork();
         if (tmp->tab_ref->process_id[i] == 0)
         {
             //Child process 
-            printf("\033[32;1mChild process!\033[m\n");
+            printf("\033[32;1mChild process! (i : %d)\033[m\n", i);
+            dup2(STDIN_FILENO, fd_in);
+            if (i + 1 != nbre_cmd)
+                dup2(tmp->tab_ref->pipe_fd[1], STDOUT_FILENO);
             execution_pipe(tmp);
             exit(EXIT_SUCCESS);
         }
         else
         {
             //Parent process
+            fd_in = tmp->tab_ref->pipe_fd[0];
+            dup2(fd_in, STDIN_FILENO);
         }
         tmp = tmp->next;
+        i++;
+    }
+    i = 0;
+    printf("Nbre cmd : %d\n", nbre_cmd);
+    while(i < nbre_cmd)
+    {
+        printf("process id : %d\n", tmp->tab_ref->process_id[i]);
+        waitpid(tmp->tab_ref->process_id[i], 0, 0);
         i++;
     }
 }

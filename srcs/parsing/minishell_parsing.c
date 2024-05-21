@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/17 22:27:50 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/21 17:19:36 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **
 
     new = new_node;
     new->tab_ref = *global;
-    new->envp_ref = *envp;
+    printf("Address 2 : %p\n", *envp);
+    new->tab_ref->envp = *envp;
     if (!(*cmd_lst))
     {
         (*cmd_lst) = new_node;
@@ -46,6 +47,7 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
     char **input_cmd_split;
     int i;
 
+    printf("Start parsing!\n");
     if (!input_cmd || *input_cmd == '\0')
         return ;
     global = ft_calloc(sizeof(t_envp), 1);

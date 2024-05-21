@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:16:13 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/10/17 12:25:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:25:02 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if (ret[i] == (char)c)
 	{
-		return ((char *)(ret + i));
+		return ((char *)(ret + i) + 1);
 	}
 	return (0);
 }

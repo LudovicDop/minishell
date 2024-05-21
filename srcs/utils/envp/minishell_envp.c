@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/15 11:12:18 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/21 16:20:21 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,38 +79,30 @@ void    add_node_to_envp(t_envp **list, t_envp *new_node)
     current = *list;
     while (current->next)
     {
+        //printf("la\n");
         current = current->next;
     }
     current->next = new_node;
     
 }
 
-void    print_envp(t_envp *list)
+void    init_envp(t_envp **envp_list, char **envp)
 {
-    while (list)
-    {
-        printf("\033[32;1m%s\033[m\033[31;1m%s\033[m\n", list->key, list->value);
-        list = list->next;
-    }
-}
-
-void    init_envp(t_envp **envp_s, char **envp)
-{
+    int     i;
+    t_envp *current;
     t_envp *new_node;
-    int i;
 
-    *envp_s = NULL;
     i = 0;
-    if (!envp)
-        ;
-    new_node = *envp_s;
+    current = *envp_list;
     while (envp[i])
     {
         new_node = malloc(sizeof(t_envp));
+        if (!new_node)
+            return ;
         new_node->value = ft_strdup(ft_strchr(envp[i], '='));
         new_node->key = ft_strchr_reverse(envp[i], '=');
         new_node->next = NULL;
-        add_node_to_envp(envp_s, new_node);
-        i++;
+        add_node_to_envp(envp_list, new_node);
+        i++;  
     }
 }

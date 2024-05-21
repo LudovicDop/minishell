@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/17 22:21:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/21 17:20:23 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
 int main(int argc, char **argv, char **envp)
 {
     char *input_cmd;
-    t_cmd *cmd;
-    t_envp *envp_s;
+    char *prompt;
+    t_cmd *cmd_list;
+    t_envp *envp_list;
 
-    cmd = NULL;
-    init_envp(&envp_s, envp);
-    // while (1)
+    envp_list = NULL;
+    cmd_list = NULL;
+    init_envp(&envp_list ,envp);
+
+    // while (1)    
     // {
-        get_prompt();
-        input_cmd = readline("");
-        start_parsing(input_cmd, &cmd, &envp_s);
+        prompt = get_prompt(envp_list);
+        input_cmd = readline(prompt);
+        printf("Address : %p\n", envp_list);
+        start_parsing(input_cmd, &cmd_list, &envp_list);
         // while (cmd)
         // {
         //     printf("\033[32;1m Arg : %s\033[m\n", cmd->arg);
@@ -54,8 +58,8 @@ int main(int argc, char **argv, char **envp)
         //         printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
         //     cmd = cmd->next;
         // }
-    //     add_history((*cmd)->tab_ref->tmp);
-    execution_main(&cmd);
+        // add_history(input_cmd);
+        // execution_main(&cmd_list);
     //     if (!(*cmd)->tab_ref->tmp)
     //     {
     //         free_everything(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 17:50:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:30:34 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,35 @@ char    *remove_users(char *string)
     if (!*s1)
         return (NULL);
     s1++;
+    s1++;
     while (*s1 != '/')
         s1++;
     new_path = s1;
     return (new_path);
 }
 
-void get_prompt(void)
+char   *get_prompt(t_envp *envp_list)
 {
-    char    *ret_prompt;
     char    *tmp_user;
     char    *tmp_path;
+    char    *prompt;
+    int i;
 
-    tmp_user = NULL;
-    tmp_path = NULL;
-    tmp_user = getenv("USER");
-    tmp_path = getenv("PWD");
-
-    ret_prompt = ft_strjoin("\033[32;1m@", tmp_user);
-    ret_prompt = ft_strjoin2(ret_prompt, "\033[m:");
-    ret_prompt = ft_strjoin2(ret_prompt, "\033[35;1m");
-    ret_prompt = ft_strjoin2(ret_prompt, remove_users(tmp_path));
-    ret_prompt = ft_strjoin2(ret_prompt, "$\033[m ");
-    
-    printf("%s", ret_prompt);
-    free(ret_prompt);
+    i = 0;
+    while (envp_list)
+    {
+        if (!ft_strcmp(envp_list->key, "USER"))
+        {
+            tmp_user = ft_strjoin("\033[32;1m@", envp_list->value);
+            tmp_user = ft_strjoin2(tmp_user, "\033[m:");
+        }
+        if (!ft_strcmp(envp_list->key, "PWD"))
+        {
+            tmp_path = ft_strjoin("\033[35;1m",remove_users(envp_list->value));
+            tmp_path = ft_strjoin2(tmp_path, "\033[m ");
+        }
+        envp_list = envp_list->next;
+    }
+    prompt = ft_strjoin(tmp_user, tmp_path);
+    return (free(tmp_user), free(tmp_path), prompt);
 }
