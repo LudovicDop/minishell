@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/21 17:52:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:41:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_tab
     int       pipe_fd[2];
     int       nbre_cmd;
     struct s_envp   *envp;
-    char      *tmp;
 } t_tab;
 
 typedef struct s_envp

@@ -6,11 +6,56 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/21 17:44:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 11:09:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void    free_cmd_list(t_cmd **cmd_list)
+{
+    t_cmd *current;
+    t_cmd *to_free;
+
+    current = *cmd_list;
+    while (current)
+    {
+        to_free = current;
+        current = current->next;
+        if (to_free->any_redirection)
+            free(to_free->arg_redirection);
+        free(to_free->arg);
+        free(to_free->pathname);
+        free(to_free);
+    }
+}
+
+void free_global_var(t_tab **global)
+{
+    t_tab *current;
+    t_tab *to_free;
+
+    current = *global;
+    free(current->process_id);
+    free(current->prompt);
+    free(current);
+}
+
+void    free_envp(t_envp **envp)
+{
+    t_envp *current;
+    t_envp *to_free;
+    
+    current = *envp;
+    while (current)
+    {
+        to_free = current;
+        current = current->next;
+        free(to_free->key);
+        free(to_free->value);
+        free(to_free);
+    }
+}
 
 void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
 {
@@ -49,7 +94,6 @@ int main(int argc, char **argv, char **envp)
     // {
         prompt = get_prompt(envp_list);
         input_cmd = readline(prompt);
-        printf("Address : %p\n", envp_list);
         start_parsing(input_cmd, &cmd_list, &envp_list);
         // while (cmd)
         // {
@@ -58,8 +102,11 @@ int main(int argc, char **argv, char **envp)
         //         printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
         //     cmd = cmd->next;
         // }
-        // add_history(input_cmd);
-        // execution_main(&cmd_list);
+        add_history(input_cmd);
+        execution_main(&cmd_list);
+        free_envp(&envp_list);
+        free_global_var(&cmd_list->tab_ref);
+        free_cmd_list(&cmd_list);
     //     if (!(*cmd)->tab_ref->tmp)
     //     {
     //         free_everything(cmd);

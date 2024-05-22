@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/21 17:52:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 11:06:23 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **
 }
 void    refill_my_node(char *input_cmd, t_cmd **new_node)
 {
-    (*new_node)->arg = ft_strjoin((*new_node)->arg, input_cmd);
-    (*new_node)->arg = ft_strjoin((*new_node)->arg, " ");
+    if (!(*new_node)->arg)
+        (*new_node)->arg = ft_strdup(input_cmd);
+    else
+        (*new_node)->arg = ft_strjoin2((*new_node)->arg, input_cmd);
+    (*new_node)->arg = ft_strjoin2((*new_node)->arg, " ");
     printf("\033[36;1m%s\033[m\n", (*new_node)->arg);
 }
 
@@ -86,4 +89,5 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
         i++;
     }
     add_cmd_node(current_node, cmd, &global, envp);
+    free_tab((void**)input_cmd_split);
 }
