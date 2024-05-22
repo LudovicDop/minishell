@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/22 11:09:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 14:35:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,23 @@ int main(int argc, char **argv, char **envp)
         //         printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
         //     cmd = cmd->next;
         // }
-        add_history(input_cmd);
-        execution_main(&cmd_list);
+
+        // while (cmd_list)
+        // {
+        //     printf("key : %s\n", cmd_list->envp_ref->key);
+        //     cmd_list = cmd_list->next;
+        // }
+
+        // add_history(input_cmd);
+         execution_main(&cmd_list);
+
+        
         free_envp(&envp_list);
         free_global_var(&cmd_list->tab_ref);
         free_cmd_list(&cmd_list);
+
+
+        
     //     if (!(*cmd)->tab_ref->tmp)
     //     {
     //         free_everything(cmd);

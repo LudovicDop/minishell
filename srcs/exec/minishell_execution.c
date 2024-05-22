@@ -6,34 +6,23 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/22 11:14:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:02:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    ft_print_my_arg(char **arg)
+int how_many_cmd(t_cmd *cmd_list)
 {
-    int i;
+    int nbre_of_cmd;
 
-    i = 0;
-    while (arg[i])
+    nbre_of_cmd = 0;
+    while (cmd_list)
     {
-        printf("\033[1;34mexecution_cmd_arg : \033[1;32m%s\033[m\033[m\n", arg[i]);
-        i++;
+        nbre_of_cmd++;
+        cmd_list = cmd_list->next;
     }
-}
-
-void    ft_print_my_redirection(char **arg)
-{
-    int i;
-
-    i = 0;
-    while (arg[i])
-    {
-        printf("\033[1;33mredirection_cmd_arg : \033[1;36m%s\033[m\033[m\n", arg[i]);
-        i++;
-    }
+    return (nbre_of_cmd);
 }
 
 /*File fd[1] == Writing && fd[0] == Reading */
@@ -64,73 +53,49 @@ void    execution_pipe(t_cmd *cmd)
     
 }
 
-void    close_fd(int **p_fd, int nbre_of_pipe)
-{
-    int i;
-
-    i = 0;
-    while (i < nbre_of_pipe)
-    {
-        close(p_fd[i][0]);
-        close(p_fd[i][1]);
-        i++;
-    }
-}
-
 
 /*Objectif gerer plusieurs pipes peut être faire une sorte de buffer pour stock la partie read de mon fd de pipe*/
 void    execution_main(t_cmd **cmd)
 {
-    int     i;
-    int     nbre_cmd;
-    int     fd_in;
-    t_cmd *tmp;
+    t_cmd   *cmd_list;
+    int fd_in;
+    int i;
 
-    nbre_cmd = 0;
     i = 0;
-    fprintf(stderr, "\033[31;1mStarting execution_main!\033[m\n");
-    if (!*cmd)
-        return ;
-    tmp = *cmd;
-    while (tmp)
+    cmd_list = *cmd;
+    cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * how_many_cmd(cmd_list));
+    while (cmd_list)
     {
-        tmp = tmp->next;
-        nbre_cmd++;
-    }
-    tmp = *cmd;
-    tmp->tab_ref->process_id = ft_calloc(nbre_cmd, sizeof(pid_t));
-    /* 0- read && 1- write */
-    while (i < nbre_cmd)
-    {
-        pipe(tmp->tab_ref->pipe_fd);
-        close(tmp->tab_ref->pipe_fd[0]);
-        close(tmp->tab_ref->pipe_fd[1]);
-        tmp->tab_ref->process_id[i] = fork();
-        if (tmp->tab_ref->process_id[i] == 0)
+        pipe(cmd_list->tab_ref->pipe_fd);
+        cmd_list->tab_ref->process_id[i] = fork();
+        printf("i : %d\n", i);
+        if (cmd_list->tab_ref->process_id[i] == 0)
         {
-            //Child process 
-            printf("\033[32;1mChild process! (i : %d)\033[m\n", i);
-            dup2(STDIN_FILENO, fd_in);
-            if (i + 1 != nbre_cmd)
-                dup2(tmp->tab_ref->pipe_fd[1], STDOUT_FILENO);
-            execution_pipe(tmp);
+            close(cmd_list->tab_ref->pipe_fd[0]);
+            fprintf(stderr, "\033[32;1mChild Process\033[m\n");
+            if (i != 0)
+            {
+                dup2(fd_in, STDIN_FILENO);   
+            }
+            if (i != how_many_cmd(cmd_list) && how_many_cmd(cmd_list) != 1)
+                dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
+            execution_pipe(cmd_list);    
             exit(EXIT_SUCCESS);
         }
         else
         {
-            //Parent process
-            fd_in = tmp->tab_ref->pipe_fd[0];
-            dup2(fd_in, STDIN_FILENO);
+           close(cmd_list->tab_ref->pipe_fd[1]);
+           fd_in = cmd_list->tab_ref->pipe_fd[0];
         }
-        tmp = tmp->next;
+        cmd_list = cmd_list->next;
         i++;
     }
+    cmd_list = *cmd;
     i = 0;
-    printf("Nbre cmd : %d\n", nbre_cmd);
-    while(i < nbre_cmd)
+    while (i < how_many_cmd(cmd_list))
     {
-        printf("process id : %d\n", tmp->tab_ref->process_id[i]);
-        waitpid(tmp->tab_ref->process_id[i], 0, 0);
+        printf("process id : %d\n", cmd_list->tab_ref->process_id[i]);
+        waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
         i++;
     }
 }
