@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/22 14:35:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:24:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ int main(int argc, char **argv, char **envp)
     t_envp *envp_list;
 
     envp_list = NULL;
-    cmd_list = NULL;
     init_envp(&envp_list ,envp);
 
-    // while (1)    
-    // {
+     while (1)    
+     {
+        cmd_list = NULL;    
         prompt = get_prompt(envp_list);
         input_cmd = readline(prompt);
         start_parsing(input_cmd, &cmd_list, &envp_list);
@@ -109,12 +109,12 @@ int main(int argc, char **argv, char **envp)
         //     cmd_list = cmd_list->next;
         // }
 
-        // add_history(input_cmd);
-         execution_main(&cmd_list);
+        add_history(input_cmd);
+        execution_main(&cmd_list);
 
         
-        free_envp(&envp_list);
-        free_global_var(&cmd_list->tab_ref);
+        //free_envp(&envp_list);
+        //free_global_var(&cmd_list->tab_ref);
         free_cmd_list(&cmd_list);
 
 
@@ -125,7 +125,7 @@ int main(int argc, char **argv, char **envp)
     //         break;
     //     }
     //     free_everything(cmd);
-    //  }
+   }
     return (0);
 }
 

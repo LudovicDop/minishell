@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/22 15:02:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:46:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void    execution_pipe(t_cmd *cmd)
     // {
     //     perror("execve");
     // }
-    printf("\033[33;1mprocess id : %d\033[m\n",getpid());
+    fprintf(stderr ,"\033[33;1mprocess id : %d\033[m\n",getpid());
     tmp_arg = ft_split(cmd->arg, ' ');
-    printf("tmp_arg[0] : %s\n", tmp_arg[0]);
+    //fprintf(stderr, "tmp_arg[0] : %s\n", tmp_arg[1]);
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
-    printf("\033[35;1mpathname : %s\033[m\n",cmd->pathname);
+    fprintf(stderr, "\033[35;1mpathname : %s (%d)\033[m\n",cmd->pathname, getpid());
     if (execve(cmd->pathname, tmp_arg, NULL) < 0)
     {
         perror("execve");
@@ -58,12 +58,15 @@ void    execution_pipe(t_cmd *cmd)
 void    execution_main(t_cmd **cmd)
 {
     t_cmd   *cmd_list;
+    int nbre_cmd;
     int fd_in;
     int i;
 
     i = 0;
     cmd_list = *cmd;
-    cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * how_many_cmd(cmd_list));
+    nbre_cmd = how_many_cmd(cmd_list);
+    printf("nbre cmd : %d\n", nbre_cmd);
+    cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * nbre_cmd);
     while (cmd_list)
     {
         pipe(cmd_list->tab_ref->pipe_fd);
@@ -75,10 +78,13 @@ void    execution_main(t_cmd **cmd)
             fprintf(stderr, "\033[32;1mChild Process\033[m\n");
             if (i != 0)
             {
-                dup2(fd_in, STDIN_FILENO);   
+                dup2(fd_in, STDIN_FILENO);
             }
-            if (i != how_many_cmd(cmd_list) && how_many_cmd(cmd_list) != 1)
+            if (i < nbre_cmd && nbre_cmd != 1)
+            {
+                fprintf(stderr, "AXA\n");
                 dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
+            }
             execution_pipe(cmd_list);    
             exit(EXIT_SUCCESS);
         }
@@ -92,7 +98,7 @@ void    execution_main(t_cmd **cmd)
     }
     cmd_list = *cmd;
     i = 0;
-    while (i < how_many_cmd(cmd_list))
+    while (i < nbre_cmd)
     {
         printf("process id : %d\n", cmd_list->tab_ref->process_id[i]);
         waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
