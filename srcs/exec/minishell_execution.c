@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/22 17:46:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:46:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void    execution_main(t_cmd **cmd)
             {
                 dup2(fd_in, STDIN_FILENO);
             }
-            if (i < nbre_cmd && nbre_cmd != 1)
+            if (i < nbre_cmd - 1 && nbre_cmd != 1)
             {
                 fprintf(stderr, "AXA\n");
                 dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
