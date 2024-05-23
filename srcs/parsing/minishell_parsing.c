@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/22 11:06:23 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:33:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void    refill_my_node(char *input_cmd, t_cmd **new_node)
     else
         (*new_node)->arg = ft_strjoin2((*new_node)->arg, input_cmd);
     (*new_node)->arg = ft_strjoin2((*new_node)->arg, " ");
-    printf("\033[36;1m%s\033[m\n", (*new_node)->arg);
 }
 
 void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
@@ -49,7 +48,6 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
     char **input_cmd_split;
     int i;
 
-    printf("Start parsing!\n");
     if (!input_cmd || *input_cmd == '\0')
         return ;
     global = ft_calloc(sizeof(t_envp), 1);
@@ -65,17 +63,14 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
         if (input_cmd_split[i][0] == '|')
         {
             i++;
-            printf("\033[31;1mAdding a node!\033[m\n");
             add_cmd_node(current_node, cmd, &global, envp);
             current_node = ft_calloc(sizeof(t_cmd), 1);
         }
         if (!ft_strcmp(input_cmd_split[i], ">"))
         {
-            printf("\033[32;1mRedirection : true!\033[m\n");
             current_node->any_redirection = true;
             while (input_cmd_split[i] && ft_strcmp(input_cmd_split[i], "|"))
             {
-                printf("\033[31;1m%s\033[m\n", input_cmd_split[i]);
                 current_node->arg_redirection = ft_strjoin(current_node->arg_redirection, input_cmd_split[i]); 
                 i++;
             }
