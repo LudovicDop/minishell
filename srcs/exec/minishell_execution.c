@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/23 12:41:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:07:22 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void    execution_pipe(t_cmd *cmd)
     //Child process
     // if (cmd->any_redirection)
     // {
+    //     fprintf(stderr, "AXA\n");
     //     special_carac(cmd);
     // }
 
@@ -70,16 +71,13 @@ void    execution_main(t_cmd **cmd)
         if (cmd_list->tab_ref->process_id[i] == 0)
         {
             close(cmd_list->tab_ref->pipe_fd[0]);
-            if (i != 0)
-            {
-                dup2(fd_in, STDIN_FILENO);
-            }
+            dup2(fd_in, STDIN_FILENO);
             if (i < nbre_cmd - 1)
             {
                 dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
             }
             close(cmd_list->tab_ref->pipe_fd[1]);
-            execution_pipe(cmd_list);    
+            execution_pipe(cmd_list); 
             exit(EXIT_SUCCESS);
         }
         else
@@ -95,7 +93,7 @@ void    execution_main(t_cmd **cmd)
     i = 0;
     while (i < nbre_cmd)
     {
-        waitpid(cmd_list->tab_ref->process_id[i], 0, __W_CONTINUED);
+        waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
         i++;
     }
     wait(NULL);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/22 10:41:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:25:24 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <signal.h>
+# include <sys/types.h>
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>

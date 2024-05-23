@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/22 15:24:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:38:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,43 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
     glob->envp = envp_s;
 }
 
-/*Faire un liste chainee pour les cmd*/
-/*Command for test : cat fichier.txt |  sed s/Ceci/Anticonstitutionnellement/g | grep Anticons*/
+int  size_of_envp(t_envp *envp_list)
+{
+    t_envp *current;
+    int i;
+
+    i = 0;
+    current = envp_list;
+    while (current)
+    {
+        i++;
+        current = current->next;
+    }
+    return (i);
+}
+char **convert_envp(t_envp *envp_list)
+{
+    char    **envp;
+    t_envp *current;
+    int size_list;
+    int i;
+
+    i = 0;
+    current = envp_list;
+    size_list = size_of_envp(current) + 1;
+    envp = malloc(sizeof(char*) * size_list);
+    
+    while (current)
+    {
+        envp[i] = ft_strjoin(current->key, "=");
+        envp[i] = ft_strjoin2(envp[i], current->value);
+        current = current->next;
+        i++;
+    }
+    envp[i] = NULL;
+    return (envp);
+}   
+
 int main(int argc, char **argv, char **envp)
 {
     char *input_cmd;
@@ -89,43 +124,34 @@ int main(int argc, char **argv, char **envp)
     envp_list = NULL;
     init_envp(&envp_list ,envp);
 
-     while (1)    
-     {
-        cmd_list = NULL;    
-        prompt = get_prompt(envp_list);
-        input_cmd = readline(prompt);
-        start_parsing(input_cmd, &cmd_list, &envp_list);
-        // while (cmd)
-        // {
-        //     printf("\033[32;1m Arg : %s\033[m\n", cmd->arg);
-        //     if (cmd->any_redirection)
-        //         printf("\033[32;1m Arg_redirection : %s\033[m\n", cmd->arg_redirection);
-        //     cmd = cmd->next;
-        // }
 
-        // while (cmd_list)
-        // {
-        //     printf("key : %s\n", cmd_list->envp_ref->key);
-        //     cmd_list = cmd_list->next;
-        // }
-
-        add_history(input_cmd);
-        execution_main(&cmd_list);
-
-        
-        //free_envp(&envp_list);
-        //free_global_var(&cmd_list->tab_ref);
-        free_cmd_list(&cmd_list);
-
-
-        
-    //     if (!(*cmd)->tab_ref->tmp)
-    //     {
-    //         free_everything(cmd);
-    //         break;
-    //     }
-    //     free_everything(cmd);
-   }
+    char **test = convert_envp(envp_list);
+    int i = 0;
+    while (test[i])
+    {
+        printf("%s\n", test[i]);
+        i++;
+    }
+    free_tab((void**)test);
+    free_envp(&envp_list);
+//      while (1)    
+//      {
+//         cmd_list = NULL;
+//         prompt = get_prompt(envp_list);
+//         input_cmd = readline(prompt);
+//         start_parsing(input_cmd, &cmd_list, &envp_list);
+//         add_history(input_cmd);
+//         execution_main(&cmd_list);
+//         //free_envp(&envp_list);
+//         //free_global_var(&cmd_list->tab_ref);
+//         free_cmd_list(&cmd_list);
+//     //     if (!(*cmd)->tab_ref->tmp)
+//     //     {
+//     //         free_everything(cmd);
+//     //         break;
+//     //     }
+//     //     free_everything(cmd);
+//    }
     return (0);
 }
 
