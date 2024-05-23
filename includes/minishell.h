@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/23 14:25:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:51:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
 void    init_env_path(t_cmd **cmd);
+char **convert_envp(t_envp *envp_list);
 
 void    init_envp(t_envp **envp_list, char **envp);
 void    print_envp(t_envp *list);

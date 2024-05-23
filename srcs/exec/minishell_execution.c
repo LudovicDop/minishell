@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/23 17:07:22 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:59:34 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int how_many_cmd(t_cmd *cmd_list)
 void    execution_pipe(t_cmd *cmd)
 {
     char    **tmp_arg;
+    char    **tmp_envp;
     //Child process
     // if (cmd->any_redirection)
     // {
@@ -45,7 +46,8 @@ void    execution_pipe(t_cmd *cmd)
     tmp_arg = ft_split(cmd->arg, ' ');
     //fprintf(stderr, "tmp_arg[0] : %s\n", tmp_arg[1]);
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
-    if (execve(cmd->pathname, tmp_arg, NULL) < 0)
+    tmp_envp = convert_envp(cmd->envp_ref);
+    if (execve(cmd->pathname, tmp_arg, tmp_arg) < 0)
     {
         perror("execve");
     }
