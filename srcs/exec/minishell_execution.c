@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/23 17:59:34 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:04:08 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,14 @@ void    execution_pipe(t_cmd *cmd)
     //fprintf(stderr, "tmp_arg[0] : %s\n", tmp_arg[1]);
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
     tmp_envp = convert_envp(cmd->envp_ref);
-    if (execve(cmd->pathname, tmp_arg, tmp_arg) < 0)
+
+    // int i = 0;
+    // while (tmp_envp[i])
+    // {
+    //     printf("\033[31;1m%s\033[m\n", tmp_envp[i]);
+    //     i++;
+    // }
+    if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
         perror("execve");
     }

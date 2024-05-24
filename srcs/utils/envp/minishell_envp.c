@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/22 14:35:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/24 07:53:39 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,16 @@ char    *test_good_path_for_exec(char *exec_name, char *path)
 
 char    *search_path(t_cmd **cmd)
 {
-    while ((*cmd)->envp_ref)
+    t_envp *current;
+
+    current = (*cmd)->envp_ref;
+    while (current)
     {
-        if (!ft_strncmp((*cmd)->envp_ref->key, "PATH", sizeof(char) * 5))
+        if (!ft_strncmp(current->key, "PATH", sizeof(char) * 5))
         {
-            return ((*cmd)->envp_ref->value);
+            return (current->value);
         }
-        (*cmd)->envp_ref = (*cmd)->envp_ref->next;
+        current = current->next;
     }
 }
 

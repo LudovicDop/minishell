@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/23 17:51:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:00:24 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int main(int argc, char **argv, char **envp)
     envp_list = NULL;
     init_envp(&envp_list ,envp);
 
-
-    // char **test = convert_envp(envp_list);
      while (1)    
      {
         cmd_list = NULL;
