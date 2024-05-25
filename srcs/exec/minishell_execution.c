@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/24 11:08:39 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/25 10:59:10 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void    execution_main(t_cmd **cmd)
     fd_in = 0;
     cmd_list = *cmd;
     nbre_cmd = how_many_cmd(cmd_list);
+    if (nbre_cmd == 0)
+        return ;
     cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * nbre_cmd);
     while (cmd_list)
     {
