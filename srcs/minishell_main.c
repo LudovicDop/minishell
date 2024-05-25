@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/25 10:58:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/25 11:23:20 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
     glob->envp = envp_s;
 }
 
+// (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
+// (ping -c 3 google.com | grep round-trip) || cat error && echo success
 int main(int argc, char **argv, char **envp)
 {
     char *input_cmd;

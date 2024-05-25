@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/25 10:59:10 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 00:30:00 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void    execution_pipe(t_cmd *cmd)
     char    **tmp_arg;
     char    **tmp_envp;
 
-    // if (cmd->any_redirection)
-    // {
-    //     fprintf(stderr, "AXA\n");
-    //     special_carac(cmd);
-    // }
+    if (cmd->any_redirection)
+    {
+        fprintf(stderr, "AXA\n");
+        special_carac(cmd);
+    }
 
     // if (search_builtins_cmd(cmd))
     //     return ;
