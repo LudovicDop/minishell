@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/25 10:54:56 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 01:03:43 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
 /*Minishell search good path in envp*/
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
-void    init_env_path(t_cmd **cmd);
 char **convert_envp(t_envp *envp_list);
 
 void    init_envp(t_envp **envp_list, char **envp);
@@ -83,6 +82,7 @@ void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **
 void    free_tab(void   **my_tab);
 void    free_everything(t_cmd **cmd);
 void    free_envp(t_envp **list);
+void    free_cmd_list(t_cmd **cmd_list);
 
 char   *get_prompt(t_envp *envp_list);
 void    ft_signal(void);

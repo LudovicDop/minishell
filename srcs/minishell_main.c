@@ -6,76 +6,11 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/25 11:23:20 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 00:58:39 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void    free_cmd_list(t_cmd **cmd_list)
-{
-    t_cmd *current;
-    t_cmd *to_free;
-
-    current = *cmd_list;
-    while (current)
-    {
-        to_free = current;
-        current = current->next;
-        if (to_free->any_redirection)
-            free(to_free->arg_redirection);
-        free(to_free->arg);
-        free(to_free->pathname);
-        free(to_free);
-    }
-}
-
-void free_global_var(t_tab **global)
-{
-    t_tab *current;
-    t_tab *to_free;
-
-    current = *global;
-    free(current->process_id);
-    free(current->prompt);
-    free(current);
-}
-
-void    free_envp(t_envp **envp)
-{
-    t_envp *current;
-    t_envp *to_free;
-    
-    current = *envp;
-    while (current)
-    {
-        to_free = current;
-        current = current->next;
-        free(to_free->key);
-        free(to_free->value);
-        free(to_free);
-    }
-}
-
-void    pre_alloc(t_cmd **cmd, t_tab *glob,t_envp *envp_s)
-{
-    for(int i = 0; i < 3; i++)
-    {
-        cmd[i] = ft_calloc(1, sizeof(t_cmd));
-    }
-    printf("\n");
-
-    for (int i = 0; i < 3; i++)
-    {
-        (cmd[i])->arg = ft_calloc(100, sizeof(char*));
-        (cmd[i])->arg_redirection = ft_calloc(100, sizeof(char*));
-    }
-    for (int i = 0; i < 3; i++)
-    {
-        (*cmd[i]).tab_ref = glob;
-    }
-    glob->envp = envp_s;
-}
 
 // (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
 // (ping -c 3 google.com | grep round-trip) || cat error && echo success

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/25 10:55:26 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 01:04:14 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,6 @@ char    *search_path(t_cmd **cmd)
     }
 }
 
-void    init_env_path(t_cmd **cmd)
-{
-    int i;
-
-    i = 0;
-    while (cmd[i])
-    {
-        // (cmd[i]->pathname) = test_good_path_for_exec(cmd[i]->arg[0], search_path(cmd));
-        i++;
-    }
-}
-
 void    add_node_to_envp(t_envp **list, t_envp *new_node)
 {
     t_envp *current;
@@ -82,7 +70,6 @@ void    add_node_to_envp(t_envp **list, t_envp *new_node)
     current = *list;
     while (current->next)
     {
-        //printf("la\n");
         current = current->next;
     }
     current->next = new_node;

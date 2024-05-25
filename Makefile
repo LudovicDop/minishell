@@ -3,7 +3,7 @@ HEADER = ./includes/
 LIBFT = -lreadline -ltermcap ./libft/libft.a
 SRC = srcs/minishell_main.c \
 	  srcs/exec/minishell_execution.c \
-	  srcs/exec/minishell_special_carac.c \
+	  srcs/exec/minishell_special_redirection.c \
 	  srcs/parsing/minishell_parsing.c \
 	  srcs/exec/builtins/minishell_builtins.c \
 	  srcs/utils/minishell_utils.c	\
