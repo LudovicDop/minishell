@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/24 07:53:39 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/25 10:55:26 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void    init_envp(t_envp **envp_list, char **envp)
         new_node = malloc(sizeof(t_envp));
         if (!new_node)
             return ;
-        new_node->value = ft_strdup(ft_strchr(envp[i], '='));
+        new_node->value = ft_strdup(ft_strchr2(envp[i], '='));
         new_node->key = ft_strchr_reverse(envp[i], '=');
         new_node->next = NULL;
         add_node_to_envp(envp_list, new_node);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/08 17:04:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/25 10:54:42 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,22 @@ char	*ft_strchr_reverse(char *s1, char c)
 	}
 	new_string[j] = '\0';
 	return (new_string);	
+}
+
+char	*ft_strchr2(const char *s, int c)
+{
+	int				i;
+	unsigned char	*ret;
+
+	ret = (unsigned char *)s;
+	i = 0;
+	while (ret[i] != '\0' && ret[i] != (char)c)
+	{
+		i++;
+	}
+	if (ret[i] == (char)c)
+	{
+		return ((char *)(ret + i) + 1);
+	}
+	return (0);
 }

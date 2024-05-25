@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/24 08:04:08 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/24 11:08:39 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void    execution_pipe(t_cmd *cmd)
 {
     char    **tmp_arg;
     char    **tmp_envp;
-    //Child process
+
     // if (cmd->any_redirection)
     // {
     //     fprintf(stderr, "AXA\n");
@@ -44,16 +44,9 @@ void    execution_pipe(t_cmd *cmd)
     //     perror("execve");
     // }
     tmp_arg = ft_split(cmd->arg, ' ');
-    //fprintf(stderr, "tmp_arg[0] : %s\n", tmp_arg[1]);
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
     tmp_envp = convert_envp(cmd->envp_ref);
-
-    // int i = 0;
-    // while (tmp_envp[i])
-    // {
-    //     printf("\033[31;1m%s\033[m\n", tmp_envp[i]);
-    //     i++;
-    // }
+    fprintf(stderr ,"\033[36;1mpath : %s\ntmp_arg : %s\ntmp_envp : %s\033[m\n", cmd->pathname, tmp_arg[0], tmp_envp[0]);
     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
         perror("execve");

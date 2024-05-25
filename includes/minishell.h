@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/23 17:51:41 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/25 10:54:56 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_cmd
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
+char	*ft_strchr2(const char *s, int c);
 /*Minishell main function exec*/
 void    execution_main(t_cmd **cmd);
 /*Quêtes secondaires*/
