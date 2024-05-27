@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/26 01:03:43 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 12:08:23 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void    free_cmd_list(t_cmd **cmd_list);
 char   *get_prompt(t_envp *envp_list);
 void    ft_signal(void);
 char	*ft_strchr_reverse(char *s1, char c);
+/*EXPORT*/
+void    ft_export(t_cmd **cmd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/26 00:30:00 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/26 01:35:21 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void    execution_pipe(t_cmd *cmd)
 
     if (cmd->any_redirection)
     {
-        fprintf(stderr, "AXA\n");
         special_carac(cmd);
     }
 
@@ -46,7 +45,6 @@ void    execution_pipe(t_cmd *cmd)
     tmp_arg = ft_split(cmd->arg, ' ');
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
     tmp_envp = convert_envp(cmd->envp_ref);
-    fprintf(stderr ,"\033[36;1mpath : %s\ntmp_arg : %s\ntmp_envp : %s\033[m\n", cmd->pathname, tmp_arg[0], tmp_envp[0]);
     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
         perror("execve");
