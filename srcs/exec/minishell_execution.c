@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/26 01:35:21 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:05:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void    execution_pipe(t_cmd *cmd)
         special_carac(cmd);
     }
 
-    // if (search_builtins_cmd(cmd))
-    //     return ;
+    search_builtins_cmd(cmd);
+
     // if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     // {
     //     perror("execve");
@@ -48,6 +48,7 @@ void    execution_pipe(t_cmd *cmd)
     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
         perror("execve");
+        //need to free everything
     }
     
 }

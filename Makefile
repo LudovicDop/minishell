@@ -14,7 +14,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/signal/minishell_signal.c \
 	  srcs/exec/builtins/ft_export/ft_export.c
 CC = cc
-CFLAGS = -g3 -I $(HEADER) -fsanitize=address
+CFLAGS = -g3 -I $(HEADER) #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
