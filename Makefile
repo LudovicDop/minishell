@@ -12,7 +12,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/minishell_freeing.c \
 	  srcs/utils/minishell_prompt.c \
 	  srcs/utils/signal/minishell_signal.c \
-	  srcs/exec/builtins/ft_export/ft_export.c
+	  srcs/exec/builtins/ft_export/ft_export.c \
+	  srcs/exec/builtins/ft_cd/ft_cd.c
 CC = cc
 CFLAGS = -g3 -I $(HEADER) #-fsanitize=address
 OBJ = $(SRC:.c=.o)

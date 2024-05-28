@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/28 10:59:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:49:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ char   *get_prompt(t_envp *envp_list);
 void    ft_signal(void);
 char	*ft_strchr_reverse(char *s1, char c);
 
-/*EXPORT*/
+/*builtins*/
 void    ft_export(t_envp **envp_list, char *key_value);
+void    ft_cd(t_envp **envp, char *path);
+
+void    search_key_and_replace_it(t_envp **envp, char *key, char *value);
 #endif

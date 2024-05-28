@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/24 07:47:41 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/28 12:41:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char    *remove_users(char *string)
         return (NULL);
     s1++;
     s1++;
-    while (*s1 != '/')
+    while (*s1 != '\0'  && *s1 != '/')
         s1++;
     new_path = s1;
     return (new_path);

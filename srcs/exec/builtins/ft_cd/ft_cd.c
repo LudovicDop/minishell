@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/26 01:36:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/28 12:51:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    ft_cd(void)
-{
+#include "minishell.h"
 
+void    ft_cd(t_envp **envp, char *path)
+{
+    chdir(path);
+    printf("ici : %s\n", getenv("PWD"));
+    search_key_and_replace_it(envp, "PWD", getenv("PWD"));
 }
