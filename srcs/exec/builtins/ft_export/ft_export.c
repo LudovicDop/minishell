@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/28 12:36:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:31:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
     return ;
 }
 
-char *get_key(const char *s1)
+char *get_key_envp(const char *s1)
 {
     int i;
     int j;
@@ -81,7 +81,7 @@ void    ft_export(t_envp **envp_list, char *key_value)
     t_export exp_tmp;
 
     exp_tmp.value = ft_strdup(get_value(key_value));
-    exp_tmp.key = ft_strdup(get_key(key_value));
+    exp_tmp.key = ft_strdup(get_key_envp(key_value));
     fprintf(stderr ,"\033[36;1mKey : %s && Value : %s\033[m\n", exp_tmp.key, exp_tmp.value);
     search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
 }
