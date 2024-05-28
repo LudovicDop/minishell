@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/28 12:49:01 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:57:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "cd"))
     {
+        fprintf(stderr ,"\033[31;1mFT_CD\033[m\n");
         ft_cd(&(cmd->envp_ref), tmp_arg[1]);
     }
     return (0);
