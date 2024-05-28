@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/27 13:41:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:38:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int main(int argc, char **argv, char **envp)
 
     envp_list = NULL;
     init_envp(&envp_list ,envp);
-    // ft_export(&envp_list, "PATH");
+    free(envp_list->key);
+    envp_list->key = ft_strdup("TEST");
+    printf("R : %s (%p)\n",envp_list->key, envp_list);
       while (1)    
       {
         cmd_list = NULL;

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/27 14:05:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:30:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void    execution_pipe(t_cmd *cmd)
     {
         special_carac(cmd);
     }
-
-    search_builtins_cmd(cmd);
 
     // if (execve(cmd->pathname, cmd->arg, NULL) < 0)
     // {
@@ -87,6 +85,7 @@ void    execution_main(t_cmd **cmd)
         {
            close(cmd_list->tab_ref->pipe_fd[1]);
            fd_in = cmd_list->tab_ref->pipe_fd[0];
+           search_builtins_cmd(cmd_list);
         }
         cmd_list = cmd_list->next;
         i++;

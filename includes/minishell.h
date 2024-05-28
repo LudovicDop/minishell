@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/27 15:40:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:59:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ typedef struct s_cmd
     struct  s_cmd *next;
 } t_cmd;
 
+typedef struct s_export
+{
+    char *key;
+    char *value;
+} t_export;
+
 
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
@@ -94,5 +100,5 @@ void    ft_signal(void);
 char	*ft_strchr_reverse(char *s1, char c);
 
 /*EXPORT*/
-void    ft_export(t_envp **envp_list, char *key);
+void    ft_export(t_envp **envp_list, char *key_value);
 #endif
