@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/30 16:23:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:04:18 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,57 @@ void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node)
     return ;
 }
 
-void    parse_pwd(t_pwd *pwd_lst, char *pwd_value)
+char *pwd_until_slash(char *pwd)
 {
+    char *ret;
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    if (!pwd)
+        return (NULL);
+    fprintf(stderr, "\033[36;1mfunction : %s\033[m\n", pwd);
+    while (pwd[j] && pwd[j] != '/')
+        j++;
+    fprintf(stderr, "j = %d\n", j + 2);
+    ret = malloc(sizeof(char) * j + 2);
+    while (pwd[i])
+    {
+        ret[i] = pwd[i];
+        if (pwd[i] == '/')
+        {
+            i++;
+            ret[i] = '\0';
+            return (ret);
+        }
+        i++;
+    }
+    ret[i] = '\0';
+    return (ret);
+}
+void    parse_pwd(t_pwd **pwd_lst, char *pwd_value)
+{
+    int i;
+    char  *tmp;
     t_pwd *new_node;
     
+    i = 0;
     fprintf(stderr, "\033[32;1mPWD : %s\033[m\n", pwd_value);
+    while (pwd_value[i])
+    {
+        if (pwd_value[i] == '/')
+        {
+            i++;
+            fprintf(stderr, "\033[31;1mstring : %s\033[m\n", pwd_value);
+            new_node = malloc(sizeof(t_pwd));
+            new_node->node = ft_strdup(pwd_until_slash(pwd_value + i));
+            new_node->next = NULL;
+            new_node->root = false;
+            ft_add_pwd_node(pwd_lst, new_node);
+        }
+        i++;
+    }
     
 }
 
@@ -77,7 +123,12 @@ void    ft_cd(t_envp **envp, char *path)
     t_envp *pwd;
     
     pwd_lst = NULL;
-    parse_pwd(pwd_lst, search_value_envp(envp, "PWD"));
+    parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
+    while (pwd_lst)
+    {
+        fprintf(stderr ,"\033[32;1mlinked lst  : %s\033[m\n", pwd_lst->node);
+        pwd_lst = pwd_lst->next;
+    }
     if (chdir(path) < 0)
     {
         perror("chdir");

@@ -15,7 +15,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_export/ft_export.c \
 	  srcs/exec/builtins/ft_cd/ft_cd.c
 CC = cc
-CFLAGS = -g3 -I $(HEADER) #-fsanitize=address
+LIB = -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
+CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
