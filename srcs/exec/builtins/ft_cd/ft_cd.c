@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/30 20:04:18 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/30 21:00:29 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,22 +117,31 @@ char *search_value_envp(t_envp **envp, char *key)
     return (NULL);
 }
 
+void    stock_linked_to_env(t_envp **envp, t_pwd **pwd_lst)
+{
+    t_pwd *current;
+    char *tmp;
+
+    current = *pwd_lst;
+    if (!current)
+        return ;
+    while (current)
+    {
+        search_key_and_replace_it(envp, "PWD", ft_strjoin2(tmp, current->node));
+        current = current->next;
+    }
+}
 void    ft_cd(t_envp **envp, char *path)
 {
     t_pwd *pwd_lst;
-    t_envp *pwd;
     
     pwd_lst = NULL;
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
-    while (pwd_lst)
-    {
-        fprintf(stderr ,"\033[32;1mlinked lst  : %s\033[m\n", pwd_lst->node);
-        pwd_lst = pwd_lst->next;
-    }
+    stock_linked_to_env(envp, &pwd_lst);
     if (chdir(path) < 0)
     {
         perror("chdir");
         return ;
     }
-    search_key_and_replace_it(envp, "PWD", ft_strjoin(get_key(envp, "PWD"), ft_strjoin("/", path)));
+    // search_key_and_replace_it(envp, "PWD", ft_strjoin(get_key(envp, "PWD"), ft_strjoin("/", path)));
 }
