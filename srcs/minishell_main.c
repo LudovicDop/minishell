@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/30 13:52:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:31:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void    handler(int signal)
     if (signal == SIGINT)
     {
         printf("\n");
+        rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
     }
