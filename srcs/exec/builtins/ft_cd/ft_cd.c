@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/30 16:14:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:23:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,12 @@ void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node)
     return ;
 }
 
-void    parse_pwd(t_pwd *pwd_lst,char *pwd_value)
+void    parse_pwd(t_pwd *pwd_lst, char *pwd_value)
 {
+    t_pwd *new_node;
+    
     fprintf(stderr, "\033[32;1mPWD : %s\033[m\n", pwd_value);
+    
 }
 
 char *search_value_envp(t_envp **envp, char *key)
