@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/25 10:54:42 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/05/30 22:49:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,34 @@ int	ft_strcmp(const char *s1, const char *s2)
 char	*ft_strjoin2(char *s1, char *s2)
 {
 	char	*ret;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!s1)
+		return (NULL);
+	if (!s2)
+		return (NULL);
+	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!ret)
+		return (free(s1), s1 = NULL, free(ret), ret = NULL, NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		ret[i++] = s2[j++];
+	ret[i] = 0;
+	free(s1);
+	s1 = NULL;
+	return (ret);
+}
+/*
+char	*ft_strjoin2(char *s1, char *s2)
+{
+	char	*ret;
 	size_t	string_size;
 	int		i;
 	int		j;
@@ -43,6 +71,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 	j = 0;
 	i = 0;
 	string_size = ft_strlen(s1) + ft_strlen(s2);
+	fprintf(stderr, "fdp de alain\n");
 	ret = malloc(sizeof(char) * (string_size + 1));
 	if (ret == NULL)
 		return (NULL);
@@ -58,7 +87,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 	ret[i] = '\0';
     free(s1);
 	return (ret);
-}
+}*/
 
 char	*ft_strchr_reverse(char *s1, char c)
 {
