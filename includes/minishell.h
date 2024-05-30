@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/30 15:04:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:49:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ typedef struct s_export
     char *value;
 } t_export;
 
+typedef struct s_pwd
+{
+    bool root;
+    char *node;
+    struct s_pwd *next;
+} t_pwd;
+
 
 /*utils*/
 int	ft_strcmp(const char *s1, const char *s2);
@@ -84,6 +91,7 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
 char **convert_envp(t_envp *envp_list);
+t_envp **search_envp_key(t_envp **envp, char *key);
 
 void    init_envp(t_envp **envp_list, char **envp);
 void    print_envp(t_envp *list);
