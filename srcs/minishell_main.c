@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/30 14:31:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:02:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void    handler(int signal)
         rl_on_new_line();
         rl_redisplay();
     }
+    else if (signal == SIGQUIT)
+    {
+        rl_on_new_line();
+        rl_redisplay();
+    }
 }
 
 void    init_signal(void)
@@ -31,6 +36,7 @@ void    init_signal(void)
     sigemptyset(&action.sa_mask);
     action.sa_flags = 0;
     sigaction(SIGINT, &action, NULL);
+    sigaction(SIGQUIT, &action, NULL);
 }
 // (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
 // (ping -c 3 google.com | grep round-trip) || cat error && echo success
@@ -56,16 +62,8 @@ int main(int argc, char **argv, char **envp)
         start_parsing(input_cmd, &cmd_list, &envp_list);
         add_history(input_cmd);
         execution_main(&cmd_list);
-        //free_envp(&envp_list);
-        //free_global_var(&cmd_list->tab_ref);
         free_cmd_list(&cmd_list);
-    //     if (!(*cmd)->tab_ref->tmp)
-    //     {
-    //         free_everything(cmd);
-    //         break;
     }
-    //     free_everything(cmd);
-//    }
      return (0);
 }
 
