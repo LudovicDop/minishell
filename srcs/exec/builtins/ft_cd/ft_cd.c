@@ -6,12 +6,26 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/01 12:53:54 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/01 18:03:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int     nbre_node(t_pwd **pwd_list)
+{
+    t_pwd *current;
+    int i;
+
+    i = 0;
+    current = *pwd_list;
+    while (current)
+    {
+        i++;
+        current = current->next;
+    }
+    return (i);
+}
 char    *get_key(t_envp **envp, char *key)
 {
     t_envp *envp_tmp;
@@ -35,7 +49,6 @@ void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node)
     tmp_lst = *pwd_lst;
     if (!(*pwd_lst))
     {
-        fprintf(stderr, "\033[36;1mBegin linked list\033[m\n");
         *pwd_lst = node;
         return ;
     }
@@ -57,10 +70,8 @@ char *pwd_until_slash(char *pwd)
     j = 0;
     if (!pwd)
         return (NULL);
-    fprintf(stderr, "\033[36;1mfunction : %s\033[m\n", pwd);
     while (pwd[j] && pwd[j] != '/')
         j++;
-    fprintf(stderr, "j = %d\n", j + 2);
     ret = malloc(sizeof(char) * j + 2);
     while (pwd[i])
     {
@@ -83,10 +94,12 @@ void    parse_pwd(t_pwd **pwd_lst, char *pwd_value)
     t_pwd *new_node;
     
     i = 0;
-    fprintf(stderr, "\033[35;1mSTART PARSE PWD\033[m\n");
+    new_node = malloc(sizeof(t_pwd));
+    new_node->node = ft_strdup("/");
+    new_node->next = NULL;
+    ft_add_pwd_node(pwd_lst, new_node);
     while (pwd_value[i])
     {
-        fprintf(stderr, "\033[32;1mbefore segfault : %c\033[m\n", pwd_value[i]);
         if (pwd_value[i] && pwd_value[i] == '/')
         {
             i++;
@@ -143,6 +156,9 @@ void    init_pwd_w_envp(t_envp **envp, t_pwd *pwd_lst)
 
     current = pwd_lst;
     new_pwd = ft_strdup("");
+    printf("nbre : %d\n", nbre_node(&pwd_lst));
+    if (current && ft_strcmp(current->node, "/"))
+        return ;
     while (current)
     {
         new_pwd = ft_strjoin2(new_pwd, current->node);
@@ -161,12 +177,10 @@ void    remove_slash(t_pwd **pwd_node)
     if (!current)
         return ;
     i = ft_strlen(current->node);
-    fprintf(stderr, "Debug : %c\n", current->node[i - 1]);
     if (current->node[i - 1] == '/')
     {
         current->node[i - 1] = '\0';
     }
-    fprintf(stderr, "\033[32;1mResult : %s\033[m\n", current->node);
     return ;
 }
 void    remove_last_node_pwd(t_envp **envp, t_pwd **pwd_list)
@@ -183,13 +197,17 @@ void    remove_last_node_pwd(t_envp **envp, t_pwd **pwd_list)
         tmp = current;
         current = current->next;
     }
-    fprintf(stderr, "\033[31;1mErase : %s\033[m\n", tmp->node);
-    remove_slash(&tmp);
-    fprintf(stderr, "\033[31;1mErase after : %s\033[m\n", tmp->node);
-    tmp->next = NULL;
-    free(current->node);
-    free(current);
-    current = NULL;
+    // fprintf(stderr, "\033[31;1mErase : %s\033[m\n", tmp->node);
+    // fprintf(stderr, "\033[31;1mErase after : %s\033[m\n", tmp->node);
+    if (!current->next)
+    {
+        fprintf(stderr, "\033[31;1mSupr : %s\033[m\n", current->node);
+        remove_slash(&tmp);
+        tmp->next = NULL;
+        free(current->node);
+        free(current);
+        current = NULL;
+    }
 }
 void    ft_cd(t_envp **envp, char *path)
 {
@@ -197,8 +215,9 @@ void    ft_cd(t_envp **envp, char *path)
     t_pwd *new_node;
     
     pwd_lst = NULL;
+    printf("\033[32;1m search_envp : %s\033[m\n", search_value_envp(envp, "PWD"));
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
-    stock_linked_to_env(envp, &pwd_lst);
+    // stock_linked_to_env(envp, &pwd_lst);
     if (chdir(path) < 0)
     {
         perror("chdir");

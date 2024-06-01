@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_prompt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/28 12:41:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:46:11 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char    *remove_users(char *string)
     char *new_path;
     int  lenght;
 
+    printf("\033[35;1m string pwd : %s\033[m\n", string);
     s1 = string;
     if (!*s1)
         return (NULL);
@@ -27,6 +28,7 @@ char    *remove_users(char *string)
     while (*s1 != '\0'  && *s1 != '/')
         s1++;
     new_path = s1;
+    printf("new_path : %s\n", new_path);
     return (new_path);
 }
 
@@ -47,10 +49,17 @@ char   *get_prompt(t_envp *envp_list)
             tmp_user = ft_strjoin("\033[32;1m@", current->value);
             tmp_user = ft_strjoin2(tmp_user, "\033[m:");
         }
-        if (!ft_strcmp(current->key, "PWD"))
+        if (*(current->value) != '\0' && !ft_strcmp(current->key, "PWD"))
         {
-            tmp_path = ft_strjoin("\033[35;1m",remove_users(current->value));
+            printf("current->value : %s (%zu)\n", current->value, ft_strlen(current->value));
+            tmp_path = ft_strjoin("\033[35;1m", remove_users(current->value));
             tmp_path = ft_strjoin2(tmp_path, "\033[m ");
+            if (ft_strlen(tmp_path) == 11)
+                tmp_path = ft_strdup("\033[35;1m/\033[m ");
+        }
+        else if (*(current->value) == '\0')
+        {
+            tmp_path = ft_strdup("\033[35;1m/\033[m");
         }
         current = current->next;
     }
