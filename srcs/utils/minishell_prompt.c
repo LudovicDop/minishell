@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/01 20:08:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/02 11:40:28 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char    *remove_users(char *string)
     int  lenght;
 
     s1 = string;
+    fprintf(stderr, "\033[31;1mpwd : %s\033[m\n", string);
     if (!*s1)
         return (NULL);
-    s1++;
     s1++;
     while (*s1 != '\0'  && *s1 != '/')
         s1++;

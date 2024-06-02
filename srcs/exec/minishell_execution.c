@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/30 14:28:01 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:55:18 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ void    execution_pipe(t_cmd *cmd)
     {
         special_carac(cmd);
     }
-
-    // if (execve(cmd->pathname, cmd->arg, NULL) < 0)
-    // {
-    //     perror("execve");
-    // }
+    if (search_builtins_child(cmd))
+        return ;
     tmp_arg = ft_split(cmd->arg, ' ');
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
     tmp_envp = convert_envp(cmd->envp_ref);
@@ -48,7 +45,6 @@ void    execution_pipe(t_cmd *cmd)
         perror("execve");
         //need to free everything
     }
-    
 }
 
 void    execution_main(t_cmd **cmd)
@@ -85,7 +81,8 @@ void    execution_main(t_cmd **cmd)
         {
            close(cmd_list->tab_ref->pipe_fd[1]);
            fd_in = cmd_list->tab_ref->pipe_fd[0];
-           search_builtins_cmd(cmd_list);
+           if (i == 0)
+            search_builtins_cmd(cmd_list);
         }
         cmd_list = cmd_list->next;
         i++;

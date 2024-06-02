@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/05/30 15:49:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:37:03 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int     search_builtins_cmd(t_cmd *cmd);
 void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
 
 /*Minishell search good path in envp*/
+void    ft_env(t_envp **envp_list);
 char    *test_good_path_for_exec(char *exec_name, char *path);
 char    *search_path(t_cmd **cmd);
 char **convert_envp(t_envp *envp_list);
@@ -110,6 +111,7 @@ char	*ft_strchr_reverse(char *s1, char c);
 /*builtins*/
 void    ft_export(t_envp **envp_list, char *key_value);
 void    ft_cd(t_envp **envp, char *path);
+int search_builtins_child(t_cmd *cmd);
 
 /*SIGNAL*/
 void    handler(int signal);

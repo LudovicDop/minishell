@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_builtins.c                               :+:      :+:    :+:   */
+/*   minishell_builtins_child.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/01 22:53:28 by ludovicdopp      ###   ########.fr       */
+/*   Created: 2024/06/01 22:49:01 by ludovicdopp       #+#    #+#             */
+/*   Updated: 2024/06/01 22:53:10 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int search_builtins_cmd(t_cmd *cmd)
+int search_builtins_child(t_cmd *cmd)
 {
     char **tmp_arg;
 
@@ -22,17 +22,13 @@ int search_builtins_cmd(t_cmd *cmd)
     if (!tmp_arg)
         return (1);
     if (!ft_strcmp(tmp_arg[0], "export"))
-    {
-        ft_export(&(cmd->envp_ref), tmp_arg[1]);
         return (1);
-    }
     else if (!ft_strcmp(tmp_arg[0], "cd"))
+        return (1);
+    else if(!ft_strcmp(tmp_arg[0], "env"))
     {
-        ft_cd(&(cmd->envp_ref), tmp_arg[1]);
+        ft_env(&(cmd->envp_ref));
         return (1);
     }
-    else if(!ft_strcmp(tmp_arg[0], "env"))
-        return (1);
     return (0);
 }
-

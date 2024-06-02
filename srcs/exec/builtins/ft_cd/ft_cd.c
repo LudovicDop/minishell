@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/01 20:09:52 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/02 11:37:04 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node)
         tmp_lst = tmp_lst->next;
     }
     tmp_lst->next = node;
+    node->next = NULL;
     return ;
 }
 
@@ -97,9 +98,10 @@ void    parse_pwd(t_pwd **pwd_lst, char *pwd_value)
     
     i = 0;
     new_node = malloc(sizeof(t_pwd));
-    new_node->node = ft_strdup("/ ");
+    new_node->node = ft_strdup("/");
     new_node->next = NULL;
     ft_add_pwd_node(pwd_lst, new_node);
+    fprintf(stderr ,"str : %s (%zu)\n", pwd_value, ft_strlen(pwd_value));
     while (pwd_value[i])
     {
         if (pwd_value[i] && pwd_value[i] == '/')
@@ -150,15 +152,17 @@ void    stock_linked_to_env(t_envp **envp, t_pwd **pwd_lst)
     }
 }
 
-void    init_pwd_w_envp(t_envp **envp, t_pwd *pwd_lst)
+void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst)
 {
     t_pwd *current;
     char *new_pwd;
 
-    current = pwd_lst;
+    current = *pwd_lst;
     new_pwd = ft_strdup("");
-    if (!current && ft_strcmp(current->node, "/"))
+    if (!current)
         return ;
+    // fprintf("current address : %p\n", current);
+    // fprintf(stderr ,"\033[32;1mCurrent->node : %s (address : %p)\033[m\n", current->node, current->node);
     while (current)
     {
         new_pwd = ft_strjoin2(new_pwd, current->node);
@@ -177,28 +181,36 @@ void    remove_slash(t_pwd **pwd_node)
     if (!current)
         return ;
     i = ft_strlen(current->node);
-    if (current->node[i - 1] == '/')
+    if (i > 1 && current->node[i - 1] == '/')
     {
         current->node[i - 1] = '\0';
     }
     return ;
 }
-void    remove_last_node_pwd(t_envp **envp, t_pwd **pwd_list)
+void    remove_last_node_pwd(t_pwd **pwd_list)
 {
     t_pwd *current;
     t_pwd *tmp;
 
     current = *pwd_list;
-    tmp = *pwd_list;
+    tmp = NULL;
     if (!current)
+    {
+        fprintf(stderr, "finito\n");
         return ;
+    }
     while (current->next)
     {
         tmp = current;
         current = current->next;
     }
-    remove_slash(&tmp);
-    tmp->next = NULL;
+    if (tmp)
+    {
+        fprintf(stderr ,"\033[31;1mRemove slash from node : %s\033[m\n", tmp->node);
+        remove_slash(&tmp);
+        tmp->next = NULL;
+    }
+    fprintf(stderr ,"\033[31;1mFreeing : %s (%p)\033[m\n", current->node, current->node);
     free(current->node);
     free(current);
     current = NULL;
@@ -209,6 +221,7 @@ void    ft_cd(t_envp **envp, char *path)
     t_pwd *new_node;
     
     pwd_lst = NULL;
+    new_node = NULL;
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
     {
@@ -217,8 +230,8 @@ void    ft_cd(t_envp **envp, char *path)
     }
     if (!ft_strcmp(path, ".."))
     {
-        remove_last_node_pwd(envp, &pwd_lst);
-        init_pwd_w_envp(envp, pwd_lst);
+        remove_last_node_pwd(&pwd_lst);
+        init_pwd_w_envp(envp, &pwd_lst);
         return ;
     }
     else if (!ft_strcmp(path, "."))
@@ -229,5 +242,5 @@ void    ft_cd(t_envp **envp, char *path)
     new_node->node = ft_strjoin("/", path);
     new_node->next = NULL;
     ft_add_pwd_node(&pwd_lst, new_node);
-    init_pwd_w_envp(envp, pwd_lst);
+    init_pwd_w_envp(envp, &pwd_lst);
 }
