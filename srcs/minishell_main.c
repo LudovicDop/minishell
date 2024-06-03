@@ -6,14 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/03 16:02:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:10:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
-// (ping -c 3 google.com | grep round-trip) || cat error && echo success
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -42,4 +39,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
