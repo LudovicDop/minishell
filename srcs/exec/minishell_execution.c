@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 16:00:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:17:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int how_many_cmd(t_cmd *cmd_list)
     return (nbre_of_cmd);
 }
 
-/*File fd[1] == Writing && fd[0] == Reading */
 void    execution_pipe(t_cmd *cmd)
 {
     char    **tmp_arg;
@@ -47,6 +46,38 @@ void    execution_pipe(t_cmd *cmd)
     }
 }
 
+void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
+{
+    int i;
+
+    i = 0;
+    while (i < nbre_cmd)
+    {
+        waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
+        i++;
+    }
+    wait(NULL);
+}
+
+void    child_process(int fd_in, int nbre_cmd, t_cmd *cmd_list)
+{
+    close(cmd_list->tab_ref->pipe_fd[0]);
+    dup2(fd_in, STDIN_FILENO);
+    if (cmd_list->next)
+        dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
+    close(cmd_list->tab_ref->pipe_fd[1]);
+    execution_pipe(cmd_list); 
+    exit(EXIT_SUCCESS);
+}
+
+void    parent_process(t_cmd *cmd_list, int *fd_in, int i)
+{
+    close(cmd_list->tab_ref->pipe_fd[1]);
+    *fd_in = cmd_list->tab_ref->pipe_fd[0];
+    if (i == 0)
+        search_builtins_cmd(cmd_list);
+}
+
 void    execution_main(t_cmd **cmd)
 {
     t_cmd   *cmd_list;
@@ -66,34 +97,12 @@ void    execution_main(t_cmd **cmd)
         pipe(cmd_list->tab_ref->pipe_fd);
         cmd_list->tab_ref->process_id[i] = fork();
         if (cmd_list->tab_ref->process_id[i] == 0)
-        {
-            close(cmd_list->tab_ref->pipe_fd[0]);
-            dup2(fd_in, STDIN_FILENO);
-            if (i < nbre_cmd - 1)
-            {
-                dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
-            }
-            close(cmd_list->tab_ref->pipe_fd[1]);
-            execution_pipe(cmd_list); 
-            exit(EXIT_SUCCESS);
-        }
-        else
-        {
-           close(cmd_list->tab_ref->pipe_fd[1]);
-           fd_in = cmd_list->tab_ref->pipe_fd[0];
-           if (i == 0)
-            search_builtins_cmd(cmd_list);
-        }
+            child_process(fd_in, nbre_cmd, cmd_list);
+        parent_process(cmd_list, &fd_in, i);
         cmd_list = cmd_list->next;
         i++;
     }
     close(fd_in);
     cmd_list = *cmd;
-    i = 0;
-    while (i < nbre_cmd)
-    {
-        waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
-        i++;
-    }
-    wait(NULL);
+    wait_everyone(cmd_list, nbre_cmd);
 }

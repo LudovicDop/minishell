@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/28 17:31:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:21:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,6 @@ char *get_key_envp(const char *s1)
 char *get_value(const char *s1)
 {
     return (ft_strchr2(s1, '='));
-}
-
-t_envp **search_envp_key(t_envp **envp, char *key)
-{
-    t_envp *current;
-
-    current = *envp;
-    while (current)
-    {
-        if (!ft_strcmp(current->key, key))
-        {
-            fprintf(stderr, "\033[36;1mJust find the key\033[m\n");
-            return (&current);
-        }
-        current = current->next;
-    }
-    fprintf(stderr, "\033[31;1mNothing was found!\033[m\n");
-    return (NULL);
 }
 
 void    ft_export(t_envp **envp_list, char *key_value)
