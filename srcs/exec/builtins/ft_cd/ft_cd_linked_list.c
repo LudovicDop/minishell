@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 23:03:39 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/03 23:05:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:42:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,28 @@ int     nbre_node(t_pwd **pwd_list)
         current = current->next;
     }
     return (i);
+}
+
+void    remove_last_node_pwd(t_pwd **pwd_list)
+{
+    t_pwd *current;
+    t_pwd *tmp;
+
+    current = *pwd_list;
+    tmp = NULL;
+    if (!current)
+        return ;
+    while (current->next)
+    {
+        tmp = current;
+        current = current->next;
+    }
+    if (tmp)
+    {
+        remove_slash(&tmp);
+        tmp->next = NULL;
+    }
+    free(current->node);
+    free(current);
+    current = NULL;
 }

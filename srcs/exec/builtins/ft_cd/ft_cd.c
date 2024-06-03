@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 23:21:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:42:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,29 +132,6 @@ void    remove_slash(t_pwd **pwd_node)
         current->node[i - 1] = '\0';
     }
     return ;
-}
-void    remove_last_node_pwd(t_pwd **pwd_list)
-{
-    t_pwd *current;
-    t_pwd *tmp;
-
-    current = *pwd_list;
-    tmp = NULL;
-    if (!current)
-        return ;
-    while (current->next)
-    {
-        tmp = current;
-        current = current->next;
-    }
-    if (tmp)
-    {
-        remove_slash(&tmp);
-        tmp->next = NULL;
-    }
-    free(current->node);
-    free(current);
-    current = NULL;
 }
 
 char    *remove_backslash_at_end(char *pwd)
