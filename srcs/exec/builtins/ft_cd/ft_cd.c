@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 23:15:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:21:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ void    ft_cd(t_envp **envp, char *path)
     {
         new_node = malloc(sizeof(t_pwd));
         new_node->node = ft_strdup(getenv("HOME"));
-        printf("null path : %s\n", new_node->node);
         new_node->next = NULL;
         if (chdir(new_node->node) < 0)
         {
@@ -212,7 +211,6 @@ void    ft_cd(t_envp **envp, char *path)
         } 
         new_node = malloc(sizeof(t_pwd));
         new_node->node = ft_strdup(path);
-        printf("null path : %s\n", new_node->node);
         new_node->next = NULL;
         ft_add_pwd_node(&pwd_lst, new_node);
         init_pwd_w_envp(envp, &pwd_lst);
