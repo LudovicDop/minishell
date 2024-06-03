@@ -1,4 +1,4 @@
-#MAKEFLAGS+=silent⠀⠀
+MAKEFLAGS+=silent⠀⠀
 HEADER = ./includes/
 LIBFT = -lreadline -ltermcap ./libft/libft.a
 SRC = srcs/minishell_main.c \
