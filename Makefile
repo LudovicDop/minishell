@@ -1,4 +1,4 @@
-MAKEFLAGS+=silent⠀⠀
+#MAKEFLAGS+=silent⠀⠀
 HEADER = ./includes/
 LIBFT = -lreadline -ltermcap ./libft/libft.a
 SRC = srcs/minishell_main.c \
@@ -23,12 +23,6 @@ CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address#
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
-all : print_art $(NAME)
-
-$(NAME) : $(OBJ)
-	make all -C libft/
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT)
-	echo "\033[32;1mCompilation done! 😊\033[m"
 print_art :
 	@echo "\033[33;1m⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⡳⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠿⣿⣿⣌⠻⣦⠀⣠⡶⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
@@ -47,6 +41,14 @@ print_art :
 	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣩⠟⢻⣿⡛⣻⡟⢀⣼⠿⣿⣿⠇⠀⠀⠙⢧⣀⠘⣳⡤⣞⠁⠀⣘⣷⠟⠁⠛⠋⠁⠀⠈⠙⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⠛⣧⣤⠤⣿⣽⣏⣙⣿⠀⠀⠋⠀⠀⠀⠀⠀⠀⠉⠛⠷⠶⠾⠿⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠟⠀⠀⣿⠿⠛⠉⠉⠀⠀											     \033[m"
+
+all : $(NAME)
+
+$(NAME) : $(OBJ)
+	make all -C libft/
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT)
+	make print_art -C ./
+	echo "\033[32;1mCompilation done! 😊\033[m"
 clean : 
 	make clean -C libft/
 	rm -rf $(OBJ)
