@@ -6,28 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 22:58:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:05:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int     nbre_node(t_pwd **pwd_list)
-{
-    t_pwd *current;
-    int i;
 
-    i = 0;
-    current = *pwd_list;
-    if (!current)
-        return (0);
-    while (current)
-    {
-        i++;
-        current = current->next;
-    }
-    return (i);
-}
 char    *get_key(t_envp **envp, char *key)
 {
     t_envp *envp_tmp;
@@ -42,25 +27,6 @@ char    *get_key(t_envp **envp, char *key)
         envp_tmp = envp_tmp->next; 
     }
     return (NULL);
-}
-
-void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node)
-{
-    t_pwd *tmp_lst;
-
-    tmp_lst = *pwd_lst;
-    if (!(*pwd_lst))
-    {
-        *pwd_lst = node;
-        return ;
-    }
-    while (tmp_lst->next)
-    {
-        tmp_lst = tmp_lst->next;
-    }
-    tmp_lst->next = node;
-    node->next = NULL;
-    return ;
 }
 
 char *pwd_until_slash(char *pwd)
@@ -150,26 +116,6 @@ void    stock_linked_to_env(t_envp **envp, t_pwd **pwd_lst)
         search_key_and_replace_it(envp, "PWD", tmp);
         current = current->next;
     }
-}
-
-void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst)
-{
-    t_pwd *current;
-    char *new_pwd;
-
-    current = *pwd_lst;
-    new_pwd = ft_strdup("");
-    if (!current)
-        return ;
-    // fprintf("current address : %p\n", current);
-    // fprintf(stderr ,"\033[32;1mCurrent->node : %s (address : %p)\033[m\n", current->node, current->node);
-    while (current)
-    {
-        new_pwd = ft_strjoin2(new_pwd, current->node);
-        current = current->next;
-    }
-    search_key_and_replace_it(envp, "PWD", new_pwd);
-    free(new_pwd);
 }
 
 void    remove_slash(t_pwd **pwd_node)

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/03 17:27:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:07:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,9 @@ void				init_signal(void);
 void				search_key_and_replace_it(t_envp **envp, char *key,
 						char *value);
 char				*get_key(t_envp **envp, char *key);
+/*CD*/
+void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node);
+void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst);
+int     nbre_node(t_pwd **pwd_list);
+
 #endif
