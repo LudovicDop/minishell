@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 21:59:05 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/01 22:04:36 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/03 21:05:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    ft_env(t_envp **envp_list)
    current =  *envp_list;
    while (current)
    {
-        printf("%s=", current->key);
+        printf("m%s=", current->key);
         printf("%s\n", current->value);
         current = current->next;
    }
