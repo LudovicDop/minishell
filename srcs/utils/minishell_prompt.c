@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 21:12:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 21:16:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*get_prompt(t_envp *envp_list)
 
 	tmp_user = NULL;
 	tmp_path = NULL;
+	prompt = NULL;
 	current = envp_list;
 	i = 0;
 	while (current)
@@ -73,5 +74,7 @@ char	*get_prompt(t_envp *envp_list)
 		current = current->next;
 	}
 	prompt = ft_strjoin(tmp_user, tmp_path);
+	if (!prompt)
+		return (NULL);
 	return (free(tmp_user), free(tmp_path), prompt);
 }

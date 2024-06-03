@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 20:18:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:37:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,10 +195,7 @@ void    remove_last_node_pwd(t_pwd **pwd_list)
     current = *pwd_list;
     tmp = NULL;
     if (!current)
-    {
-        fprintf(stderr, "finito\n");
         return ;
-    }
     while (current->next)
     {
         tmp = current;
@@ -206,11 +203,9 @@ void    remove_last_node_pwd(t_pwd **pwd_list)
     }
     if (tmp)
     {
-        fprintf(stderr ,"\033[31;1mRemove slash from node : %s\033[m\n", tmp->node);
         remove_slash(&tmp);
         tmp->next = NULL;
     }
-    fprintf(stderr ,"\033[31;1mFreeing : %s (%p)\033[m\n", current->node, current->node);
     free(current->node);
     free(current);
     current = NULL;
@@ -247,6 +242,21 @@ void    ft_cd(t_envp **envp, char *path)
     
     pwd_lst = NULL;
     new_node = NULL;
+    if (!path)
+    {
+        new_node = malloc(sizeof(t_pwd));
+        new_node->node = ft_strdup(getenv("HOME"));
+        printf("null path : %s\n", new_node->node);
+        new_node->next = NULL;
+        if (chdir(new_node->node) < 0)
+        {
+            perror("chdir");
+            return ;
+        }
+        ft_add_pwd_node(&pwd_lst, new_node);
+        init_pwd_w_envp(envp, &pwd_lst);
+        return ;
+    }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
     {
