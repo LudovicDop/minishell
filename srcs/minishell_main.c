@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/01 12:57:39 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/03 16:02:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 // (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
 // (ping -c 3 google.com | grep round-trip) || cat error && echo success
-int main(int argc, char **argv, char **envp)
+
+int	main(int argc, char **argv, char **envp)
 {
-    char *input_cmd;
-    char *prompt;
-    t_cmd *cmd_list;
-    t_envp *envp_list;
+	char	*input_cmd;
+	char	*prompt;
+	t_cmd	*cmd_list;
+	t_envp	*envp_list;
 
-    envp_list = NULL;
-    init_envp(&envp_list ,envp);
-    init_signal();
-    while (1)    
-    {
-        cmd_list = NULL;
-        prompt = get_prompt(envp_list);
-        input_cmd = readline(prompt);
-        if (!input_cmd)
-        {
-            exit(EXIT_SUCCESS);
-        }
-        start_parsing(input_cmd, &cmd_list, &envp_list);
-        add_history(input_cmd);
-        execution_main(&cmd_list);
-        free_cmd_list(&cmd_list);
-    }
-     return (0);
+	envp_list = NULL;
+	init_envp(&envp_list, envp);
+	init_signal();
+	while (1)
+	{
+		cmd_list = NULL;
+		prompt = get_prompt(envp_list);
+		input_cmd = readline(prompt);
+		if (!input_cmd)
+		{
+			free_envp(&envp_list);
+			exit(EXIT_SUCCESS);
+		}
+		start_parsing(input_cmd, &cmd_list, &envp_list);
+		add_history(input_cmd);
+		execution_main(&cmd_list);
+		free_everything(&cmd_list, prompt);
+	}
+	return (0);
 }
-
-
 

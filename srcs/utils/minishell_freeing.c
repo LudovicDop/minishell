@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_freeing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/26 01:02:35 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/03 16:01:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,19 @@ void    free_tab(void   **my_tab)
     free(my_tab);
 }
 
-/*Not update for the moment but we will use it later*/
-void    free_everything(t_cmd **cmd)
+void    free_everything(t_cmd **cmd, char *prompt)
 {
-    free((*cmd)->tab_ref->process_id);
-    free((*cmd)->tab_ref);
-    free_tab((void**)cmd);
+    t_cmd *current;
+
+    current = *cmd;
+    if (current)
+    {
+        free(current->tab_ref->process_id);
+        free(current->tab_ref);
+        free_cmd_list(&current);
+    }
+    if (prompt)
+        free(prompt);
 }
 
 
@@ -52,17 +59,6 @@ void    free_cmd_list(t_cmd **cmd_list)
         free(to_free->pathname);
         free(to_free);
     }
-}
-
-void free_global_var(t_tab **global)
-{
-    t_tab *current;
-    t_tab *to_free;
-
-    current = *global;
-    free(current->process_id);
-    free(current->prompt);
-    free(current);
 }
 
 void    free_envp(t_envp **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/01 23:37:03 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/03 15:59:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **
 
 /*Minishell freeing memory*/
 void    free_tab(void   **my_tab);
-void    free_everything(t_cmd **cmd);
+void    free_everything(t_cmd **cmd, char *prompt);
 void    free_envp(t_envp **list);
 void    free_cmd_list(t_cmd **cmd_list);
 
