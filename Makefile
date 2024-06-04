@@ -19,7 +19,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_cd/ft_cd_linked_list.c \
 	  srcs/exec/builtins/ft_cd/ft_cd_absolute_path.c
 CC = cc
-LIB = #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib #-lreadline
+LIB = -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib #-lreadline
 CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell

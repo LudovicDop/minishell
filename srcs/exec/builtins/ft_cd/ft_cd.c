@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 18:15:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:22:07 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,9 +174,11 @@ void    ft_cd(t_envp **envp, char *path)
     }
     if (path[0] == '/')
     {
-        absolute_path(path, pwd_lst, envp);
+        printf("\033[31;1mAbsolute path (%s)\033[m\n", path);
+        absolute_path(path, &pwd_lst, envp);
+        printf("\033[35;1m%s\033[m\n", pwd_lst->node);
         free_pwd_lst(&pwd_lst);
-        free(path);
+        //free(path);
         return ;
     }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
