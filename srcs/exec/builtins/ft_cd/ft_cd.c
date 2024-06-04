@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 23:22:07 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/04 23:51:21 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,11 +174,8 @@ void    ft_cd(t_envp **envp, char *path)
     }
     if (path[0] == '/')
     {
-        printf("\033[31;1mAbsolute path (%s)\033[m\n", path);
         absolute_path(path, &pwd_lst, envp);
-        printf("\033[35;1m%s\033[m\n", pwd_lst->node);
         free_pwd_lst(&pwd_lst);
-        //free(path);
         return ;
     }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
@@ -200,6 +197,7 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         return ;
     }
+    printf("result : %s\n", getcwd(0, 0));
     new_node = malloc(sizeof(t_pwd));
     tmp = remove_backslash_at_end(path);
     new_node->node = ft_strjoin("/", tmp);
