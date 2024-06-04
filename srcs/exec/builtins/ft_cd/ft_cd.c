@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 17:36:33 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:09:45 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void    parse_pwd(t_pwd **pwd_lst, char *pwd_value)
     new_node->node = ft_strdup("/");
     new_node->next = NULL;
     ft_add_pwd_node(pwd_lst, new_node);
-    fprintf(stderr ,"str : %s (%zu)\n", pwd_value, ft_strlen(pwd_value));
     while (pwd_value[i])
     {
         if (pwd_value[i] && pwd_value[i] == '/')

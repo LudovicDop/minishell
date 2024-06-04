@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 16:28:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:07:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void    child_process(int fd_in, int nbre_cmd, t_cmd *cmd_list)
     if (cmd_list->next)
         dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
     close(cmd_list->tab_ref->pipe_fd[1]);
-    execution_pipe(cmd_list); 
+    execution_pipe(cmd_list);
     exit(EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:49:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 21:26:44 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:54:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int search_builtins_child(t_cmd *cmd)
     else if(!ft_strcmp(tmp_arg[0], "env"))
     {
         ft_env(&(cmd->envp_ref));
+        free_tab((void**)tmp_arg);
         return (1);
     }
     free_tab((void**)tmp_arg);
