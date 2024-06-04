@@ -16,38 +16,20 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_cd/ft_cd.c \
 	  srcs/exec/builtins/ft_env/ft_env.c \
 	  srcs/exec/builtins/minishell_builtins_child.c \
-	  srcs/exec/builtins/ft_cd/ft_cd_linked_list.c
+	  srcs/exec/builtins/ft_cd/ft_cd_linked_list.c \
+	  srcs/exec/builtins/ft_cd/ft_cd_absolute_path.c
 CC = cc
 LIB = #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib #-lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address#
+CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
-print_art :
-	@echo "\033[33;1m⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⡳⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠿⣿⣿⣌⠻⣦⠀⣠⡶⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⢰⣾⣿⣿⠛⣷⣬⣿⠋⢠⣿⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⢀⡀⠀⢸⣿⣿⣿⣟⣛⠿⢦⣽⣦⡞⠉⠛⠶⠞⠁⠀⠙⢷⡄⠀⠀⢀⣀⣀⣤⣤⣴⢳⡄"
-	@echo "⠀⠀⠀⠀⠀⢰⣶⣄⣀⣀⣾⣹⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡟⢷⡀⠀⢀⣴⠛⡇⠀⠙⠛⣻⣽⣟⣫⣿⣶⣦⣭⣿⠆⠀⠀⠀⠀⠀⠀⠸⠉⠉⠉⠉⢩⣽⣦⡌⠁⠈⢻"
-	@echo "⠀⠀⢤⣤⣀⣠⣷⣿⣯⣥⠿⣯⡽⣿⡞⣻⡟⠀⠀⠀⠀⢰⣤⣄⣀⣸⣇⣬⡿⠶⢿⣅⣸⠇⠀⠀⠈⢻⠛⣋⣥⣤⣿⣄⣀⠀⠀⠀⠀⠀⠿⠙⠀⠀⠀⠀⠀⠀⣻⣿⡿⠀⠀⣼⣿"
-	@echo "⣀⠀⢘⣿⣿⣿⣗⣿⣶⣿⣶⠚⣧⣸⠛⢿⡀⠀⠀⠀⠀⠘⢷⡈⣻⡿⣼⠿⢤⣄⣀⡤⠽⣷⣤⠶⢚⡿⠀⣯⡀⠒⠒⠺⢿⣝⣃⣀⣀⠀⠀⠀⠀⠀⣠⣤⣶⣿⣿⡾⠛⣶⢛⡟⠉"
-	@echo "⠻⣿⡿⢻⣽⠟⠋⠁⠀⠈⢿⣹⣇⣸⠦⣿⣷⠶⣿⣦⣤⣤⣾⡟⠉⢸⣅⣰⡏⠉⠹⣄⣀⣼⣄⣰⣟⠳⣶⣼⣿⣦⣤⣤⣾⣻⡯⠭⣭⣿⣻⣶⠤⣾⣿⣿⣿⣯⣾⠁⠀⠙⠿⠁⠀"
-	@echo "⢠⣯⡴⠋⠁⠀⠀⠀⠀⠀⠘⣿⢤⡟⠲⣿⣷⣾⠋⠘⣷⣈⣿⠛⢺⠋⠰⣯⠟⢻⠉⠹⣄⠀⡉⢿⡙⢿⣍⣿⣿⣛⣿⣿⣿⣧⡀⢀⡀⠉⠛⠻⢿⣿⣿⡿⣿⣿⣿⣧⣀⣴⣄⠀⠀"
-	@echo "⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣤⣹⠒⢾⣖⣼⣧⣴⢏⣹⠷⠤⣾⠒⡾⢛⡗⠚⣏⠉⠙⡏⠉⠙⣧⢀⡟⠑⣿⠿⢻⣫⣿⣿⣷⡿⠓⠶⠤⠤⣤⣽⣉⠛⠿⠿⣾⣿⣿⡿⠿⡆⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣧⣸⡛⠺⣇⡼⣟⡿⠯⣏⣀⣠⠷⠴⢷⢿⣿⢭⣹⡉⠉⢻⠒⡾⠛⣿⠧⢺⡇⠀⣸⣿⣟⣿⣿⠁⠀⣠⣶⣆⠀⠀⠉⠙⠓⠲⠶⣯⣥⣴⣦⡇⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⡀⢻⡉⢉⣳⣼⣷⣤⣾⣀⣯⣀⣠⣾⡟⢻⣄⣈⡏⠉⢻⣦⡷⠖⢿⠖⠚⡟⢿⠋⠀⢹⣿⣇⣤⣼⠟⣿⣿⡆⠀⠀⠀⠀⠀⠀⠿⠻⠏⠘⠋⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡉⠙⣯⡿⠁⠀⠀⠉⠛⠻⣶⣾⠋⠀⠀⢿⣌⡿⠲⡼⢿⡦⣤⠾⠒⡶⠋⠛⣷⡀⠈⣯⣥⠾⠋⣼⠿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣿⣉⡷⣤⣤⣴⠒⣾⠀⣿⣥⣶⣶⡆⠀⠻⣧⣀⣳⣤⠽⢧⣀⣠⠷⠤⡶⢛⣷⡀⢁⣠⠴⢦⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣩⠟⢻⣿⡛⣻⡟⢀⣼⠿⣿⣿⠇⠀⠀⠙⢧⣀⠘⣳⡤⣞⠁⠀⣘⣷⠟⠁⠛⠋⠁⠀⠈⠙⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⠛⣧⣤⠤⣿⣽⣏⣙⣿⠀⠀⠋⠀⠀⠀⠀⠀⠀⠉⠛⠷⠶⠾⠿⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-	@echo "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠟⠀⠀⣿⠿⠛⠉⠉⠀⠀											     \033[m"
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
 	make all -C libft/
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT)
-	make print_art -C ./
 	echo "\033[32;1mCompilation done! 😊\033[m"
 clean : 
 	make clean -C libft/
@@ -58,4 +40,5 @@ fclean : clean
 	rm -rf $(NAME)
 	echo "\033[31;1mCleaning++ has been carried out 💔\033[m"
 re : fclean all $(NAME)
+
 .PHONY: all clean fclean re

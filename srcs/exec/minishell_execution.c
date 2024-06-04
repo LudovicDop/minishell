@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 21:22:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:28:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
     i = 0;
     while (i < nbre_cmd)
     {
-        waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
+        // waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
+        waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
         i++;
     }
     wait(NULL);

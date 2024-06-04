@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 21:16:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:48:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ char	*init_prompt_path(char *tmp_path, t_envp **envp_list)
 	tmp_path = ft_strjoin("\033[35;1m", remove_users(current->value));
 	tmp_path = ft_strjoin2(tmp_path, "\033[m ");
 	if (ft_strlen(tmp_path) == 11)
+	{
+		free(tmp_path);
 		tmp_path = ft_strdup("\033[35;1m/\033[m ");
+	}
 	return (tmp_path);
 }
 

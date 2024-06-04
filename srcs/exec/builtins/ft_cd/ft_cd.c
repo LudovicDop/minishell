@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 23:42:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:36:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void    parse_pwd(t_pwd **pwd_lst, char *pwd_value)
         {
             i++;
             new_node = malloc(sizeof(t_pwd));
-            new_node->node = ft_strdup(pwd_until_slash(pwd_value + i));
+            new_node->node = pwd_until_slash(pwd_value + i);
             new_node->next = NULL;
             new_node->root = false;
             ft_add_pwd_node(pwd_lst, new_node);
@@ -145,7 +145,7 @@ char    *remove_backslash_at_end(char *pwd)
     if (!pwd)
         return (NULL);
     new_string = pwd;
-    while (pwd[i] != '/')
+    while ((pwd[i] && pwd[i] != '/') || i == 0)
         i++;
     new_string = malloc(sizeof(char) * i + 1);
     if (!new_string)
@@ -156,62 +156,54 @@ char    *remove_backslash_at_end(char *pwd)
         j++;
     }
     new_string[j] = '\0';
-    return (free(pwd), new_string);
+    return (new_string);
 }
 void    ft_cd(t_envp **envp, char *path)
 {
+    char *tmp;
     t_pwd *pwd_lst;
     t_pwd *new_node;
     
     pwd_lst = NULL;
     new_node = NULL;
-    if (!path)
+    if (!path || !ft_strcmp(path, "~"))
     {
-        new_node = malloc(sizeof(t_pwd));
-        new_node->node = ft_strdup(getenv("HOME"));
-        new_node->next = NULL;
-        if (chdir(new_node->node) < 0)
-        {
-            perror("chdir");
+        free(path);
+        path = ft_strdup(getenv("HOME"));
+        if (!path)
             return ;
-        }
-        ft_add_pwd_node(&pwd_lst, new_node);
-        init_pwd_w_envp(envp, &pwd_lst);
-        return ;
     }
     if (path[0] == '/')
     {
-        if (chdir(path) < 0)
-        {
-            perror("chdir");
-            return ;
-        } 
-        new_node = malloc(sizeof(t_pwd));
-        new_node->node = ft_strdup(path);
-        new_node->next = NULL;
-        ft_add_pwd_node(&pwd_lst, new_node);
-        init_pwd_w_envp(envp, &pwd_lst);
+        absolute_path(path, pwd_lst, envp);
+        free_pwd_lst(&pwd_lst);
         return ;
     }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
     {
         perror("chdir");
+        free_pwd_lst(&pwd_lst);
         return ;
     }
     if (!ft_strcmp(path, ".."))
     {
         remove_last_node_pwd(&pwd_lst);
         init_pwd_w_envp(envp, &pwd_lst);
+        free_pwd_lst(&pwd_lst);
         return ;
     }
     else if (!ft_strcmp(path, "."))
     {
+        free_pwd_lst(&pwd_lst);
         return ;
     }
     new_node = malloc(sizeof(t_pwd));
-    new_node->node = ft_strjoin("/", remove_backslash_at_end(path));
+    tmp = remove_backslash_at_end(path);
+    new_node->node = ft_strjoin("/", tmp);
     new_node->next = NULL;
     ft_add_pwd_node(&pwd_lst, new_node);
     init_pwd_w_envp(envp, &pwd_lst);
+    free_pwd_lst(&pwd_lst);
+    free(tmp);
 }

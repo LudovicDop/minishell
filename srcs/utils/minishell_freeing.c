@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 16:01:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:26:00 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,21 @@ void    free_envp(t_envp **envp)
         current = current->next;
         free(to_free->key);
         free(to_free->value);
+        free(to_free);
+    }
+}
+
+void    free_pwd_lst(t_pwd **pwd)
+{
+    t_pwd *current;
+    t_pwd *to_free;
+    
+    current = *pwd;
+    while (current)
+    {
+        to_free = current;
+        current = current->next;
+        free(to_free->node);
         free(to_free);
     }
 }
