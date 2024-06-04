@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 18:09:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:15:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void    ft_cd(t_envp **envp, char *path)
     {
         absolute_path(path, pwd_lst, envp);
         free_pwd_lst(&pwd_lst);
+        free(path);
         return ;
     }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
