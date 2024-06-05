@@ -6,68 +6,84 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 16:47:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:20:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// string, $, AXA
-// ceci est un $ test de test
-char *search_and_replace(char *string, char c_to_replace, char *insert)
+int c_is_present(char *string, char c)
+{
+    int i;
+
+    i = 0;
+    while (string[i])
+    {
+        if (string[i] == c)
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+char *start_replacing(char *string, char *new_string, char c_to_replace, char *insert)
 {
     int i;
     int j;
     int k;
-    int lenght_string;
-    char *new_string;
 
+    k = 0;
     i = 0;
     j = 0;
-    k = 0;
-    if (!string || !c_to_replace || !insert)
-        return (string);
-    lenght_string = ft_strlen(string);
     while (string[i])
     {
         if (string[i] == c_to_replace)
-            break ;
-        i++; 
-    }
-    if (i != lenght_string)
-    {
-        i = 0;
-        printf("result : %lu\n", lenght_string + ft_strlen(insert) + 1);
-        new_string = malloc(sizeof(char) * lenght_string + ft_strlen(insert) + 1);
-        while (string[i])
         {
-            if (string[i] == c_to_replace)
-            {
-                i++;
-                printf("len : %zu (%s)\n", ft_strlen(insert), insert);
-                while (insert[j])
-                {
-                    new_string[k] = insert[j];
-                    printf("new_string bis: %c\n", new_string[k]);
-                    k++;
-                    j++;
-                }
-            }
-            new_string[k] = string[i];
-            printf("new_string : %c\n", new_string[k]);
-            k++;
-            if (string[i])
-                i++;
+            i++;
+            while (insert[j])
+                new_string[k++] = insert[j++];
         }
-        new_string[k] = '\0';
-        printf("new_string : %c\n", new_string[k]);
-        return (new_string);
+        new_string[k++] = string[i];
+        if (string[i])
+            i++;
     }
-    return (string);
+    new_string[k] = '\0';
+    return (new_string);
+}
+// cd ~/Desktop
+char *search_and_replace(char *string, char c_to_replace, char *insert)
+{
+    char *new_string;
+
+    if (!string || !c_to_replace || !insert)
+        return (string);
+    if (c_is_present(string, c_to_replace))
+    {
+        new_string = malloc(sizeof(char) * ft_strlen(string) + ft_strlen(insert) + 1);
+        if (!new_string)
+            return (NULL);
+        return (start_replacing(string, new_string, c_to_replace, insert));
+    }
+    new_string = ft_strdup(string);
+    return (new_string);
 }
 
-void    home_path(char *path)
+void    home_path(char *path, t_envp **envp)
 {
-    printf("\033[35;1m%s\033[m\n", search_and_replace("TEST$ TEST$", '$', "bien joue"));
-    printf("home_path : %s\n", path);
+    char *new_path;
+
+    new_path = NULL;
+    //printf("\033[35;1m%s\033[m\n", search_and_replace(path, '~', getenv("HOME")));
+    if (path)
+        new_path = search_and_replace(path, '~', getenv("HOME"));
+    else
+        new_path = ft_strdup(getenv("HOME"));
+    if (chdir(new_path) < 0)
+    {
+        perror("chdir");
+        free(new_path);
+    }
+    search_key_and_replace_it(envp, "PWD", new_path);
+    free(new_path);
+    return ;
 }

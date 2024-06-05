@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 15:48:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:18:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,6 @@ void    remove_slash(t_pwd **pwd_node);
 void    absolute_path(char *path, t_pwd **pwd_lst, t_envp **envp);
 char    *remove_backslash_at_end(char *pwd);
 void    free_pwd_lst(t_pwd **pwd);
-void    home_path(char *path);
+void    home_path(char *path, t_envp **envp);
 
 #endif

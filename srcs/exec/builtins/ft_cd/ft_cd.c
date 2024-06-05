@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/05 15:53:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:18:05 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void    ft_cd(t_envp **envp, char *path)
     new_node = NULL;
     if (!path || path[0] == '~')
     {
-        home_path(path);
+        home_path(path, envp);
         return ;
     }
     if (path[0] == '/')
