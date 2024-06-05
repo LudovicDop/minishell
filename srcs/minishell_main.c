@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/03 21:55:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:51:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(input_cmd);
 		execution_main(&cmd_list);
 		free_everything(&cmd_list, prompt);
+		free(input_cmd);
 	}
 	return (0);
 }

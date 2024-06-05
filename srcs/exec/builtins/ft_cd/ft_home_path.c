@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 18:11:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:52:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ void    home_path(char *path, t_envp **envp)
     new_path = NULL;
     //printf("\033[35;1m%s\033[m\n", search_and_replace(path, '~', getenv("HOME")));
     if (path)
+    {
         new_path = search_and_replace(path, '~', getenv("HOME"));
+    }
     else
         new_path = ft_strdup(getenv("HOME"));
     if (chdir(new_path) < 0)
