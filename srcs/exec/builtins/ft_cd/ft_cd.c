@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/05 17:18:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:08:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,17 @@ void    ft_cd(t_envp **envp, char *path)
         return ;
     }
     new_node = malloc(sizeof(t_pwd));
-    tmp = remove_backslash_at_end(path);
-    new_node->node = ft_strjoin("/", tmp);
+    tmp = ft_strtrim(path, "./");
+    printf("TEST = %s\n", tmp);
+    if (tmp[0] != '\0')
+        new_node->node = ft_strjoin("/", tmp);
+    else
+    {
+        free_pwd_lst(&pwd_lst);
+        pwd_lst = NULL;
+        new_node->node = getcwd(0, 0);
+        printf("ICI : %s\n", new_node->node);
+    }
     new_node->next = NULL;
     ft_add_pwd_node(&pwd_lst, new_node);
     init_pwd_w_envp(envp, &pwd_lst);

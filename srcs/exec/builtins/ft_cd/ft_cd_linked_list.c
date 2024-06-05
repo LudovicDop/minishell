@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_linked_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 23:03:39 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/04 23:17:50 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/05 18:07:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

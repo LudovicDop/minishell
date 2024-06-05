@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 17:20:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:11:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void    home_path(char *path, t_envp **envp)
     {
         perror("chdir");
         free(new_path);
+        return ;
     }
     search_key_and_replace_it(envp, "PWD", new_path);
-    free(new_path);
+    if (new_path)
+        free(new_path);
     return ;
 }
