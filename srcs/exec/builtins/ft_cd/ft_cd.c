@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/05 18:08:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:19:58 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,30 +133,30 @@ void    remove_slash(t_pwd **pwd_node)
     return ;
 }
 
-char    *remove_backslash_at_end(char *pwd)
-{
-    int     i;
-    int     j;
-    char *new_string;
+// char    *remove_backslash_at_end(char *pwd)
+// {
+//     int     i;
+//     int     j;
+//     char *new_string;
 
-    i = 0;
-    j = 0;
-    if (!pwd)
-        return (NULL);
-    new_string = pwd;
-    while ((pwd[i] && pwd[i] != '/') || i == 0)
-        i++;
-    new_string = malloc(sizeof(char) * i + 1);
-    if (!new_string)
-        return (NULL);
-    while (j < i)
-    {
-        new_string[j] = pwd[j];
-        j++;
-    }
-    new_string[j] = '\0';
-    return (new_string);
-}
+//     i = 0;
+//     j = 0;
+//     if (!pwd)
+//         return (NULL);
+//     new_string = pwd;
+//     while ((pwd[i] && pwd[i] != '/') || i == 0)
+//         i++;
+//     new_string = malloc(sizeof(char) * i + 1);
+//     if (!new_string)
+//         return (NULL);
+//     while (j < i)
+//     {
+//         new_string[j] = pwd[j];
+//         j++;
+//     }
+//     new_string[j] = '\0';
+//     return (new_string);
+// }
 void    ft_cd(t_envp **envp, char *path)
 {
     char *tmp;
@@ -197,7 +197,6 @@ void    ft_cd(t_envp **envp, char *path)
     }
     new_node = malloc(sizeof(t_pwd));
     tmp = ft_strtrim(path, "./");
-    printf("TEST = %s\n", tmp);
     if (tmp[0] != '\0')
         new_node->node = ft_strjoin("/", tmp);
     else
@@ -205,7 +204,6 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         pwd_lst = NULL;
         new_node->node = getcwd(0, 0);
-        printf("ICI : %s\n", new_node->node);
     }
     new_node->next = NULL;
     ft_add_pwd_node(&pwd_lst, new_node);
