@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/04 23:51:21 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/05 15:53:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,10 @@ void    ft_cd(t_envp **envp, char *path)
     
     pwd_lst = NULL;
     new_node = NULL;
-    if (!path || !ft_strcmp(path, "~"))
+    if (!path || path[0] == '~')
     {
-        free(path);
-        path = ft_strdup(getenv("HOME"));
-        if (!path)
-            return ;
+        home_path(path);
+        return ;
     }
     if (path[0] == '/')
     {
@@ -197,7 +195,6 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         return ;
     }
-    printf("result : %s\n", getcwd(0, 0));
     new_node = malloc(sizeof(t_pwd));
     tmp = remove_backslash_at_end(path);
     new_node->node = ft_strjoin("/", tmp);
