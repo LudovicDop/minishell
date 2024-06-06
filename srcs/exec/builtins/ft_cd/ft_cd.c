@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/06 15:57:31 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:30:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,22 @@ void    remove_slash(t_pwd **pwd_node)
     return ;
 }
 
+int is_symbolic_link(const char *path) {
+    struct stat path_stat;
+    
+    // Use lstat to get the information about the path
+    if (lstat(path, &path_stat) != 0) {
+        perror("lstat");
+        return -1; // Error occurred
+    }
+
+    // Check if the path is a symbolic link
+    if (S_ISLNK(path_stat.st_mode)) {
+        return 1; // The path is a symbolic link
+    } else {
+        return 0; // The path is not a symbolic link
+    }
+}
 void    ft_cd(t_envp **envp, char *path)
 {
     char *tmp;
@@ -184,9 +200,17 @@ void    ft_cd(t_envp **envp, char *path)
     }
     printf("string : %s\n", tmp);
     new_node->next = NULL;
-    ft_add_pwd_node(&pwd_lst, new_node);
-    //search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
-    init_pwd_w_envp(envp, &pwd_lst);
+    if (is_symbolic_link(getcwd(0,0)))
+    {
+        printf("ICI\n");
+        ft_add_pwd_node(&pwd_lst, new_node);
+        init_pwd_w_envp(envp, &pwd_lst);
+    }
+    else
+    {
+        printf("no\n");
+        search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
+    } 
     free_pwd_lst(&pwd_lst);
     free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 18:51:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:05:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!input_cmd)
 		{
 			free_envp(&envp_list);
-			exit(EXIT_SUCCESS);
+			free(input_cmd);
+			return (0);
 		}
 		start_parsing(input_cmd, &cmd_list, &envp_list);
 		add_history(input_cmd);
