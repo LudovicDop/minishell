@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/30 22:49:01 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:09:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,6 @@ char	*ft_strjoin2(char *s1, char *s2)
 	s1 = NULL;
 	return (ret);
 }
-/*
-char	*ft_strjoin2(char *s1, char *s2)
-{
-	char	*ret;
-	size_t	string_size;
-	int		i;
-	int		j;
-
-	j = 0;
-	i = 0;
-	string_size = ft_strlen(s1) + ft_strlen(s2);
-	fprintf(stderr, "fdp de alain\n");
-	ret = malloc(sizeof(char) * (string_size + 1));
-	if (ret == NULL)
-		return (NULL);
-	while (s1[j] != '\0')
-	{
-		ret[i++] = s1[j++];
-	}
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		ret[i++] = s2[j++];
-	}
-	ret[i] = '\0';
-    free(s1);
-	return (ret);
-}*/
 
 char	*ft_strchr_reverse(char *s1, char c)
 {

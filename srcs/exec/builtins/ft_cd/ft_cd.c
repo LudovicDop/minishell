@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/05 21:19:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/06 15:57:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,30 +133,6 @@ void    remove_slash(t_pwd **pwd_node)
     return ;
 }
 
-// char    *remove_backslash_at_end(char *pwd)
-// {
-//     int     i;
-//     int     j;
-//     char *new_string;
-
-//     i = 0;
-//     j = 0;
-//     if (!pwd)
-//         return (NULL);
-//     new_string = pwd;
-//     while ((pwd[i] && pwd[i] != '/') || i == 0)
-//         i++;
-//     new_string = malloc(sizeof(char) * i + 1);
-//     if (!new_string)
-//         return (NULL);
-//     while (j < i)
-//     {
-//         new_string[j] = pwd[j];
-//         j++;
-//     }
-//     new_string[j] = '\0';
-//     return (new_string);
-// }
 void    ft_cd(t_envp **envp, char *path)
 {
     char *tmp;
@@ -195,6 +171,7 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         return ;
     }
+    printf("string : %s\n", path);
     new_node = malloc(sizeof(t_pwd));
     tmp = ft_strtrim(path, "./");
     if (tmp[0] != '\0')
@@ -205,8 +182,10 @@ void    ft_cd(t_envp **envp, char *path)
         pwd_lst = NULL;
         new_node->node = getcwd(0, 0);
     }
+    printf("string : %s\n", tmp);
     new_node->next = NULL;
     ft_add_pwd_node(&pwd_lst, new_node);
+    //search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
     init_pwd_w_envp(envp, &pwd_lst);
     free_pwd_lst(&pwd_lst);
     free(tmp);
