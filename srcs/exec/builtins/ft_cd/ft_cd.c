@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/07 11:05:57 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/07 16:20:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int is_symbolic_link(const char *path) {
     struct stat path_stat;
     
     // Use lstat to get the information about the path
-    printf("\033[35;1mString : %s\033[m\n", path);
+    printf("\033[36;1mString : %s\033[m\n", path);
     if (lstat(path, &path_stat) != 0) {
         printf("\033[31;1mError (string : %s)\033[m\n", path);
         return -1; // Error occurred
@@ -149,6 +149,7 @@ int is_symbolic_link(const char *path) {
     } else {
         return 0; // The path is not a symbolic link
     }
+    printf("Weirdo\n");
 }
 void    ft_cd(t_envp **envp, char *path)
 {
@@ -183,11 +184,6 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         return ;
     }
-    // else if (!ft_strcmp(path, "."))
-    // {
-    //     free_pwd_lst(&pwd_lst);
-    //     return ;
-    // }
     printf("string : %s\n", path);
     new_node = malloc(sizeof(t_pwd));
     tmp = ft_strtrim(path, "./");
@@ -201,13 +197,15 @@ void    ft_cd(t_envp **envp, char *path)
     }
     printf("string : %s\n", tmp);
     new_node->next = NULL;
-    if (is_symbolic_link(tmp) == 1)
+    if (is_symbolic_link(path) == 1)
     {
+        printf("\033[32;1mIt is a symbolic link\033[m\n");
         ft_add_pwd_node(&pwd_lst, new_node);
         init_pwd_w_envp(envp, &pwd_lst);
     }
-    else if (is_symbolic_link(tmp) < 0)
+    else if (is_symbolic_link(path) <= 0)
     {
+        printf("\033[31;1mIt is not a symbolic link\033[m\n");
         search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
     }
     free_pwd_lst(&pwd_lst);
