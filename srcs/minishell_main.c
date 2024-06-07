@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/06 18:05:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:24:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!input_cmd)
 		{
 			free_envp(&envp_list);
+			free(prompt);
 			free(input_cmd);
 			return (0);
 		}
