@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/06 18:30:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:05:57 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,9 @@ int is_symbolic_link(const char *path) {
     struct stat path_stat;
     
     // Use lstat to get the information about the path
+    printf("\033[35;1mString : %s\033[m\n", path);
     if (lstat(path, &path_stat) != 0) {
-        perror("lstat");
+        printf("\033[31;1mError (string : %s)\033[m\n", path);
         return -1; // Error occurred
     }
 
@@ -182,11 +183,11 @@ void    ft_cd(t_envp **envp, char *path)
         free_pwd_lst(&pwd_lst);
         return ;
     }
-    else if (!ft_strcmp(path, "."))
-    {
-        free_pwd_lst(&pwd_lst);
-        return ;
-    }
+    // else if (!ft_strcmp(path, "."))
+    // {
+    //     free_pwd_lst(&pwd_lst);
+    //     return ;
+    // }
     printf("string : %s\n", path);
     new_node = malloc(sizeof(t_pwd));
     tmp = ft_strtrim(path, "./");
@@ -200,17 +201,15 @@ void    ft_cd(t_envp **envp, char *path)
     }
     printf("string : %s\n", tmp);
     new_node->next = NULL;
-    if (is_symbolic_link(getcwd(0,0)))
+    if (is_symbolic_link(tmp) == 1)
     {
-        printf("ICI\n");
         ft_add_pwd_node(&pwd_lst, new_node);
         init_pwd_w_envp(envp, &pwd_lst);
     }
-    else
+    else if (is_symbolic_link(tmp) < 0)
     {
-        printf("no\n");
         search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
-    } 
+    }
     free_pwd_lst(&pwd_lst);
     free(tmp);
 }
