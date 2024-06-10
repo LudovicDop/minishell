@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 17:06:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:59:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,37 @@ char *get_value(const char *s1)
     return (ft_strchr2(s1, '='));
 }
 
+void    search_key_and_increment_it(t_envp **envp, char *key, char *value)
+{
+    t_envp *i;
+
+    i = *envp;
+    if (!envp)
+        return ;
+    while (i)
+    {
+        if (!ft_strcmp(i->key, key))
+        {
+            i->value = ft_strjoin2(i->value, value);
+        }
+        i = i->next;
+    }
+    return ;
+}
+
+int     is_it_incrementation(char *key)
+{
+    int lenght;
+
+    lenght = ft_strlen(key);
+    if (key[lenght - 1] == '+')
+    {
+        key[lenght - 1] = '\0';
+        return (1);
+    }
+    return (0);
+}
+
 void    ft_export(t_envp **envp_list, char *key_value)
 {
     t_export exp_tmp;
@@ -66,11 +97,14 @@ void    ft_export(t_envp **envp_list, char *key_value)
     {
         return (print_env_export(envp_list));
     }
-    printf("\033[36;1mkey_value = %s\033[m\n", key_value);
     exp_tmp.value = ft_strdup(get_value(key_value));
     if (!exp_tmp.value)
         return ;
     exp_tmp.key = ft_strdup(get_key_envp(key_value));
-    fprintf(stderr ,"\033[36;1mKey : %s && Value : %s\033[m\n", exp_tmp.key, exp_tmp.value);
+    if (is_it_incrementation(exp_tmp.key))
+    {
+        search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
+        return ;
+    }
     search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
 }
