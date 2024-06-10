@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 23:59:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/11 00:01:26 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void    ft_export(t_envp **envp_list, char *key_value)
     if (!exp_tmp.value)
         return ;
     exp_tmp.key = ft_strdup(get_key_envp(key_value));
+    if (!exp_tmp.key)
+        return ;
     if (is_it_incrementation(exp_tmp.key))
     {
         search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
