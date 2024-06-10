@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 15:39:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:43:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ void   sort_list(t_envp **envp)
     t_envp *j;
     char *tmp;
 
+    if (!envp)
+        return ;
     i = *envp;
-    j = (*envp)->next;
     while (i)
     {
         j = i->next; 
