@@ -6,9 +6,10 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 14:00:05 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/10/24 12:51:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:49:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strdup(const char *s)
@@ -17,6 +18,8 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		i++;
