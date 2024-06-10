@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 15:43:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:52:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void   sort_list(t_envp **envp)
 {
     t_envp *i;
     t_envp *j;
-    char *tmp;
+    char *tmp_key;
+    char *tmp_value;
 
     if (!envp)
         return ;
@@ -28,9 +29,14 @@ void   sort_list(t_envp **envp)
         {
             if (ft_strncmp(i->key, j->key, ft_strlen(i->key) + ft_strlen(j->key)) > 0)
             {
-                tmp = i->key;
+                tmp_value = i->value;
+                tmp_key = i->key;
                 i->key = j->key;
-                j->key = tmp;
+                i->value = j->value;
+                j->key = tmp_key;
+                j->value = tmp_value;
+                
+                
             }
             j = j->next;
         }
