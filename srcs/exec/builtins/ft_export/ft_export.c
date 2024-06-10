@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 17:21:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:54:10 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void    ft_export(t_envp **envp_list, char *key_value)
 {
     t_export exp_tmp;
 
+    if (!key_value)
+    {
+        print_env_export(envp_list);
+        return ;
+    }
     exp_tmp.value = ft_strdup(get_value(key_value));
     exp_tmp.key = ft_strdup(get_key_envp(key_value));
     fprintf(stderr ,"\033[36;1mKey : %s && Value : %s\033[m\n", exp_tmp.key, exp_tmp.value);

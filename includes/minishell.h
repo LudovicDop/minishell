@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/06 18:19:29 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:19:07 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ void    absolute_path(char *path, t_pwd **pwd_lst, t_envp **envp);
 char    *remove_backslash_at_end(char *pwd);
 void    free_pwd_lst(t_pwd **pwd);
 void    home_path(char *path, t_envp **envp);
+int     testing_absolute_path(char *path, t_envp **envp, t_pwd *pwd_lst);
+void    method_of_list(char *path, t_pwd *pwd_lst, t_pwd *new_node, t_envp **envp);
 /*PWD*/
+void    print_env_export(t_envp **envp);
 void    ft_pwd(t_cmd **cmd);
 #endif

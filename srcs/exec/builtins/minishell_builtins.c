@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/06 18:08:23 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:45:19 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int search_builtins_cmd(t_cmd *cmd)
         return (1);
     if (!ft_strcmp(tmp_arg[0], "export"))
     {
-        ft_export(&(cmd->envp_ref), tmp_arg[1]);
+        // ft_export(&(cmd->envp_ref), tmp_arg[1]);
         free_tab((void**)tmp_arg);
         return (1);
     }
@@ -40,7 +40,6 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "pwd"))
     {
-        ft_pwd(&cmd);
         free_tab((void**)tmp_arg);
         return (1);
     }

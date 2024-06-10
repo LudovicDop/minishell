@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/07 16:22:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:36:04 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,21 +133,6 @@ void    remove_slash(t_pwd **pwd_node)
     return ;
 }
 
-int is_symbolic_link(const char *path) {
-    struct stat path_stat;
-    
-    // Use lstat to get the information about the path
-    if (lstat(path, &path_stat) != 0) {
-        return -1; // Error occurred
-    }
-
-    // Check if the path is a symbolic link
-    if (S_ISLNK(path_stat.st_mode)) {
-        return 1; // The path is a symbolic link
-    } else {
-        return 0; // The path is not a symbolic link
-    }
-}
 void    ft_cd(t_envp **envp, char *path)
 {
     char *tmp;
@@ -156,33 +141,17 @@ void    ft_cd(t_envp **envp, char *path)
     
     pwd_lst = NULL;
     new_node = NULL;
-    if (!path || path[0] == '~')
-    {
-        home_path(path, envp);
+    if (testing_absolute_path(path, envp, pwd_lst))
         return ;
-    }
-    if (path[0] == '/')
-    {
-        absolute_path(path, &pwd_lst, envp);
-        free_pwd_lst(&pwd_lst);
-        return ;
-    }
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
-    {
-        perror("chdir");
-        free_pwd_lst(&pwd_lst);
-        return ;
-    }
-    if (!ft_strcmp(path, ".."))
-    {
-        remove_last_node_pwd(&pwd_lst);
-        init_pwd_w_envp(envp, &pwd_lst);
-        free_pwd_lst(&pwd_lst);
-        return ;
-    }
+        return (perror("chdir"), free_pwd_lst(&pwd_lst));
     new_node = malloc(sizeof(t_pwd));
+    if (!new_node)
+        return ;
     tmp = ft_strtrim(path, "./");
+    if (!tmp)
+        return (free(new_node));
     if (tmp[0] != '\0')
         new_node->node = ft_strjoin("/", tmp);
     else
@@ -192,13 +161,7 @@ void    ft_cd(t_envp **envp, char *path)
         new_node->node = getcwd(0, 0);
     }
     new_node->next = NULL;
-    if (is_symbolic_link(path) == 1)
-    {
-        ft_add_pwd_node(&pwd_lst, new_node);
-        init_pwd_w_envp(envp, &pwd_lst);
-    }
-    else if (is_symbolic_link(path) <= 0)
-        search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
+    method_of_list(path, pwd_lst, new_node, envp);
     free_pwd_lst(&pwd_lst);
     free(tmp);
 }

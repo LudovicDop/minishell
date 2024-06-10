@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_absolute_path.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 15:49:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:25:40 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int     testing_absolute_path(char *path, t_envp **envp, t_pwd *pwd_lst)
+{
+    if (!path || path[0] == '~')
+    {
+        home_path(path, envp);
+        return (1);
+    }
+    if (path[0] == '/')
+    {
+        absolute_path(path, &pwd_lst, envp);
+        return (1);
+    }
+    return (0);
+}
 void    absolute_path(char *path, t_pwd **pwd_lst, t_envp **envp)
 {
     t_pwd *new_node;

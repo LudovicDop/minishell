@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins_child.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:49:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/06 16:14:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:45:37 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int search_builtins_child(t_cmd *cmd)
     if (!tmp_arg)
         return (1);
     if (!ft_strcmp(tmp_arg[0], "export"))
+    {
+        ft_export(&(cmd->envp_ref), tmp_arg[1]);
+        free_tab((void**)tmp_arg);
         return (1);
+    }
     else if (!ft_strcmp(tmp_arg[0], "cd"))
     {
         free_tab((void**)tmp_arg);
