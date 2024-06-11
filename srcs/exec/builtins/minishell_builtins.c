@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/11 17:00:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:34:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "cd"))
     {
-        ft_cd(&(cmd->envp_ref), tmp_arg[1]);
+        ft_cd(cmd, &(cmd->envp_ref), tmp_arg[1]);
         free_tab((void**)tmp_arg);
         return (1);
     }
@@ -56,7 +56,7 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "exit"))
     {
-        ft_exit(tmp_arg[1]);
+        ft_exit(cmd, tmp_arg[1]);
         free_tab((void**)tmp_arg);
         return (1);
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/05/26 00:39:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/11 21:08:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void    add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst, t_tab **global, t_envp **
 
     new = new_node;
     new->tab_ref = *global;
+    printf("address 2 : %p\n", new->tab_ref);
     new->envp_ref = *envp;
     if (!(*cmd_lst))
     {
@@ -50,7 +51,7 @@ void    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
 
     if (!input_cmd || *input_cmd == '\0')
         return ;
-    global = ft_calloc(sizeof(t_envp), 1);
+    global = ft_calloc(sizeof(t_tab), 1);
     i = 0;
     input_cmd_split = ft_split(input_cmd, ' ');
     if (!input_cmd_split)

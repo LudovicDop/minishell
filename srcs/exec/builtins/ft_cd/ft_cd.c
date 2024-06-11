@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/08 13:36:04 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/11 21:08:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void    remove_slash(t_pwd **pwd_node)
     return ;
 }
 
-void    ft_cd(t_envp **envp, char *path)
+void    ft_cd(t_cmd *cmd, t_envp **envp, char *path)
 {
     char *tmp;
     t_pwd *pwd_lst;
@@ -145,7 +145,12 @@ void    ft_cd(t_envp **envp, char *path)
         return ;
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
+    {
+        printf("address : %p\n", cmd->tab_ref);
+        cmd->tab_ref->return_val = 1;
+        // printf("value ret : %d\n", cmd->tab_ref->return_val);
         return (perror("chdir"), free_pwd_lst(&pwd_lst));
+    }
     new_node = malloc(sizeof(t_pwd));
     if (!new_node)
         return ;

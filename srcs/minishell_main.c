@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/11 16:27:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:05:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		start_parsing(input_cmd, &cmd_list, &envp_list);
 		add_history(input_cmd);
 		execution_main(&cmd_list);
+		fprintf(stderr ,"\033[32;1mReturn_val : %d\033[m\n", cmd_list->tab_ref->return_val);
 		free_everything(&cmd_list, prompt);
 		free(input_cmd);
 	}

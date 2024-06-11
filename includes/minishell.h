@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/11 17:03:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:03:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char				*ft_strchr_reverse(char *s1, char c);
 
 /*builtins*/
 void				ft_export(t_envp **envp_list, char *key_value);
-void				ft_cd(t_envp **envp, char *path);
+void    ft_cd(t_cmd *cmd, t_envp **envp, char *path);
 int					search_builtins_child(t_cmd *cmd);
 
 /*SIGNAL*/
@@ -137,5 +137,5 @@ void    ft_pwd(t_cmd **cmd);
 /*UNSET*/
 void    ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
-void    ft_exit(char *val);
+void    ft_exit(t_cmd *cmd_list, char *val);
 #endif

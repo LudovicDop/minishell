@@ -26,7 +26,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_exit/ft_exit.c
 CC = cc
 LIB = -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
+CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
