@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/10 17:42:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:33:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,6 @@ void    method_of_list(char *path, t_pwd *pwd_lst, t_pwd *new_node, t_envp **env
 /*PWD*/
 void    print_env_export(t_envp **envp);
 void    ft_pwd(t_cmd **cmd);
+/*UNSET*/
+void    ft_unset(t_envp **envp, char *key_to_remove);
 #endif

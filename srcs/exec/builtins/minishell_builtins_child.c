@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:49:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 16:15:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:29:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int search_builtins_child(t_cmd *cmd)
     else if (!ft_strcmp(tmp_arg[0], "pwd"))
     {
         ft_pwd(&cmd);
+        free_tab((void**)tmp_arg);
+        return (1);
+    }
+    else if (!ft_strcmp(tmp_arg[0], "unset"))
+    {
         free_tab((void**)tmp_arg);
         return (1);
     }
