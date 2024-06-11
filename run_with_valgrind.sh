@@ -7,7 +7,7 @@ set -e
 PROGRAM="./minishell"
 
 # Define the suppression file
-SUPPRESSION_FILE="valgrind.supp"
+SUPPRESSION_FILE="ignore_readline.supp"
 
 # Run Valgrind with the specified suppression file
-valgrind --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM
+valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM

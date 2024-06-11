@@ -31,7 +31,6 @@ CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
-
 all : $(NAME)
 
 $(NAME) : $(OBJ)
