@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/11 21:03:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:13:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,6 @@ void    ft_pwd(t_cmd **cmd);
 void    ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
 void    ft_exit(t_cmd *cmd_list, char *val);
+/*ECHO*/
+void    ft_echo(char *string, bool without_ret);
 #endif
