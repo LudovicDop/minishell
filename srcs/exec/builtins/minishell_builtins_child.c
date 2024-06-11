@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:49:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/11 16:29:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:01:05 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int search_builtins_child(t_cmd *cmd)
         return (1);
     }
     else if (!ft_strcmp(tmp_arg[0], "unset"))
+    {
+        free_tab((void**)tmp_arg);
+        return (1);
+    }
+    else if (!ft_strcmp(tmp_arg[0], "exit"))
     {
         free_tab((void**)tmp_arg);
         return (1);
