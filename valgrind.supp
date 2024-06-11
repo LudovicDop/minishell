@@ -1,0 +1,11 @@
+{
+   readline_leak
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   fun:???
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+}
+

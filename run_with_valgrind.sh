@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Ensure the script exits if any command fails
+set -e
+
+# Define the program to run
+PROGRAM="./minishell"
+
+# Define the suppression file
+SUPPRESSION_FILE="valgrind.supp"
+
+# Run Valgrind with the specified suppression file
+valgrind --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM
