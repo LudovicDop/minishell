@@ -24,7 +24,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_export/ft_export_env.c \
 	  srcs/exec/builtins/ft_unset/ft_unset.c \
 	  srcs/exec/builtins/ft_exit/ft_exit.c \
-	  srcs/exec/builtins/ft_echo/ft_echo.c
+	  srcs/exec/builtins/ft_echo/ft_echo.c \
+	  srcs/utils/envp/SHLVL/ft_shlvl.c
 CC = cc
 LIB = -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
 CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/12 12:55:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 13:35:55 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void				ft_env(t_envp **envp_list);
 char				*test_good_path_for_exec(char *exec_name, char *path);
 char				*search_path(t_cmd **cmd);
 char				**convert_envp(t_envp *envp_list);
-t_envp				**search_envp_key(t_envp **envp, char *key);
+t_envp				*search_envp_key(t_envp **envp, char *key);
 
 void				init_envp(t_envp **envp_list, char **envp);
 void				print_envp(t_envp *list);
@@ -142,4 +142,5 @@ void    ft_exit(t_cmd *cmd_list, char *val);
 void    ft_echo(char *string, bool without_ret);
 /*ENVP*/
 void	add_node_to_envp(t_envp **list, t_envp *new_node);
+void    increment_shlvl(t_envp **envp);
 #endif
