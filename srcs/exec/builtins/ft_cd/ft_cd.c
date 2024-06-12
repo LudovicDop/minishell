@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/11 21:08:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:04:10 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,8 @@ void    ft_cd(t_cmd *cmd, t_envp **envp, char *path)
     parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
     if (chdir(path) < 0)
     {
-        printf("address : %p\n", cmd->tab_ref);
         cmd->tab_ref->return_val = 1;
-        // printf("value ret : %d\n", cmd->tab_ref->return_val);
-        return (perror("chdir"), free_pwd_lst(&pwd_lst));
+        return (perror("chdir"), free_pwd_lst(&pwd_lst)); 
     }
     new_node = malloc(sizeof(t_pwd));
     if (!new_node)

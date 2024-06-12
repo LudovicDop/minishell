@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 16:42:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 22:24:59 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int search_builtins_cmd(t_cmd *cmd)
     else if (!ft_strcmp(tmp_arg[0], "echo"))
     {
         if (tmp_arg[1] && !ft_strcmp(tmp_arg[1], "-n"))
-            ft_echo(tmp_arg[2], true);
+            ft_echo(tmp_arg[2], true, &(cmd->envp_ref));
         else
-            ft_echo(tmp_arg[1], false);
+            ft_echo(tmp_arg[1], false, &(cmd->envp_ref));
         free_tab((void**)tmp_arg);
         return (1);
     }

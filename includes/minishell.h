@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/12 13:35:55 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 17:18:36 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void    ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
 void    ft_exit(t_cmd *cmd_list, char *val);
 /*ECHO*/
-void    ft_echo(char *string, bool without_ret);
+void    ft_echo(char *string, bool without_ret, t_envp **envp);
 /*ENVP*/
 void	add_node_to_envp(t_envp **list, t_envp *new_node);
 void    increment_shlvl(t_envp **envp);

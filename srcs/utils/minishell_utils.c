@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 15:59:59 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 22:24:53 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_strcmp(const char *s1, const char *s2)
     s1_lenght = ft_strlen(s1);
     s2_lenght = ft_strlen(s2);
     i = 0;
-
     while (i < s1_lenght && i < s2_lenght)
     {
         if (s1[i] != s2[i])
@@ -30,7 +29,7 @@ int	ft_strcmp(const char *s1, const char *s2)
         }
         i++;
     }
-    return (0);
+    return (s1[i] - s2[i]);
 }
 
 char	*ft_strjoin2(char *s1, char *s2)
