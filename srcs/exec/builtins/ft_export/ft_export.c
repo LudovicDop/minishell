@@ -6,16 +6,32 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 12:57:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 13:01:20 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    create_new_key(t_envp **envp, char *key, char *value)
+{
+    t_envp *new_node;
+
+    new_node = malloc(sizeof(t_envp));
+    if (!new_node)
+        return ;
+    new_node->key = ft_strdup(key);
+    if (!new_node->key)
+        return ;
+    new_node->value = ft_strdup(value);
+    if (!new_node)
+        return ;
+    new_node->next = NULL;
+    add_node_to_envp(envp, new_node);
+}
+
 void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
 {
     t_envp *envp_t;
-    t_envp *new_node;
 
     envp_t = *envp;
     while (envp_t)
@@ -26,14 +42,9 @@ void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
             envp_t->value = ft_strdup(value);
             return ;
         }
-        new_node = envp_t;
         envp_t = envp_t->next;
     }
-    new_node = malloc(sizeof(t_envp));
-    new_node->key = ft_strdup(key);
-    new_node->value = ft_strdup(value);
-    new_node->next = NULL;
-    add_node_to_envp(envp, new_node);
+    create_new_key(envp, key, value);
     return ;
 }
 
