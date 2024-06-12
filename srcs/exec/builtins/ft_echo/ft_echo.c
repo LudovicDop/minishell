@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/12 22:33:01 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 22:38:37 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ char    *ft_check_dollar(char *string, t_envp **envp, t_cmd *cmd)
 
     if (!ft_strcmp(string, "$"))
         return ("$");
-    else if (!ft_strcmp(string, "$?"))
+    if (!ft_strcmp(string, "$?"))
         return (ft_itoa(cmd->tab_ref->return_val));
-    else
+    if (string[0] == '$')
     {
         node = search_envp_value(envp, skip_dollar(string));
         if (node)
@@ -66,6 +66,7 @@ char    *ft_check_dollar(char *string, t_envp **envp, t_cmd *cmd)
         else
             return ("");
     }
+    return (string);
 }
 
 void    ft_echo(char *string, bool without_ret, t_envp **envp, t_cmd *cmd)
