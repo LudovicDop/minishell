@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:27:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 13:38:32 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 14:10:15 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void    increment_shlvl(t_envp **envp)
     shlvl++;
     free(node->value);
     node->value = ft_itoa(shlvl);
-    printf("shlvl : %s\n", node->value);
 }

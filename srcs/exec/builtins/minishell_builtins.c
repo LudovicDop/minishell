@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/11 21:15:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:42:12 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if(!ft_strcmp(tmp_arg[0], "env"))
     {
-        free_tab((void**)tmp_arg);
-        return (1);
-    }
-    else if (!ft_strcmp(tmp_arg[0], "pwd"))
-    {
+        ft_env(&(cmd->envp_ref));
         free_tab((void**)tmp_arg);
         return (1);
     }
@@ -51,6 +47,7 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "pwd"))
     {
+        ft_pwd(&cmd);
         free_tab((void**)tmp_arg);
         return (1);
     }
@@ -62,10 +59,8 @@ int search_builtins_cmd(t_cmd *cmd)
     }
     else if (!ft_strcmp(tmp_arg[0], "echo"))
     {
-        if (ft_strcmp(tmp_arg[1], "-n"))
-        {
+        if (tmp_arg[1] && !ft_strcmp(tmp_arg[1], "-n"))
             ft_echo(tmp_arg[2], true);
-        }
         else
             ft_echo(tmp_arg[1], false);
         free_tab((void**)tmp_arg);
