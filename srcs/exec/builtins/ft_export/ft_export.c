@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/11 00:01:26 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 12:57:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
 {
     t_envp *envp_t;
+    t_envp *new_node;
 
     envp_t = *envp;
     while (envp_t)
@@ -23,9 +24,16 @@ void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
         {
             free(envp_t->value);
             envp_t->value = ft_strdup(value);
+            return ;
         }
+        new_node = envp_t;
         envp_t = envp_t->next;
     }
+    new_node = malloc(sizeof(t_envp));
+    new_node->key = ft_strdup(key);
+    new_node->value = ft_strdup(value);
+    new_node->next = NULL;
+    add_node_to_envp(envp, new_node);
     return ;
 }
 
@@ -89,6 +97,19 @@ int     is_it_incrementation(char *key)
     return (0);
 }
 
+
+// void    create_new_key(t_envp **envp_list, char *key, char *value)
+// {
+//     t_envp *i;
+
+//     i = *envp_list;
+//     while (i)
+//     {
+        
+//         i = i->next;
+//     }
+// }
+
 void    ft_export(t_envp **envp_list, char *key_value)
 {
     t_export exp_tmp;
@@ -108,5 +129,10 @@ void    ft_export(t_envp **envp_list, char *key_value)
         search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
         return ;
     }
+    // if (exp_tmp.value[0] == '\0')
+    // {
+        
+    //     return ;
+    // }
     search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
 }
