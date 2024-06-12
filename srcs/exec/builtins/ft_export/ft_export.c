@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 13:01:20 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/12 13:02:09 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,6 @@ int     is_it_incrementation(char *key)
     return (0);
 }
 
-
-// void    create_new_key(t_envp **envp_list, char *key, char *value)
-// {
-//     t_envp *i;
-
-//     i = *envp_list;
-//     while (i)
-//     {
-        
-//         i = i->next;
-//     }
-// }
-
 void    ft_export(t_envp **envp_list, char *key_value)
 {
     t_export exp_tmp;
@@ -140,10 +127,5 @@ void    ft_export(t_envp **envp_list, char *key_value)
         search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
         return ;
     }
-    // if (exp_tmp.value[0] == '\0')
-    // {
-        
-    //     return ;
-    // }
     search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
 }
