@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/13 17:03:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:07:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void    execution_main(t_cmd **cmd)
     cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * nbre_cmd);
     if (nbre_cmd == 1)
     {
-        search_builtins_cmd(cmd_list);
-        return ;
+        if (search_builtins_cmd(cmd_list))
+            return ;
     }
     while (cmd_list)
     {
