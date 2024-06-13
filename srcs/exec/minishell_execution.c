@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/10 17:42:12 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:28:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void    execution_pipe(t_cmd *cmd)
     {
         special_carac(cmd);
     }
-    if (search_builtins_child(cmd))
+    if (search_builtins_cmd(cmd))
         return ;
     tmp_arg = ft_split(cmd->arg, ' ');
     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
@@ -75,8 +75,6 @@ void    parent_process(t_cmd *cmd_list, int *fd_in, int i)
 {
     close(cmd_list->tab_ref->pipe_fd[1]);
     *fd_in = cmd_list->tab_ref->pipe_fd[0];
-    if (i == 0)
-        search_builtins_cmd(cmd_list);
 }
 
 void    execution_main(t_cmd **cmd)
@@ -93,6 +91,8 @@ void    execution_main(t_cmd **cmd)
     if (nbre_cmd == 0)
         return ;
     cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * nbre_cmd);
+    if (nbre_cmd == 1)
+        search_builtins_cmd(cmd_list);
     while (cmd_list)
     {
         pipe(cmd_list->tab_ref->pipe_fd);
