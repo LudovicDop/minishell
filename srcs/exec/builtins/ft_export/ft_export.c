@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 13:02:09 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/14 14:09:29 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ void    search_key_and_increment_it(t_envp **envp, char *key, char *value)
         if (!ft_strcmp(i->key, key))
         {
             i->value = ft_strjoin2(i->value, value);
+            return ;
         }
         i = i->next;
     }
+    search_key_and_replace_it(envp, key, value);
     return ;
 }
 
