@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/16 10:20:52 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/16 11:06:58 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int    check_error(char *input_cmd)
     if (check_double_quotes(input_cmd))
         return (1);
     if (check_pipes(input_cmd))
+        return (1);
+    if (check_redirection_symbol(input_cmd))
         return (1);
     return (0);
 }
