@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 10:26:21 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/16 11:18:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/16 13:58:17 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,17 @@ int    check_redirection_bis(char *input_cmd, char symbol)
     return (0);
 }
 
-int    check_redirection_symbol(char *input_cmd)
+int    check_redirection_symbol(char *input_cmd, t_cmd *cmd)
 {
     if (check_redirection_bis(input_cmd, '<'))
+    {
+        ft_error_msg(cmd, "syntax error near unexpected token ", '<', 2);
         return (1);
+    }
     if (check_redirection_bis(input_cmd, '>'))
+    {
+        ft_error_msg(cmd, "syntax error near unexpected token ", '>', 2);
         return (1);
+    }
     return (0);
 }

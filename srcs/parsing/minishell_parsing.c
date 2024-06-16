@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/16 11:06:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/16 14:09:05 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void    refill_my_node(char *input_cmd, t_cmd **new_node)
     (*new_node)->arg = ft_strjoin2((*new_node)->arg, " ");
 }
 
-int    check_error(char *input_cmd)
+int    check_error(char *input_cmd, t_cmd *cmd)
 {
     if (!input_cmd)
         return (0);
-    if (check_simple_quotes(input_cmd))
+    if (check_simple_quotes(input_cmd, cmd))
         return (1);
-    if (check_double_quotes(input_cmd))
+    if (check_double_quotes(input_cmd, cmd))
         return (1);
-    if (check_pipes(input_cmd))
+    if (check_pipes(input_cmd, cmd))
         return (1);
-    if (check_redirection_symbol(input_cmd))
+    if (check_redirection_symbol(input_cmd, cmd))
         return (1);
     return (0);
 }
@@ -105,11 +105,7 @@ int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
     // }
     // add_cmd_node(current_node, cmd, &global, envp);
     // free_tab((void**)input_cmd_split);
-    printf("string : %s\n", input_cmd);
-    if (check_error(input_cmd))
-    {
-        printf("\033[31;1mError while parsing\033[m\n");
+    if (check_error(input_cmd, *cmd))
         return (1);
-    }
     return (0);
 }

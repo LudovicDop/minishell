@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 10:17:07 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/16 11:07:18 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/16 13:58:30 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int     empty_after_symbol(char *input_cmd)
         return (1);
     return (0);
 }
-int     check_pipes(char *input_cmd)
+int     check_pipes(char *input_cmd, t_cmd *cmd)
 {
     int i;
     int count_pipes;
@@ -53,10 +53,16 @@ int     check_pipes(char *input_cmd)
                 count_pipes++;
                 i++;
             }
-            if (count_pipes > 2)
+            if (count_pipes > 2 && count_pipes != 0)
+            {
+                ft_error_msg(cmd, "syntax error near unexpected token ", '|', 2);
                 return (1);
-            if (empty_after_symbol(&input_cmd[i]))
+            }
+            if (empty_after_symbol(&input_cmd[i]) && count_pipes != 0)
+            {
+                ft_error_msg(cmd, "unexpected EOF while looking for matching ", '|', 2);
                 return (1);
+            }
         }
         if (input_cmd[i])
             i++;
