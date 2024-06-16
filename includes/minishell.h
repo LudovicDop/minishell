@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/12 22:31:33 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/16 10:19:49 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ void				special_carac(t_cmd *cmd);
 int					search_builtins_cmd(t_cmd *cmd);
 
 /*Minishell parsing*/
-void				start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
+int				start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
+int     check_simple_quotes(char *input_cmd);
+int     check_double_quotes(char *input_cmd);
+int     check_pipes(char *input_cmd);
+int     empty_after_symbol(char *input_cmd);
 
 /*Minishell search good path in envp*/
 void				ft_env(t_envp **envp_list);
