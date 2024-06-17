@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/13 17:07:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:33:11 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    ft_error_exec(char *error_msg, char *cmd_name)
+{
+    ft_putstr_fd("nemshell: ", 2);
+    ft_putstr_fd(cmd_name, 2);
+    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(error_msg, 2);
+}
 int how_many_cmd(t_cmd *cmd_list)
 {
     int nbre_of_cmd;
@@ -41,7 +48,8 @@ void    execution_pipe(t_cmd *cmd)
     tmp_envp = convert_envp(cmd->envp_ref);
     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
-        perror("execve");
+        ft_error_exec("command not found\n", tmp_arg[0]);
+        // perror("execve");
         //need to free everything
     }
 }
