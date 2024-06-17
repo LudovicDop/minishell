@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/16 14:09:05 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/17 10:31:29 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,55 +57,55 @@ int    check_error(char *input_cmd, t_cmd *cmd)
 }
 int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
 {
-    // t_cmd *current_node;
-    // t_tab *global;
-    // char **input_cmd_split;
-    // int i;
+    t_cmd *current_node;
+    t_tab *global;
+    char **input_cmd_split;
+    int i;
 
-    // if (!input_cmd || *input_cmd == '\0')
-    //     return ;
-    // global = ft_calloc(sizeof(t_tab), 1);
-    // i = 0;
-    // input_cmd_split = ft_split(input_cmd, ' ');
-    // if (!input_cmd_split)
-    //     return ;
-    // current_node = ft_calloc(sizeof(t_cmd), 1);
-    // if (!current_node)
-    //     return ;
-    // while (input_cmd_split[i])
-    // {
-    //     if (input_cmd_split[i][0] == '|')
-    //     {
-    //         i++;
-    //         add_cmd_node(current_node, cmd, &global, envp);
-    //         current_node = ft_calloc(sizeof(t_cmd), 1);
-    //     }
-    //     if (!ft_strcmp(input_cmd_split[i], ">"))
-    //     {
-    //         current_node->any_redirection = true;
-    //         fprintf(stderr, "\033[32;1mRedirection : true!\033[m\n");
-    //         while (input_cmd_split[i] && ft_strcmp(input_cmd_split[i], "|"))
-    //         {
-    //             fprintf(stderr, "\033[31;1mParsing redirection!\033[m\n");
-    //             if (!current_node->arg_redirection)
-    //                 current_node->arg_redirection = ft_strdup(input_cmd_split[i]);
-    //             else
-    //                 current_node->arg_redirection = ft_strjoin(current_node->arg_redirection, input_cmd_split[i]); 
-    //             fprintf(stderr, "\033[31;1m%s\033[m\n", current_node->arg_redirection);
-    //             i++;
-    //         }
-    //         if (!input_cmd_split[i])
-    //         {
-    //             add_cmd_node(current_node, cmd, &global, envp);
-    //             return;
-    //         }
-    //     }
-    //     refill_my_node(input_cmd_split[i], &current_node);
-    //     i++;
-    // }
-    // add_cmd_node(current_node, cmd, &global, envp);
-    // free_tab((void**)input_cmd_split);
     if (check_error(input_cmd, *cmd))
         return (1);
+    if (!input_cmd || *input_cmd == '\0')
+        return (0);
+    global = ft_calloc(sizeof(t_tab), 1);
+    i = 0;
+    input_cmd_split = ft_split(input_cmd, ' ');
+    if (!input_cmd_split)
+        return (0);
+    current_node = ft_calloc(sizeof(t_cmd), 1);
+    if (!current_node)
+        return (1);
+    while (input_cmd_split[i])
+    {
+        if (input_cmd_split[i][0] == '|')
+        {
+            i++;
+            add_cmd_node(current_node, cmd, &global, envp);
+            current_node = ft_calloc(sizeof(t_cmd), 1);
+        }
+        if (!ft_strcmp(input_cmd_split[i], ">"))
+        {
+            current_node->any_redirection = true;
+            fprintf(stderr, "\033[32;1mRedirection : true!\033[m\n");
+            while (input_cmd_split[i] && ft_strcmp(input_cmd_split[i], "|"))
+            {
+                fprintf(stderr, "\033[31;1mParsing redirection!\033[m\n");
+                if (!current_node->arg_redirection)
+                    current_node->arg_redirection = ft_strdup(input_cmd_split[i]);
+                else
+                    current_node->arg_redirection = ft_strjoin(current_node->arg_redirection, input_cmd_split[i]); 
+                fprintf(stderr, "\033[31;1m%s\033[m\n", current_node->arg_redirection);
+                i++;
+            }
+            if (!input_cmd_split[i])
+            {
+                add_cmd_node(current_node, cmd, &global, envp);
+                return (0);
+            }
+        }
+        refill_my_node(input_cmd_split[i], &current_node);
+        i++;
+    }
+    add_cmd_node(current_node, cmd, &global, envp);
+    free_tab((void**)input_cmd_split);
     return (0);
 }
