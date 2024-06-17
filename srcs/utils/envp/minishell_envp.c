@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 22:45:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/17 10:51:13 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*test_good_path_for_exec(char *exec_name, char *path)
 
 	if (access(exec_name, F_OK) == 0)
 		return (exec_name);
+	if (!path)
+		return (NULL);
 	split_path = ft_split(path, ':');
 	i = 0;
 	while (split_path[i])

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/17 10:31:29 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/17 10:49:16 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,12 @@ int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
         if (!ft_strcmp(input_cmd_split[i], ">"))
         {
             current_node->any_redirection = true;
-            fprintf(stderr, "\033[32;1mRedirection : true!\033[m\n");
             while (input_cmd_split[i] && ft_strcmp(input_cmd_split[i], "|"))
             {
-                fprintf(stderr, "\033[31;1mParsing redirection!\033[m\n");
                 if (!current_node->arg_redirection)
                     current_node->arg_redirection = ft_strdup(input_cmd_split[i]);
                 else
                     current_node->arg_redirection = ft_strjoin(current_node->arg_redirection, input_cmd_split[i]); 
-                fprintf(stderr, "\033[31;1m%s\033[m\n", current_node->arg_redirection);
                 i++;
             }
             if (!input_cmd_split[i])
