@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/12 22:24:53 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/18 14:30:33 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,33 @@ int	ft_strcmp(const char *s1, const char *s2)
     return (s1[i] - s2[i]);
 }
 
-char	*ft_strjoin2(char *s1, char *s2)
-{
-	char	*ret;
-	size_t	i;
-	size_t	j;
+// char	*ft_strjoin2(char *s1, char *s2)
+// {
+// 	char	*ret;
+// 	size_t	i;
+// 	size_t	j;
 
-	i = 0;
-	if (!s1)
-		return (NULL);
-	if (!s2)
-		return (NULL);
-	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!ret)
-		return (free(s1), s1 = NULL, free(ret), ret = NULL, NULL);
-	while (s1[i])
-	{
-		ret[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j])
-		ret[i++] = s2[j++];
-	ret[i] = 0;
-	free(s1);
-	s1 = NULL;
-	return (ret);
-}
+// 	i = 0;
+// 	if (!s1)
+// 		return (NULL);
+// 	if (!s2)
+// 		return (NULL);
+// 	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+// 	if (!ret)
+// 		return (free(s1), s1 = NULL, free(ret), ret = NULL, NULL);
+// 	while (s1[i])
+// 	{
+// 		ret[i] = s1[i];
+// 		i++;
+// 	}
+// 	j = 0;
+// 	while (s2[j])
+// 		ret[i++] = s2[j++];
+// 	ret[i] = 0;
+// 	free(s1);
+// 	s1 = NULL;
+// 	return (ret);
+// }
 
 char	*ft_strchr_reverse(char *s1, char c)
 {
