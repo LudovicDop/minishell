@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:03:33 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/06 16:14:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:01:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*search_key_value(t_cmd **cmd, char *key)
 		}
 		current = current->next;
 	}
-    return (NULL);
+	return (NULL);
 }
 
-void    ft_pwd(t_cmd **cmd)
+void	ft_pwd(t_cmd **cmd)
 {
-    printf("%s\n", search_key_value(cmd, "PWD"));
+	printf("%s\n", search_key_value(cmd, "PWD"));
 }

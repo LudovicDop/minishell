@@ -3,131 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 09:59:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 11:01:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    create_new_key(t_envp **envp, char *key, char *value)
+char	*get_key_envp(const char *s1)
 {
-    t_envp *new_node;
+	int		i;
+	int		j;
+	char	*string;
+	char	*ret;
 
-    new_node = malloc(sizeof(t_envp));
-    if (!new_node)
-        return ;
-    new_node->key = ft_strdup(key);
-    if (!new_node->key)
-        return ;
-    new_node->value = ft_strdup(value);
-    if (!new_node)
-        return ;
-    new_node->next = NULL;
-    add_node_to_envp(envp, new_node);
+	string = (char *)s1;
+	i = 0;
+	while (string[i] && string[i] != '=')
+		i++;
+	ret = ft_calloc(i + 1, sizeof(char));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (string[i] && string[i] != '=')
+	{
+		ret[i] = string[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }
 
-void    search_key_and_replace_it(t_envp **envp, char *key, char *value)
+char	*get_value(const char *s1)
 {
-    t_envp *envp_t;
-
-    envp_t = *envp;
-    while (envp_t)
-    {
-        if (!ft_strcmp(envp_t->key, key))
-        {
-            free(envp_t->value);
-            envp_t->value = ft_strdup(value);
-            return ;
-        }
-        envp_t = envp_t->next;
-    }
-    create_new_key(envp, key, value);
-    return ;
+	return (ft_strchr2(s1, '='));
 }
 
-char *get_key_envp(const char *s1)
+void	search_key_and_increment_it(t_envp **envp, char *key, char *value)
 {
-    int i;
-    int j;
-    char *string;
-    char *ret;
+	t_envp	*i;
 
-    string = (char*)s1;
-    i = 0;
-    while (string[i] && string[i] != '=')
-        i++;
-    ret = ft_calloc(i + 1, sizeof(char));
-    if (!ret)
-        return (NULL);
-    i = 0;
-    while (string[i] && string[i] != '=')
-    {
-        ret[i] = string[i];
-        i++;
-    }
-    ret[i] = '\0';
-    return (ret);
+	i = *envp;
+	if (!envp)
+		return ;
+	while (i)
+	{
+		if (!ft_strcmp(i->key, key))
+		{
+			i->value = ft_strjoin2(i->value, value);
+			return ;
+		}
+		i = i->next;
+	}
+	search_key_and_replace_it(envp, key, value);
+	return ;
 }
 
-char *get_value(const char *s1)
+int	is_it_incrementation(char *key)
 {
-    return (ft_strchr2(s1, '='));
+	int	lenght;
+
+	lenght = ft_strlen(key);
+	if (key[lenght - 1] == '+')
+	{
+		key[lenght - 1] = '\0';
+		return (1);
+	}
+	return (0);
 }
 
-void    search_key_and_increment_it(t_envp **envp, char *key, char *value)
+void	ft_export(t_envp **envp_list, char *key_value)
 {
-    t_envp *i;
+	t_export	exp_tmp;
 
-    i = *envp;
-    if (!envp)
-        return ;
-    while (i)
-    {
-        if (!ft_strcmp(i->key, key))
-        {
-            i->value = ft_strjoin2(i->value, value);
-            return ;
-        }
-        i = i->next;
-    }
-    search_key_and_replace_it(envp, key, value);
-    return ;
-}
-
-int     is_it_incrementation(char *key)
-{
-    int lenght;
-
-    lenght = ft_strlen(key);
-    if (key[lenght - 1] == '+')
-    {
-        key[lenght - 1] = '\0';
-        return (1);
-    }
-    return (0);
-}
-
-void    ft_export(t_envp **envp_list, char *key_value)
-{
-    t_export exp_tmp;
-    
-    if (!key_value)
-    {
-        return (print_env_export(envp_list));
-    }
-    exp_tmp.value = ft_strdup(get_value(key_value));
-    if (!exp_tmp.value)
-        return ;
-    exp_tmp.key = ft_strdup(get_key_envp(key_value));
-    if (!exp_tmp.key)
-        return ;
-    if (is_it_incrementation(exp_tmp.key))
-    {
-        search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
-        return ;
-    }
-    search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
+	if (!key_value)
+	{
+		return (print_env_export(envp_list));
+	}
+	exp_tmp.value = ft_strdup(get_value(key_value));
+	if (!exp_tmp.value)
+		return ;
+	exp_tmp.key = ft_strdup(get_key_envp(key_value));
+	if (!exp_tmp.key)
+		return ;
+	if (is_it_incrementation(exp_tmp.key))
+	{
+		search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);
+		return ;
+	}
+	search_key_and_replace_it(envp_list, exp_tmp.key, exp_tmp.value);
 }
