@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 10:47:34 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:20:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	absolute_path(char *path, t_envp **envp)
 	new_node = NULL;
 	if (chdir(path) < 0)
 	{
-		perror("chdir");
+		ft_error_exec("No such file or directory\n", path);
 		return ;
 	}
 	new_node = malloc(sizeof(t_pwd));

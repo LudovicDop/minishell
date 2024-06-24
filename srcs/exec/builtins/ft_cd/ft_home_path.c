@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 10:47:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:17:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	home_path(char *path, t_envp **envp)
 	}
 	if (chdir(new_path) < 0)
 	{
-		perror("chdir");
+		ft_error_exec("No such file or directory\n", new_path);
 		free(new_path);
 		return ;
 	}
