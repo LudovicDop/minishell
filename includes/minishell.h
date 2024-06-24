@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/16 13:55:58 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 09:31:42 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,32 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef enum {
+	WORD,
+	AND,
+	OR,
+	PIPE,
+	LPARENT,
+	RPARENT,
+	SUBSHELL,
+	COMMAND
+} t_token_type;
+
+/*New part of my code*/
+typedef struct s_node
+{
+	t_token_type type;
+	char		*value;
+	struct s_node *left;
+	struct s_node *right;
+} t_node;
+
 typedef struct s_export
 {
 	char			*key;
 	char			*value;
 }					t_export;
+/*end of the new part of my code*/
 
 typedef struct s_pwd
 {
@@ -131,12 +152,14 @@ void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst);
 int     nbre_node(t_pwd **pwd_list);
 void    remove_last_node_pwd(t_pwd **pwd_list);
 void    remove_slash(t_pwd **pwd_node);
-void    absolute_path(char *path, t_pwd **pwd_lst, t_envp **envp);
+void    absolute_path(char *path, t_envp **envp);
 char    *remove_backslash_at_end(char *pwd);
 void    free_pwd_lst(t_pwd **pwd);
 void    home_path(char *path, t_envp **envp);
-int     testing_absolute_path(char *path, t_envp **envp, t_pwd *pwd_lst);
-void    method_of_list(char *path, t_pwd *pwd_lst, t_pwd *new_node, t_envp **envp);
+int     testing_absolute_path(char *path, t_envp **envp);
+void    method_of_list(char *path, t_pwd *new_node, t_envp **envp);
+char *search_value_envp(t_envp **envp, char *key);
+void    parse_pwd(t_pwd **pwd_lst, char *pwd_value);
 /*PWD*/
 void    print_env_export(t_envp **envp);
 void    ft_pwd(t_cmd **cmd);

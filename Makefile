@@ -29,7 +29,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/parsing/ft_parsing_check/ft_quotes_check.c \
 	  srcs/parsing/ft_parsing_check/ft_pipes_check.c \
 	  srcs/parsing/ft_parsing_check/ft_redirection_symbol.c \
-	  srcs/parsing/ft_parsing_check/ft_error_msg.c
+	  srcs/parsing/ft_parsing_check/ft_error_msg.c \
+	  srcs/exec/builtins/ft_cd/ft_cd_utils.c
 CC = cc
 LIB = -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
 CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address

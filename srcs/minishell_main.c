@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/18 13:52:25 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/18 16:36:42 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		cmd_list = NULL;
 		prompt = get_prompt(envp_list);
 		input_cmd = readline(prompt);
-		// input_cmd = readline("");
 		if (!input_cmd)
 		{
 			free_envp(&envp_list);

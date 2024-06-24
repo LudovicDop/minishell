@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/08 13:36:12 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 09:25:59 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,21 @@ int is_symbolic_link(const char *path) {
     }
 }
 
-void    method_of_list(char *path, t_pwd *pwd_lst, t_pwd *new_node, t_envp **envp)
+void    method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 {
+    t_pwd *pwd_lst;
+
+    pwd_lst = NULL;
     if (is_symbolic_link(path) == 1)
     {
+        parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
         ft_add_pwd_node(&pwd_lst, new_node);
         init_pwd_w_envp(envp, &pwd_lst);
+        free_pwd_lst(&pwd_lst);
     }
     else if (is_symbolic_link(path) <= 0)
+    {
         search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
+        free(new_node);
+    }
 }

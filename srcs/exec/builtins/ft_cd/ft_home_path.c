@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 21:48:47 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 09:19:40 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char *start_replacing(char *string, char *new_string, char c_to_replace, char *i
     new_string[k] = '\0';
     return (new_string);
 }
-// cd ~/Desktop
+
 char *search_and_replace(char *string, char c_to_replace, char *insert)
 {
     char *new_string;
@@ -65,6 +65,8 @@ char *search_and_replace(char *string, char c_to_replace, char *insert)
         return (start_replacing(string, new_string, c_to_replace, insert));
     }
     new_string = ft_strdup(string);
+    if (!new_string)
+        return (NULL);
     return (new_string);
 }
 void    remove_backslash_end(char **path)
@@ -84,30 +86,25 @@ void    remove_backslash_end(char **path)
 void    home_path(char *path, t_envp **envp)
 {
     char *new_path;
-    char *tmp;
 
-    tmp = NULL;
     new_path = NULL;
-    //printf("\033[35;1m%s\033[m\n", search_and_replace(path, '~', getenv("HOME")));
     if (path)
-    {
         new_path = search_and_replace(path, '~', getenv("HOME"));
-    }
     else
+    {
         new_path = ft_strdup(getenv("HOME"));
+        if (!new_path)
+            return ;
+    }
     if (chdir(new_path) < 0)
     {
         perror("chdir");
         free(new_path);
         return ;
     }
-    // printf("string before : %s\n", new_path);
     remove_backslash_end(&new_path);
-    // printf("string : %s\n", tmp);
     search_key_and_replace_it(envp, "PWD", new_path);
     if (new_path)
         free(new_path);
-    if (tmp)
-        free(tmp);
     return ;
 }

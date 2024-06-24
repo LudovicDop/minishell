@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_linked_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 23:03:39 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/05 18:07:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 10:29:16 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst)
     while (current)
     {
         new_pwd = ft_strjoin2(new_pwd, current->node);
+        if (!new_pwd)
+            break ;
         current = current->next;
     }
     search_key_and_replace_it(envp, "PWD", new_pwd);

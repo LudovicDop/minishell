@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/17 21:33:11 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 08:57:55 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void    execution_pipe(t_cmd *cmd)
     {
         ft_error_exec("command not found\n", tmp_arg[0]);
         // perror("execve");
+        return ;
         //need to free everything
     }
 }
@@ -118,3 +119,16 @@ void    execution_main(t_cmd **cmd)
     cmd_list = *cmd;
     wait_everyone(cmd_list, nbre_cmd);
 }
+
+// int execute_command(t_node *node)
+// {
+//     if (node->type != COMMAND)
+//         return (-1);
+    
+// }
+
+// int execute_pipeline(t_node *node)
+// {
+//     if (node->type != PIPE)
+//         return (-1);
+// }
