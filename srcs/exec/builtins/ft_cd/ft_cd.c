@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 18:18:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:22:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	parse_pwd(t_pwd **pwd_lst, char *pwd_value)
 	while (pwd_value[i])
 	{
 		if (pwd_value[i] && pwd_value[i] == '/')
-			parse_pwd_bis(pwd_lst, pwd_value, i++);
+		{
+			i++;
+			parse_pwd_bis(pwd_lst, pwd_value, i);
+		}
 		if (pwd_value[i])
 			i++;
 	}
