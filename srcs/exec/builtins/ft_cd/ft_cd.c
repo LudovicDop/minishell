@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 10:47:23 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:14:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_cd(t_cmd *cmd, t_envp **envp, char *path)
 	if (testing_absolute_path(path, envp))
 		return ;
 	if (chdir(path) < 0)
-		return (perror("chdir"));
+		return (ft_error_exec("No such file or directory\n", path));
 	new_node = malloc(sizeof(t_pwd));
 	if (!new_node)
 		return ;

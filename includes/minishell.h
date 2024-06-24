@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 09:31:42 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 11:13:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
 # include <term.h>
 # include <time.h>
 # include <unistd.h>
@@ -57,7 +57,8 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef enum {
+typedef enum
+{
 	WORD,
 	AND,
 	OR,
@@ -66,16 +67,16 @@ typedef enum {
 	RPARENT,
 	SUBSHELL,
 	COMMAND
-} t_token_type;
+}					t_token_type;
 
 /*New part of my code*/
 typedef struct s_node
 {
-	t_token_type type;
-	char		*value;
-	struct s_node *left;
-	struct s_node *right;
-} t_node;
+	t_token_type	type;
+	char			*value;
+	struct s_node	*left;
+	struct s_node	*right;
+}					t_node;
 
 typedef struct s_export
 {
@@ -98,19 +99,21 @@ char				*ft_strchr2(const char *s, int c);
 
 /*Minishell main function exec*/
 void				execution_main(t_cmd **cmd);
+void				ft_error_exec(char *error_msg, char *cmd_name);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
 int					search_builtins_cmd(t_cmd *cmd);
 
 /*Minishell parsing*/
-int				start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
-int     check_simple_quotes(char *input_cmd, t_cmd *cmd);
-int     check_double_quotes(char *input_cmd, t_cmd *cmd);
-int     check_pipes(char *input_cmd, t_cmd *cmd);
-int     empty_after_symbol(char *input_cmd);
-int    check_redirection_symbol(char *input_cmd, t_cmd *cmd);
-int ft_error_msg(t_cmd *cmd, char *error_msg, char near_this_char, int error_val);
+int					start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
+int					check_simple_quotes(char *input_cmd, t_cmd *cmd);
+int					check_double_quotes(char *input_cmd, t_cmd *cmd);
+int					check_pipes(char *input_cmd, t_cmd *cmd);
+int					empty_after_symbol(char *input_cmd);
+int					check_redirection_symbol(char *input_cmd, t_cmd *cmd);
+int					ft_error_msg(t_cmd *cmd, char *error_msg,
+						char near_this_char, int error_val);
 
 /*Minishell search good path in envp*/
 void				ft_env(t_envp **envp_list);
@@ -136,7 +139,7 @@ char				*ft_strchr_reverse(char *s1, char c);
 
 /*builtins*/
 void				ft_export(t_envp **envp_list, char *key_value);
-void    ft_cd(t_cmd *cmd, t_envp **envp, char *path);
+void				ft_cd(t_cmd *cmd, t_envp **envp, char *path);
 int					search_builtins_child(t_cmd *cmd);
 
 /*SIGNAL*/
@@ -147,29 +150,30 @@ void				search_key_and_replace_it(t_envp **envp, char *key,
 						char *value);
 char				*get_key(t_envp **envp, char *key);
 /*CD*/
-void    ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node);
-void    init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst);
-int     nbre_node(t_pwd **pwd_list);
-void    remove_last_node_pwd(t_pwd **pwd_list);
-void    remove_slash(t_pwd **pwd_node);
-void    absolute_path(char *path, t_envp **envp);
-char    *remove_backslash_at_end(char *pwd);
-void    free_pwd_lst(t_pwd **pwd);
-void    home_path(char *path, t_envp **envp);
-int     testing_absolute_path(char *path, t_envp **envp);
-void    method_of_list(char *path, t_pwd *new_node, t_envp **envp);
-char *search_value_envp(t_envp **envp, char *key);
-void    parse_pwd(t_pwd **pwd_lst, char *pwd_value);
+void				ft_add_pwd_node(t_pwd **pwd_lst, t_pwd *node);
+void				init_pwd_w_envp(t_envp **envp, t_pwd **pwd_lst);
+int					nbre_node(t_pwd **pwd_list);
+void				remove_last_node_pwd(t_pwd **pwd_list);
+void				remove_slash(t_pwd **pwd_node);
+void				absolute_path(char *path, t_envp **envp);
+char				*remove_backslash_at_end(char *pwd);
+void				free_pwd_lst(t_pwd **pwd);
+void				home_path(char *path, t_envp **envp);
+int					testing_absolute_path(char *path, t_envp **envp);
+void				method_of_list(char *path, t_pwd *new_node, t_envp **envp);
+char				*search_value_envp(t_envp **envp, char *key);
+void				parse_pwd(t_pwd **pwd_lst, char *pwd_value);
 /*PWD*/
-void    print_env_export(t_envp **envp);
-void    ft_pwd(t_cmd **cmd);
+void				print_env_export(t_envp **envp);
+void				ft_pwd(t_cmd **cmd);
 /*UNSET*/
-void    ft_unset(t_envp **envp, char *key_to_remove);
+void				ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
-void    ft_exit(t_cmd *cmd_list, char *val);
+void				ft_exit(t_cmd *cmd_list, char *val);
 /*ECHO*/
-void    ft_echo(char *string, bool without_ret, t_envp **envp, t_cmd *cmd);
+void				ft_echo(char *string, bool without_ret, t_envp **envp,
+						t_cmd *cmd);
 /*ENVP*/
-void	add_node_to_envp(t_envp **list, t_envp *new_node);
-void    increment_shlvl(t_envp **envp);
+void				add_node_to_envp(t_envp **list, t_envp *new_node);
+void				increment_shlvl(t_envp **envp);
 #endif
