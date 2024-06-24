@@ -10,4 +10,4 @@ PROGRAM="./minishell"
 SUPPRESSION_FILE="ignore_readline.supp"
 
 # Run Valgrind with the specified suppression file
-valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s --trace-children=yes $PROGRAM
+valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM
