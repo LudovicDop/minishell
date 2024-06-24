@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 08:57:55 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/24 12:56:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void    execution_pipe(t_cmd *cmd)
     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
     {
         ft_error_exec("command not found\n", tmp_arg[0]);
-        // perror("execve");
+        free_tab((void**)tmp_arg);
+        free_tab((void**)tmp_envp);
         return ;
         //need to free everything
     }
@@ -77,7 +78,7 @@ void    child_process(int fd_in, int nbre_cmd, t_cmd *cmd_list)
         dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
     close(cmd_list->tab_ref->pipe_fd[1]);
     execution_pipe(cmd_list);
-    exit(EXIT_SUCCESS);
+    // exit(EXIT_SUCCESS);
 }
 
 void    parent_process(t_cmd *cmd_list, int *fd_in, int i)
@@ -110,7 +111,11 @@ void    execution_main(t_cmd **cmd)
         pipe(cmd_list->tab_ref->pipe_fd);
         cmd_list->tab_ref->process_id[i] = fork();
         if (cmd_list->tab_ref->process_id[i] == 0)
+        {
             child_process(fd_in, nbre_cmd, cmd_list);
+            free_everything(cmd, NULL);
+            exit(EXIT_SUCCESS);
+        }
         parent_process(cmd_list, &fd_in, i);
         cmd_list = cmd_list->next;
         i++;
