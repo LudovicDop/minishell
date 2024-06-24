@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 10:56:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:18:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,24 @@ char	*ft_check_dollar(char *string, t_envp **envp, t_cmd *cmd)
 	t_envp	*node;
 
 	if (!ft_strcmp(string, "$"))
-		return ("$");
+		return (ft_strdup("$"));
 	if (!ft_strcmp(string, "$?"))
 		return (ft_itoa(cmd->tab_ref->return_val));
 	if (string[0] == '$')
 	{
 		node = search_envp_value(envp, skip_dollar(string));
 		if (node)
-			return (node->value);
+			return (ft_strdup(node->value));
 		else
-			return ("");
+			return (ft_strdup(""));
 	}
 	return (string);
 }
 
 void	ft_echo(char *string, bool without_ret, t_envp **envp, t_cmd *cmd)
 {
+	char *tmp;
+
 	if (!string)
 	{
 		printf("\n");
@@ -78,10 +80,14 @@ void	ft_echo(char *string, bool without_ret, t_envp **envp, t_cmd *cmd)
 	}
 	if (without_ret)
 	{
-		printf("%s", ft_check_dollar(string, envp, cmd));
+
+		tmp = ft_check_dollar(string, envp, cmd);
+		printf("%s", tmp);
 	}
 	else if (!without_ret)
 	{
-		printf("%s\n", ft_check_dollar(string, envp, cmd));
+		tmp = ft_check_dollar(string, envp, cmd);
+		printf("%s\n", tmp);
 	}
+	free(tmp);
 }
