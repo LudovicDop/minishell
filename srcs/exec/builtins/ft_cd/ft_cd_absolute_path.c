@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 11:20:31 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:56:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	absolute_path(char *path, t_envp **envp)
 	new_node->next = NULL;
 	ft_add_pwd_node(&pwd_lst, new_node);
 	init_pwd_w_envp(envp, &pwd_lst);
+	free_pwd_lst(&pwd_lst);
 	return ;
 }

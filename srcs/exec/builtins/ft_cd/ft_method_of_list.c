@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 10:48:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:53:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	is_symbolic_link(const char *path)
 
 void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 {
+	char	*tmp;
 	t_pwd	*pwd_lst;
 
 	pwd_lst = NULL;
@@ -38,7 +39,10 @@ void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 	}
 	else if (is_symbolic_link(path) <= 0)
 	{
-		search_key_and_replace_it(envp, "PWD", getcwd(0, 0));
+		tmp = getcwd(0, 0);
+		search_key_and_replace_it(envp, "PWD", tmp);
+		free(new_node->node);
 		free(new_node);
+		free(tmp);
 	}
 }
