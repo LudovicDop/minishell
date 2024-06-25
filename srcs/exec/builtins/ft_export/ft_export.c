@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 15:36:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:40:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*get_key_envp(const char *s1)
 	i = 0;
 	while (string[i] && string[i] != '=')
 		i++;
+	if (string[i] == '\0')
+		return (NULL);
 	ret = ft_calloc(i + 1, sizeof(char));
 	if (!ret)
 		return (NULL);

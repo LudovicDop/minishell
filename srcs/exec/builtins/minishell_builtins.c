@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 09:04:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:26:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	search_builtins_cmd(t_cmd *cmd)
 	else if (!ft_strcmp(tmp_arg[0], "exit"))
 		return (ft_exit(cmd, tmp_arg[1]), free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "echo"))
-		return (ft_echo_bis(cmd, tmp_arg), 1);
+		return (ft_echo_bis(cmd, tmp_arg), free_tab((void **)tmp_arg), 1);
 	return (free_tab((void **)tmp_arg), 0);
 }
