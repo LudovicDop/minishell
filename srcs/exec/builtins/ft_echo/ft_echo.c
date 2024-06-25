@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 14:02:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:06:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,18 @@ void	ft_echo(char *string, bool without_ret, t_envp **envp, t_cmd *cmd)
 {
 	char *tmp;
 
-	if (!string)
+	if (!string && !without_ret)
 	{
 		printf("\n");
 		return ;
 	}
+	if (!string && without_ret)
+	{
+		printf("");
+		return ;
+	}
 	if (without_ret)
 	{
-
 		tmp = ft_check_dollar(string, envp, cmd);
 		printf("%s", tmp);
 	}
