@@ -1,0 +1,2 @@
+// (ping -c 3 google.com | grep round-trip) || (cat error && echo success)
+// (ping -c 3 google.com | grep round-trip) || cat error && echo success
