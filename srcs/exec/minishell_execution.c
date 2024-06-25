@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 17:34:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:51:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void    execution_main(t_cmd **cmd)
 
 int execute_command(t_token *token, int *pipe)
 {
-    char *tmp;
+    char **tmp;
 
     if (token->type != CMD)
         return (-1);
@@ -139,7 +139,7 @@ int execute_command(t_token *token, int *pipe)
         close(pipe[1]);
     }
     tmp = ft_split(token->value, ' ');
-    execve()    
+    // execve()    
     return (0);
 }
 
@@ -160,7 +160,7 @@ int execute_ast(t_token *node)
     while (node)
     {
         if (node->type == CMD)
-            execute_command(node, &pipe);
+            execute_command(node, pipe);
         else if (node->type == PIPE)
             execute_pipeline(node);
         node = node->next;

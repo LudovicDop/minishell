@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/25 17:11:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:50:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char				*ft_strchr2(const char *s, int c);
 /*Minishell main function exec*/
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
-int 				execute_command(t_token *node);
+int 				execute_command(t_token *token, int *pipe);
 int execute_ast(t_token *node);
 
 /*Quêtes secondaires*/
