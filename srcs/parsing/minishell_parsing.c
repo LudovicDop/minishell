@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:24:09 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/17 10:49:16 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/25 10:16:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int    check_error(char *input_cmd, t_cmd *cmd)
 int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
 {
     t_cmd *current_node;
-    t_tab *global;
+    t_tab *glob;
     char **input_cmd_split;
     int i;
 
@@ -66,7 +66,7 @@ int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
         return (1);
     if (!input_cmd || *input_cmd == '\0')
         return (0);
-    global = ft_calloc(sizeof(t_tab), 1);
+    glob = ft_calloc(sizeof(t_tab), 1);
     i = 0;
     input_cmd_split = ft_split(input_cmd, ' ');
     if (!input_cmd_split)
@@ -79,7 +79,7 @@ int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
         if (input_cmd_split[i][0] == '|')
         {
             i++;
-            add_cmd_node(current_node, cmd, &global, envp);
+            add_cmd_node(current_node, cmd, &glob, envp);
             current_node = ft_calloc(sizeof(t_cmd), 1);
         }
         if (!ft_strcmp(input_cmd_split[i], ">"))
@@ -95,14 +95,14 @@ int    start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp)
             }
             if (!input_cmd_split[i])
             {
-                add_cmd_node(current_node, cmd, &global, envp);
+                add_cmd_node(current_node, cmd, &glob, envp);
                 return (0);
             }
         }
         refill_my_node(input_cmd_split[i], &current_node);
         i++;
     }
-    add_cmd_node(current_node, cmd, &global, envp);
+    add_cmd_node(current_node, cmd, &glob, envp);
     free_tab((void**)input_cmd_split);
     return (0);
 }

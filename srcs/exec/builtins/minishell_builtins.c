@@ -6,19 +6,19 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 09:26:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:58:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo_bis(t_cmd *cmd, char **tmp_arg)
+void	ft_echo_bis(t_cmd *cmd, char **tmp_arg)
 {
 	if (tmp_arg[1] && !ft_strcmp(tmp_arg[1], "-n"))
 		ft_echo(tmp_arg[2], true, &(cmd->envp_ref), cmd);
 	else
 		ft_echo(tmp_arg[1], false, &(cmd->envp_ref), cmd);
-	return (1);
+	return ;
 }
 
 int	search_builtins_cmd(t_cmd *cmd)
