@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/26 18:25:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:28:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
         return (-1);
     if (id == 0)
     {
-        close(pipe_fd[WRITE]);
+        // close(pipe_fd[WRITE]);
         dup2(fd_in, STDIN_FILENO);
         close(pipe_fd[READ]);
         execute_ast(node->next, pipe_fd ,envp_list);
