@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/17 10:51:13 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/26 09:45:33 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	*test_good_path_for_exec(char *exec_name, char *path)
 	return (NULL);
 }
 
-char	*search_path(t_cmd **cmd)
+char	*search_path(t_envp *envp_list)
 {
 	t_envp	*current;
 
-	current = (*cmd)->envp_ref;
+	current = envp_list;
 	while (current)
 	{
 		if (!ft_strncmp(current->key, "PATH", sizeof(char) * 5))

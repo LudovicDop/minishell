@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/25 17:46:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/26 09:43:22 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input_cmd;
 	char	*prompt;
 	t_token	*token;
-	t_cmd	*cmd_list;
+	// t_cmd	*cmd_list;
 	t_envp	*envp_list;
 
 	// glob = ft_calloc(sizeof(t_tab), 1);
@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	increment_shlvl(&envp_list);
 	while (1)
 	{
-		cmd_list = NULL;
+		// cmd_list = NULL;
 		prompt = get_prompt(envp_list);
 		input_cmd = readline(prompt);
 		if (!input_cmd)
@@ -69,13 +69,13 @@ int	main(int argc, char **argv, char **envp)
 		// check_quotes(input_cmd);
 		// check_par(input_cmd);
 		token = lexer(input_cmd);
-		execute_ast(token);
+		execute_ast(token, envp_list);
 		// check_op(token);
 		// check_token_par(token);
 		print_token(token);
 		// start_parsing(input_cmd, &cmd_list, &envp_list);
 		// execution_main(&cmd_list);
-		free_everything(&cmd_list, prompt);
+		// free_everything(&cmd_list, prompt);
 		free(input_cmd);
 	}
 	return (0);

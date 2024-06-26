@@ -1,4 +1,4 @@
-MAKEFLAGS+=silent⠀⠀
+#MAKEFLAGS+=silent
 HEADER = ./includes/ 
 # HEADER2 = ./srcs/minishell_parsing/includes/
 LIBFT = -lreadline -ltermcap ./libft/libft.a
