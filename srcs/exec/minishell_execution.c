@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/26 17:47:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/26 18:25:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,14 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
 
 int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
 {
+    int fd_in;
     int status;
     pid_t id;
 
     if (node->type != PIPE)
         return (-1);
+    close(pipe_fd[WRITE]);
+    fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
     printf("WRITE : %d || READ : %d\n", pipe_fd[WRITE], pipe_fd[READ]);
@@ -189,14 +192,18 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
     if (id == 0)
     {
         close(pipe_fd[WRITE]);
-        dup2(pipe_fd[READ], STDIN_FILENO);
-        close(pipe_fd[WRITE]);
+        dup2(fd_in, STDIN_FILENO);
+        close(pipe_fd[READ]);
         execute_ast(node->next, pipe_fd ,envp_list);
         exit(EXIT_FAILURE);
     }
-    close(pipe_fd[0]);
-    close(pipe_fd[1]);
-    waitpid(id, &status, 0);
+    else
+    {
+        close(fd_in);
+        close(pipe_fd[READ]);
+        close(pipe_fd[WRITE]);
+        waitpid(id, &status, 0);
+    }
     return (0);
 }
 
