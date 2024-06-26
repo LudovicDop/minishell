@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/26 09:49:07 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/06/26 15:00:05 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # include <term.h>
 # include <time.h>
 # include <unistd.h>
-
+# define WRITE 1
+# define READ 0
 typedef struct s_tab
 {
 	char			*prompt;
@@ -105,7 +106,7 @@ char				*ft_strchr2(const char *s, int c);
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_token *token, int *pipe, t_envp *envp_list);
-int 				execute_ast(t_token *node, t_envp *envp_list);
+int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
