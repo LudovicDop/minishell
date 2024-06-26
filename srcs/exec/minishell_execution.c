@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/26 16:55:31 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:47:25 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,13 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
         return (-1);
     if (id == 0)
     {
+        fprintf(stderr, "value : READ %d && WRITE %d (for cmd : %s) %d\n", pipe_fd[READ],pipe_fd[WRITE], token->value, getpid());
         close(pipe_fd[READ]);
-        fprintf(stderr, "value : %d (for cmd : %s) %d\n", pipe_fd[READ], token->value, getpid());
-        dup2(STDIN_FILENO, pipe_fd[READ]);
+        if (pipe_fd[READ] != -1)
+            dup2(pipe_fd[READ], STDIN_FILENO);
         if (token->next)
         {
-            fprintf(stderr ,"there you go (id : %d)\n", getpid());
+            fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value);
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
             close(pipe_fd[WRITE]);
         }
@@ -164,6 +165,10 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
         waitpid(id, &status, 0);
         return (0);
     }
+    else
+    {
+        perror("fork");
+    }
     return (0);
 }
 
@@ -177,6 +182,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
         return (-1);
     if (pipe(pipe_fd) < 0)
         return (-1);
+    printf("WRITE : %d || READ : %d\n", pipe_fd[WRITE], pipe_fd[READ]);
     id = fork();
     if (id < 0)
         return (-1);
@@ -196,13 +202,13 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
 
 int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list)
 {
-    if (!node || node->type == 1)
+    if (!node)
         return (1);
     fprintf(stderr ,"\033[31;1mStart new node (%s + %d)\033[m\n", node->value, node->type);
     if (node->type == CMD)
         execute_command(node, pipe_fd, envp_list);
     else if (node->type == PIPE)
-        execute_pipeline(node, pipe_fd,envp_list);
+        return (execute_pipeline(node, pipe_fd,envp_list));
     execute_ast(node->next, pipe_fd ,envp_list);
     return (0);
 }
