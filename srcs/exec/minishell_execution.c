@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 14:24:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:11:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,8 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
             close(pipe_fd[WRITE]);
         }
+        if (search_builtins_token(token, envp_list))
+            return 1;
         tmp_arg = ft_split(token->value, ' ');
         path = test_good_path_for_exec(tmp_arg[0], search_path(envp_list));
         tmp_envp = convert_envp(envp_list);
@@ -181,8 +183,8 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
     if (node->type != PIPE)
         return (-1);
     close(pipe_fd[WRITE]);
-    fd_in = pipe_fd[READ];
     // close(pipe_fd[READ]);
+    fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
     printf("\033[32;1mREAD : %d || WRITE : %d\033[m\n",pipe_fd[READ], pipe_fd[WRITE]);

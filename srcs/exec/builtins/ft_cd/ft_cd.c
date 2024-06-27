@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 09:45:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:05:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	parse_pwd(t_pwd **pwd_lst, char *pwd_value)
 	}
 }
 
-void	ft_cd(t_cmd *cmd, t_envp **envp, char *path)
+void	ft_cd(t_token *token, t_envp **envp, char *path)
 {
 	char	*tmp;
 	t_pwd	*new_node;
@@ -108,7 +108,7 @@ void	ft_cd(t_cmd *cmd, t_envp **envp, char *path)
 		return ;
 	if (chdir(path) < 0)
 	{
-		cmd->tab_ref->return_val = 42;
+		// cmd->tab_ref->return_val = 42;
 		return (ft_error_exec("No such file or directory dddd\n", path));
 	}
 	new_node = malloc(sizeof(t_pwd));

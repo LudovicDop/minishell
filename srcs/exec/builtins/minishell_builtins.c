@@ -6,46 +6,46 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 13:58:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:12:18 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo_bis(t_cmd *cmd, char **tmp_arg)
+void	ft_echo_bis(t_token *token, char **tmp_arg, t_envp *envp_list)
 {
 	if (tmp_arg[1] && !ft_strcmp(tmp_arg[1], "-n"))
-		ft_echo(tmp_arg[2], true, &(cmd->envp_ref), cmd);
+		ft_echo(tmp_arg[2], true, &(envp_list), token);
 	else
-		ft_echo(tmp_arg[1], false, &(cmd->envp_ref), cmd);
+		ft_echo(tmp_arg[1], false, &(envp_list), token);
 	return ;
 }
 
-int	search_builtins_cmd(t_cmd *cmd)
+int	search_builtins_token(t_token *token, t_envp *envp_list)
 {
 	char	**tmp_arg;
 
-	if (!cmd)
+	if (!token)
 		return (0);
-	tmp_arg = ft_split(cmd->arg, ' ');
+	tmp_arg = ft_split(token->value, ' ');
 	if (!tmp_arg)
 		return (1);
 	if (!ft_strcmp(tmp_arg[0], "export"))
-		return (ft_export(&(cmd->envp_ref), tmp_arg[1]),
+		return (ft_export(&(envp_list), tmp_arg[1]),
 			free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "cd"))
-		return (ft_cd(cmd, &(cmd->envp_ref), tmp_arg[1]),
+		return (ft_cd(token, &(envp_list), tmp_arg[1]),
 			free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "env"))
-		return (ft_env(&(cmd->envp_ref)), free_tab((void **)tmp_arg), 1);
+		return (ft_env(&(envp_list)), free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "unset"))
-		return (ft_unset(&(cmd->envp_ref), tmp_arg[1]),
+		return (ft_unset(&(envp_list), tmp_arg[1]),
 			free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "pwd"))
-		return (ft_pwd(&cmd), free_tab((void **)tmp_arg), 1);
+		return (ft_pwd(envp_list), free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "exit"))
-		return (ft_exit(cmd, tmp_arg[1]), free_tab((void **)tmp_arg), 1);
+		return (ft_exit(token, tmp_arg[1]), free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "echo"))
-		return (ft_echo_bis(cmd, tmp_arg), free_tab((void **)tmp_arg), 1);
+		return (ft_echo_bis(token, tmp_arg, envp_list), free_tab((void **)tmp_arg), 1);
 	return (free_tab((void **)tmp_arg), 0);
 }

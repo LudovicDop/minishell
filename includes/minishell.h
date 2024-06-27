@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/26 15:00:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:14:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ char				*ft_strchr_reverse(char *s1, char c);
 
 /*builtins*/
 void				ft_export(t_envp **envp_list, char *key_value);
-void				ft_cd(t_cmd *cmd, t_envp **envp, char *path);
-int					search_builtins_child(t_cmd *cmd);
-
+void				ft_cd(t_token *token, t_envp **envp, char *path);
+int					search_builtins_child(t_token *token, t_envp *envp_list);
+int	search_builtins_token(t_token *token, t_envp *envp_list);
 /*SIGNAL*/
 void				handler(int signal);
 void				init_signal(void);
@@ -172,14 +172,14 @@ char				*search_value_envp(t_envp **envp, char *key);
 void				parse_pwd(t_pwd **pwd_lst, char *pwd_value);
 /*PWD*/
 void				print_env_export(t_envp **envp);
-void				ft_pwd(t_cmd **cmd);
+void				ft_pwd(t_envp *envp_list);
 /*UNSET*/
 void				ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
-void				ft_exit(t_cmd *cmd_list, char *val);
+void				ft_exit(t_token *token, char *val);
 /*ECHO*/
 void				ft_echo(char *string, bool without_ret, t_envp **envp,
-						t_cmd *cmd);
+						t_token *token);
 /*ENVP*/
 void				add_node_to_envp(t_envp **list, t_envp *new_node);
 void				increment_shlvl(t_envp **envp);
