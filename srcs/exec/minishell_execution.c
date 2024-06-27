@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 14:03:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:24:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
     if (id == 0)
     {
         fprintf(stderr, "\033[36;1mvalue : READ %d && WRITE %d (for cmd : %s) %d\033[m\n", pipe_fd[READ],pipe_fd[WRITE], token->value, getpid());
-        close(pipe_fd[READ]);
-        dup2(pipe_fd[READ], STDIN_FILENO);
+        close(pipe_fd[READ]); // ici
         if (token->next)
         {
             // fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value);
@@ -161,7 +160,6 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
     }
     else if (id > 0)
     {
-        close(pipe_fd[READ]);
         close(pipe_fd[WRITE]);
         waitpid(id, &status, 0);
         return (0);
@@ -195,6 +193,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
     {
         printf("\033[35;1mfd_in : %d\033[m\n", fd_in);
         dup2(fd_in, STDIN_FILENO);
+        close(fd_in);
         execute_ast(node->next, pipe_fd ,envp_list);
         exit(EXIT_FAILURE);
     }
