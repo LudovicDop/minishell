@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 17:03:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:40:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ int how_many_cmd(t_token *token)
     nbre_of_cmd = 0;
     while (token)
     {
-        nbre_of_cmd++;
+        if (token->type == CMD)
+            nbre_of_cmd++;
         token = token->next;
     }
+    printf("nbre cmd : %d\n", nbre_of_cmd);
     return (nbre_of_cmd);
 }
 
@@ -145,7 +147,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
     {
         fprintf(stderr, "\033[36;1mvalue : READ %d && WRITE %d (for cmd : %s) %d\033[m\n", pipe_fd[READ],pipe_fd[WRITE], token->value, getpid());
         close(pipe_fd[READ]); // ici
-        if (token->next)
+        if (token->next && token->next->type == PIPE)
         {
             // fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value);
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
@@ -219,8 +221,8 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
         return (1);
     if (how_many_cmd(root) == 1)
     {
-        search_builtins_token(root, envp_list);
-        return (0);
+        if (search_builtins_token(root, envp_list))
+            return (0);
     }
     if (node->type != 1)
         fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);

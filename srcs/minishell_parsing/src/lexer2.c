@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:24:19 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/23 22:24:21 by alphan           ###   ########.fr       */
+/*   Updated: 2024/06/27 17:32:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ char	*get_string(char a, char b, char c, int *i)
 
 t_token_type	get_token_type2(char*s)
 {
-	if (!ft_strncmp(s, "|", 1))
-		return (PIPE);
 	if (!ft_strncmp(s, "||", 2))
 		return (OR);
 	if (!ft_strncmp(s, "&&", 2))
 		return (AND);
+	if (!ft_strncmp(s, "|", 1))
+		return (PIPE);
+	
 	if (!ft_strncmp(s, "&", 1))
 		return (SEP);
 	if (!ft_strncmp(s, "*", 1))
@@ -58,14 +59,15 @@ t_token_type	get_token_type(char *s)
 		return (OPEN_PAR);
 	if (!ft_strncmp(s, ")", 1))
 		return (CLOSE_PAR);
-	if (!ft_strncmp(s, "<", 1))
-		return (REDIRECT_IN);
-	if (!ft_strncmp(s, ">", 1))
-		return (REDIRECT_OUT);
 	if (!ft_strncmp(s, ">>", 2))
 		return (REDIRECT_APPEND);
 	if (!ft_strncmp(s, "<<", 2))
 		return (HEREDOC);
+	if (!ft_strncmp(s, "<", 1))
+		return (REDIRECT_IN);
+	if (!ft_strncmp(s, ">", 1))
+		return (REDIRECT_OUT);
+	
 	return (get_token_type2(s));
 }
 
