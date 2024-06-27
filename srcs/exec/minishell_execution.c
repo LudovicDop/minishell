@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 11:53:22 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:03:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
     {
         fprintf(stderr, "\033[36;1mvalue : READ %d && WRITE %d (for cmd : %s) %d\033[m\n", pipe_fd[READ],pipe_fd[WRITE], token->value, getpid());
         close(pipe_fd[READ]);
-        if (pipe_fd[READ] != -1)
-            dup2(pipe_fd[READ], STDIN_FILENO);
+        dup2(pipe_fd[READ], STDIN_FILENO);
         if (token->next)
         {
             // fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value);
@@ -162,6 +161,8 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
     }
     else if (id > 0)
     {
+        close(pipe_fd[READ]);
+        close(pipe_fd[WRITE]);
         waitpid(id, &status, 0);
         return (0);
     }
@@ -183,6 +184,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
         return (-1);
     close(pipe_fd[WRITE]);
     fd_in = pipe_fd[READ];
+    // close(pipe_fd[READ]);
     if (pipe(pipe_fd) < 0)
         return (-1);
     printf("\033[32;1mREAD : %d || WRITE : %d\033[m\n",pipe_fd[READ], pipe_fd[WRITE]);
@@ -191,10 +193,8 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
         return (-1);
     if (id == 0)
     {
-        // close(pipe_fd[WRITE]);
         printf("\033[35;1mfd_in : %d\033[m\n", fd_in);
         dup2(fd_in, STDIN_FILENO);
-        close(pipe_fd[READ]);
         execute_ast(node->next, pipe_fd ,envp_list);
         exit(EXIT_FAILURE);
     }
