@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/27 15:17:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:55:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	main(int argc, char **argv, char **envp)
 		pipe(pipe_fd);
 		// pipe_fd[0] = -1;
 		// pipe_fd[1] = -1;
-		execute_ast(token, pipe_fd, envp_list);
+		t_token *root;
+
+		root = token;
+		execute_ast(token, pipe_fd, envp_list, root);
 		// check_op(token);
 		// check_token_par(token);
 		print_token(token);

@@ -6,11 +6,12 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 15:11:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:03:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "../minishell_parsing/includes/parser.h"
 
 void    ft_error_exec(char *error_msg, char *cmd_name)
 {
@@ -19,15 +20,15 @@ void    ft_error_exec(char *error_msg, char *cmd_name)
     ft_putstr_fd(": ", 2);
     ft_putstr_fd(error_msg, 2);
 }
-int how_many_cmd(t_cmd *cmd_list)
+int how_many_cmd(t_token *token)
 {
     int nbre_of_cmd;
 
     nbre_of_cmd = 0;
-    while (cmd_list)
+    while (token)
     {
         nbre_of_cmd++;
-        cmd_list = cmd_list->next;
+        token = token->next;
     }
     return (nbre_of_cmd);
 }
@@ -151,13 +152,16 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
             close(pipe_fd[WRITE]);
         }
         if (search_builtins_token(token, envp_list))
-            return 1;
-        tmp_arg = ft_split(token->value, ' ');
-        path = test_good_path_for_exec(tmp_arg[0], search_path(envp_list));
-        tmp_envp = convert_envp(envp_list);
-        if (execve(path, tmp_arg, tmp_envp) < 0)
+            return (exit(EXIT_FAILURE), 0);
+        else
         {
-            exit(EXIT_FAILURE);
+            tmp_arg = ft_split(token->value, ' ');
+            path = test_good_path_for_exec(tmp_arg[0], search_path(envp_list));
+            tmp_envp = convert_envp(envp_list);
+            if (execve(path, tmp_arg, tmp_envp) < 0)
+            {
+                exit(EXIT_FAILURE);
+            }
         }
     }
     else if (id > 0)
@@ -174,7 +178,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
 }
 
 
-int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
+int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *root)
 {
     int fd_in;
     int status;
@@ -196,7 +200,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
         printf("\033[35;1mfd_in : %d\033[m\n", fd_in);
         dup2(fd_in, STDIN_FILENO);
         close(fd_in);
-        execute_ast(node->next, pipe_fd ,envp_list);
+        execute_ast(node->next, pipe_fd ,envp_list, root);
         exit(EXIT_FAILURE);
     }
     else
@@ -209,16 +213,42 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list)
     return (0);
 }
 
-int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list)
+int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
 {
     if (!node)
         return (1);
+    if (how_many_cmd(root) == 1)
+    {
+        search_builtins_token(root, envp_list);
+        return (0);
+    }
     if (node->type != 1)
         fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);
     if (node->type == CMD)
         execute_command(node, pipe_fd, envp_list);
     else if (node->type == PIPE)
-        return (execute_pipeline(node, pipe_fd,envp_list));
-    execute_ast(node->next, pipe_fd ,envp_list);
+        return (execute_pipeline(node, pipe_fd,envp_list, root));
+    execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
 }
+
+
+// int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list)
+// {
+//     t_token *root;
+//     if (!node)
+//         return (1);
+//     root = node;
+//     while (node)
+//     {
+//         if ()
+//         if (node->type != 1)
+//             fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);
+//         if (node->type == CMD)
+//             execute_command(node, pipe_fd, envp_list);
+//         else if (node->type == PIPE)
+//             return (execute_pipeline(node, pipe_fd, envp_list));
+//         node = node->next;
+//     }
+//     return (0);
+// }

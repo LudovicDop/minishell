@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/27 15:14:04 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:31:58 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char				*ft_strchr2(const char *s, int c);
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_token *token, int *pipe, t_envp *envp_list);
-int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list);
+int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list, t_token *root);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
@@ -148,7 +148,7 @@ char				*ft_strchr_reverse(char *s1, char c);
 void				ft_export(t_envp **envp_list, char *key_value);
 void				ft_cd(t_token *token, t_envp **envp, char *path);
 int					search_builtins_child(t_token *token, t_envp *envp_list);
-int	search_builtins_token(t_token *token, t_envp *envp_list);
+int					search_builtins_token(t_token *token, t_envp *envp_list);
 /*SIGNAL*/
 void				handler(int signal);
 void				init_signal(void);

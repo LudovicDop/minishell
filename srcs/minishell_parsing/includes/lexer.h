@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:31:43 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/18 09:25:24 by alphan           ###   ########.fr       */
+/*   Updated: 2024/06/27 16:35:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	struct s_token	*root;
 	int				pos;
 	int				priority;
 	struct s_token	*next;
