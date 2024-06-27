@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/26 18:19:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:51:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int	main(int argc, char **argv, char **envp)
 		token = lexer(input_cmd);
 		int pipe_fd[2];
 		pipe(pipe_fd);
-		// pipe_fd[0] = 0;
-		// pipe_fd[1] = 0;
+		// pipe_fd[0] = -1;
+		// pipe_fd[1] = -1;
 		execute_ast(token, pipe_fd, envp_list);
 		// check_op(token);
 		// check_token_par(token);
-		print_token(token);
+		// print_token(token);
 		// start_parsing(input_cmd, &cmd_list, &envp_list);
 		// execution_main(&cmd_list);
 		// free_everything(&cmd_list, prompt);
