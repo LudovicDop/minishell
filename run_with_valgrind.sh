@@ -4,7 +4,7 @@
 set -e
 
 # Define the program to run
-PROGRAM="/home/ldoppler/Desktop/minishell/./minishell"
+PROGRAM="/home/ldoppler/Desktop/minishell_merge/./minishell"
 
 # Define the suppression file
 SUPPRESSION_FILE="/home/ldoppler/Desktop/minishell/ignore_readline.supp"

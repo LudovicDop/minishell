@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 14:47:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:52:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,23 @@ char	*init_prompt_path(char *tmp_path, t_envp **envp_list)
 	return (tmp_path);
 }
 
+char	*init_prompt_path2(void)
+{
+	char *tmp;
+	char *cwd;
+	char *without_user;
+
+	cwd = getcwd(0, 0);
+	without_user = remove_users(cwd);
+	tmp = ft_strjoin("\033[35;1m", without_user);
+	tmp = ft_strjoin2(tmp, "\033[m ");
+	if (ft_strlen(tmp) == 11)
+	{
+		tmp = ft_strdup("\033[35;1m/\033[m ");
+	}
+	return (free(cwd), tmp);
+}
+
 char	*get_prompt(t_envp *envp_list)
 {
 	char	*tmp_user;
@@ -72,12 +89,20 @@ char	*get_prompt(t_envp *envp_list)
 	{
 		if (!ft_strcmp(current->key, "USER"))
 			tmp_user = init_prompt_user(tmp_user, &current);
-		if (*(current->value) != '\0' && !ft_strcmp(current->key, "PWD"))
+		else if (*(current->value) != '\0' && !ft_strcmp(current->key, "PWD"))
 			tmp_path = init_prompt_path(tmp_path, &current);
 		current = current->next;
 	}
-	prompt = ft_strjoin(tmp_user, tmp_path);
-	if (!prompt)
-		return (NULL);
+	if (tmp_user && tmp_path)
+		prompt = ft_strjoin(tmp_user, tmp_path);
+	else 
+	{
+		prompt = ft_strdup("\033[32;1m@?\033[m:");
+		if (!prompt)
+			return (free(tmp_user), free(tmp_path), NULL);
+		tmp_path = init_prompt_path2();
+		prompt = ft_strjoin2(prompt, tmp_path);
+		return (free(tmp_user), free(tmp_path), prompt);
+	}
 	return (free(tmp_user), free(tmp_path), prompt);
 }

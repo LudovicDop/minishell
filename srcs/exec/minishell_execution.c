@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 17:41:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:17:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
             tmp_envp = convert_envp(envp_list);
             if (execve(path, tmp_arg, tmp_envp) < 0)
             {
+                ft_error_exec("command not found\n", tmp_arg[0]);
                 exit(EXIT_FAILURE);
             }
         }
