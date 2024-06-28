@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/28 11:53:46 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:55:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char				*ft_strchr2(const char *s, int c);
 /*Minishell main function exec*/
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
-int 				execute_command(t_token *token, int *pipe, t_envp *envp_list);
+int 				execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root);
 int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list, t_token *root);
 
 /*Quêtes secondaires*/
@@ -136,9 +136,9 @@ void				add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst,
 
 /*Minishell freeing memory*/
 void				free_tab(void **my_tab);
-void				free_everything(t_cmd **cmd, char *prompt);
+void    			free_everything(t_token **token, char *prompt);
 void				free_envp(t_envp **list);
-void				free_cmd_list(t_cmd **cmd_list);
+void				free_cmd_list(t_token **token_lst);
 
 char				*get_prompt(t_envp *envp_list);
 void				ft_signal(void);

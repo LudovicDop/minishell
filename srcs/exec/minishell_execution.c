@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 14:17:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:54:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
 
 // test_good_path_for_exec(tmp_arg[0], search_path(&cmd))
 // tmp_envp = convert_envp(cmd->envp_ref);
-int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
+int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root)
 {
     char **tmp_arg;
     char **tmp_envp;
@@ -163,6 +163,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list)
             if (execve(path, tmp_arg, tmp_envp) < 0)
             {
                 ft_error_exec("command not found\n", tmp_arg[0]);
+                free_everything(root, NULL);
                 exit(EXIT_FAILURE);
             }
         }
@@ -228,7 +229,7 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
     if (node->type != 1)
         fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);
     if (node->type == CMD)
-        execute_command(node, pipe_fd, envp_list);
+        execute_command(node, pipe_fd, envp_list, root);
     else if (node->type == PIPE)
         return (execute_pipeline(node, pipe_fd,envp_list, root));
     execute_ast(node->next, pipe_fd ,envp_list, root);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 10:21:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:55:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,31 @@ void    free_tab(void   **my_tab)
     free(my_tab);
 }
 
-void    free_everything(t_cmd **cmd, char *prompt)
+void    free_everything(t_token **token, char *prompt)
 {
-    t_cmd *current;
+    t_token *current;
 
-    current = *cmd;
-    if (current)
+    current = *token;
+    if (token)
     {
-        free(current->tab_ref->process_id);
-        free(current->tab_ref);
-        free_cmd_list(&current);
+        free_cmd_list(token);
     }
     if (prompt)
         free(prompt);
 }
 
 
-void    free_cmd_list(t_cmd **cmd_list)
+void    free_cmd_list(t_token **token_lst)
 {
-    t_cmd *current;
-    t_cmd *to_free;
+    t_token *current;
+    t_token *to_free;
 
-    current = *cmd_list;
+    current = *token_lst;
     while (current)
     {
         to_free = current;
         current = current->next;
-        if (to_free->any_redirection)
-            free(to_free->arg_redirection);
-        free(to_free->arg);
-        free(to_free->pathname);
+        free(to_free->value);
         free(to_free);
     }
 }

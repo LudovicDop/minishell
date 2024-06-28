@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 13:26:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:37:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 	tmp = ft_strtrim(path, "./");
 	if (!tmp)
 		return (free(new_node));
+	printf("old val : %s\n", old_pwd);
 	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
 	if (tmp[0] != '\0')
 	{
