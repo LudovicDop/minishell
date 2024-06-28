@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 17:51:46 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:29:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,34 +98,114 @@ void	parse_pwd(t_pwd **pwd_lst, char *pwd_value)
 	}
 }
 
+int		compare_path(t_envp **envp, char *path)
+{
+	// char *tmp;
+
+	// tmp = getcwd(0, 0);
+	printf("path : %s\n", path);
+	if (is_symbolic_link(path) == 1)
+	{
+		printf("symbolic\n");
+	}
+	else
+	{
+		printf("not symbolic\n");
+	}
+	return (0);
+}
+
+void remove_last_node(t_pwd **pwd_lst)
+{
+    t_pwd *current;
+    t_pwd *previous;
+
+    current = *pwd_lst;
+    if (!current)
+        return ;
+
+    if (!current->next) // Case when there's only one node
+    {
+        printf("Last node: %s\n", current->node);
+        free(current->node);
+        free(current);
+        *pwd_lst = NULL;
+        return ;
+    }
+
+    // Traverse to the second-to-last node
+    while (current->next)
+    {
+        previous = current;
+        current = current->next;
+    }
+
+    printf("Last node: %s\n", current->node);
+    free(current->node);
+    free(current);
+	remove_backslash_end(&(previous->node)); 
+    previous->next = NULL;
+}
+
+int	update_old_pwd(char *current_pwd, t_envp **envp)
+{
+	char	*tmp;
+	t_pwd *update_old_path;
+
+	update_old_path = NULL;
+	if (is_symbolic_link(current_pwd) == 1)
+	{
+		parse_pwd(&update_old_path, search_value_envp(envp, "PWD"));
+		remove_last_node(&update_old_path);
+		init_pwd_w_envp(envp, &update_old_path);
+		return (1);
+	}
+	else
+	{
+		tmp = getcwd(0, 0);
+		search_key_and_replace_it(envp, "PWD", tmp);
+		free(tmp);
+	}
+	return (0);
+}
+
 void	ft_cd(t_token *token, t_envp **envp, char *path)
 {
+	char	*current_pwd;
 	char	*old_pwd;
 	char	*tmp;
 	t_pwd	*new_node;
 
 	new_node = NULL;
-	old_pwd = getcwd(0, 0);
+	old_pwd = search_value_envp(envp, "PWD");
 	if (testing_absolute_path(path, envp))
 		return ;
+	if (!ft_strcmp(path, ".."))
+	{
+		if (update_old_pwd(old_pwd, envp))
+			return ;
+	}
+	printf("==> %s\n", path);
 	if (chdir(path) < 0)
 	{
 		// cmd->tab_ref->return_val = 42;
 		return (ft_error_exec("No such file or directory\n", path), free(old_pwd));
 	}
-	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
-	free(old_pwd);
 	new_node = malloc(sizeof(t_pwd));
 	if (!new_node)
 		return ;
 	tmp = ft_strtrim(path, "./");
 	if (!tmp)
 		return (free(new_node));
+	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
 	if (tmp[0] != '\0')
+	{
 		new_node->node = ft_strjoin("/", tmp);
+	}
 	else
 		new_node->node = getcwd(0, 0);
 	new_node->next = NULL;
 	method_of_list(path, new_node, envp);
+	// free(old_pwd);
 	free(tmp);
 }

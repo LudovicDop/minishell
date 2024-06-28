@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/27 16:31:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:53:46 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ int					testing_absolute_path(char *path, t_envp **envp);
 void				method_of_list(char *path, t_pwd *new_node, t_envp **envp);
 char				*search_value_envp(t_envp **envp, char *key);
 void				parse_pwd(t_pwd **pwd_lst, char *pwd_value);
+int					is_symbolic_link(const char *path);
+void				remove_backslash_end(char **path);
 /*PWD*/
 void				print_env_export(t_envp **envp);
 void				ft_pwd(t_envp *envp_list);
