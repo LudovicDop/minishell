@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 12:29:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/28 13:26:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 	if (chdir(path) < 0)
 	{
 		// cmd->tab_ref->return_val = 42;
-		return (ft_error_exec("No such file or directory\n", path), free(old_pwd));
+		return (ft_error_exec("No such file or directory\n", path));
 	}
 	new_node = malloc(sizeof(t_pwd));
 	if (!new_node)
