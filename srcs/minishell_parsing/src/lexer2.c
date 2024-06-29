@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:24:19 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/27 17:32:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:37:31 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@ void	push_stack(t_token **token, char *s, t_token_type type)
 	element = ft_calloc(sizeof(t_token), 1);
 	if (!element)
 		return ;
-	*element = (t_token){type, ft_strdup(s), b++, a[type], NULL};
+	// *element = (t_token){type, ft_strdup(s), b++, a[type], NULL};
+	element->type = type;
+	element->value = ft_strdup(s);
+	element->pos = b++;
+	element->priority = a[type];
+	element->next = NULL;
 	tmp = *token;
 	if (!tmp)
 	{
