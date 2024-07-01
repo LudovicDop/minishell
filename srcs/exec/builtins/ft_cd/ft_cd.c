@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 17:37:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:25:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,14 +147,28 @@ void remove_last_node(t_pwd **pwd_lst)
     previous->next = NULL;
 }
 
-int	update_old_pwd(char *current_pwd, t_envp **envp)
+
+int	ft_chdir(char *path)
+{
+	if (chdir(path) < 0)
+	{
+		// cmd->tab_ref->return_val = 42;
+		return (ft_error_exec("No such file or directory\n", path), 0);
+	}
+	return (1);
+}
+
+int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 {
 	char	*tmp;
 	t_pwd *update_old_path;
 
 	update_old_path = NULL;
+	printf("ici : %s\n", current_pwd);
 	if (is_symbolic_link(current_pwd) == 1)
 	{
+		printf("IS FUCKING SYMBOLIC\n");
+		search_key_and_replace_it(envp, "OLDPWD", current_pwd);
 		parse_pwd(&update_old_path, search_value_envp(envp, "PWD"));
 		remove_last_node(&update_old_path);
 		init_pwd_w_envp(envp, &update_old_path);
@@ -162,13 +176,16 @@ int	update_old_pwd(char *current_pwd, t_envp **envp)
 	}
 	else
 	{
+		if (!ft_chdir(path))
+			return (1);
 		tmp = getcwd(0, 0);
 		search_key_and_replace_it(envp, "PWD", tmp);
+		search_key_and_replace_it(envp, "OLDPWD", current_pwd);
 		free(tmp);
+		return (1);
 	}
 	return (0);
 }
-
 void	ft_cd(t_token *token, t_envp **envp, char *path)
 {
 	char	*current_pwd;
@@ -182,22 +199,18 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 		return ;
 	if (!ft_strcmp(path, ".."))
 	{
-		if (update_old_pwd(old_pwd, envp))
+		if (update_old_pwd(old_pwd, envp, path))
 			return ;
 	}
 	printf("==> %s\n", path);
-	if (chdir(path) < 0)
-	{
-		// cmd->tab_ref->return_val = 42;
-		return (ft_error_exec("No such file or directory\n", path));
-	}
+	if (!ft_chdir(path))
+		return ;
 	new_node = malloc(sizeof(t_pwd));
 	if (!new_node)
 		return ;
 	tmp = ft_strtrim(path, "./");
 	if (!tmp)
 		return (free(new_node));
-	printf("old val : %s\n", old_pwd);
 	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
 	if (tmp[0] != '\0')
 	{
@@ -207,6 +220,5 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 		new_node->node = getcwd(0, 0);
 	new_node->next = NULL;
 	method_of_list(path, new_node, envp);
-	// free(old_pwd);
 	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:30:44 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 18:13:18 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:25:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ char	*search_value_envp(t_envp **envp, char *key)
 		}
 		current = current->next;
 	}
-	printf("null\n");
 	return (NULL);
 }

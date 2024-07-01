@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/24 11:17:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:24:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,20 @@ void	home_path(char *path, t_envp **envp)
 
 	new_path = NULL;
 	if (path)
-		new_path = search_and_replace(path, '~', getenv("HOME"));
+		new_path = search_and_replace(path, '~', search_value_envp(envp, "HOME"));
 	else
 	{
-		new_path = ft_strdup(getenv("HOME"));
-		if (!new_path)
-			return ;
+		new_path = search_value_envp(envp, "HOME");
 	}
 	if (chdir(new_path) < 0)
 	{
-		ft_error_exec("No such file or directory\n", new_path);
-		free(new_path);
+		if (!new_path)
+			ft_putstr_fd("nemshell : PATH is probably unset!\n", 2);
+		else
+			ft_error_exec("No such file or directory\n", new_path);
 		return ;
 	}
 	remove_backslash_end(&new_path);
 	search_key_and_replace_it(envp, "PWD", new_path);
-	if (new_path)
-		free(new_path);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 17:34:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:52:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ char	*get_prompt(t_envp *envp_list)
 		current = current->next;
 	}
 	if (tmp_user && tmp_path)
-	{
 		prompt = ft_strjoin(tmp_user, tmp_path);
-		printf("address before : %p\n", prompt);
-	}
 	else 
 	{
 		prompt = ft_strdup("\033[32;1m@?\033[m:");
@@ -107,6 +104,5 @@ char	*get_prompt(t_envp *envp_list)
 		prompt = ft_strjoin2(prompt, tmp_path);
 		return (free(tmp_user), free(tmp_path), prompt);
 	}
-	printf("ENDDD\n");
 	return (free(tmp_user), free(tmp_path), prompt);
 }
