@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 14:58:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:19:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,24 +123,18 @@ void remove_last_node(t_pwd **pwd_lst)
     current = *pwd_lst;
     if (!current)
         return ;
-
-    if (!current->next) // Case when there's only one node
+    if (!current->next)
     {
-        printf("Last node: %s\n", current->node);
         free(current->node);
         free(current);
         *pwd_lst = NULL;
         return ;
     }
-
-    // Traverse to the second-to-last node
     while (current->next)
     {
         previous = current;
         current = current->next;
     }
-
-    printf("Last node: %s\n", current->node);
     free(current->node);
     free(current);
 	remove_backslash_end(&(previous->node)); 
@@ -170,6 +164,7 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 		parse_pwd(&update_old_path, search_value_envp(envp, "PWD"));
 		remove_last_node(&update_old_path);
 		init_pwd_w_envp(envp, &update_old_path);
+		free_pwd_lst(&update_old_path);
 		return (1);
 	}
 	else
