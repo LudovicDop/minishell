@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:30:44 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 14:25:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:54:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ char	*search_value_envp(t_envp **envp, char *key)
 	while (current)
 	{
 		if (!ft_strcmp(current->key, key))
-		{
-			printf("%s\n", current->value);
 			return (current->value);
-		}
 		current = current->next;
 	}
 	return (NULL);

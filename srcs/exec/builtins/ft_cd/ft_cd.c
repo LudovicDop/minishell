@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 14:25:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:58:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,8 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 	t_pwd *update_old_path;
 
 	update_old_path = NULL;
-	printf("ici : %s\n", current_pwd);
 	if (is_symbolic_link(current_pwd) == 1)
 	{
-		printf("IS FUCKING SYMBOLIC\n");
 		search_key_and_replace_it(envp, "OLDPWD", current_pwd);
 		parse_pwd(&update_old_path, search_value_envp(envp, "PWD"));
 		remove_last_node(&update_old_path);
@@ -179,8 +177,8 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 		if (!ft_chdir(path))
 			return (1);
 		tmp = getcwd(0, 0);
-		search_key_and_replace_it(envp, "PWD", tmp);
 		search_key_and_replace_it(envp, "OLDPWD", current_pwd);
+		search_key_and_replace_it(envp, "PWD", tmp);
 		free(tmp);
 		return (1);
 	}
@@ -202,7 +200,6 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 		if (update_old_pwd(old_pwd, envp, path))
 			return ;
 	}
-	printf("==> %s\n", path);
 	if (!ft_chdir(path))
 		return ;
 	new_node = malloc(sizeof(t_pwd));
@@ -213,9 +210,7 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 		return (free(new_node));
 	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
 	if (tmp[0] != '\0')
-	{
 		new_node->node = ft_strjoin("/", tmp);
-	}
 	else
 		new_node->node = getcwd(0, 0);
 	new_node->next = NULL;
