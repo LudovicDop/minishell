@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/27 15:12:18 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:00:45 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_echo_bis(t_token *token, char **tmp_arg, t_envp *envp_list)
 		ft_echo(tmp_arg[2], true, &(envp_list), token);
 	else
 		ft_echo(tmp_arg[1], false, &(envp_list), token);
-	return ;
+	return (free_tab((void **)tmp_arg));
 }
 
 int	search_builtins_token(t_token *token, t_envp *envp_list)
@@ -46,6 +46,6 @@ int	search_builtins_token(t_token *token, t_envp *envp_list)
 	else if (!ft_strcmp(tmp_arg[0], "exit"))
 		return (ft_exit(token, tmp_arg[1]), free_tab((void **)tmp_arg), 1);
 	else if (!ft_strcmp(tmp_arg[0], "echo"))
-		return (ft_echo_bis(token, tmp_arg, envp_list), free_tab((void **)tmp_arg), 1);
+		return (ft_echo_bis(token, tmp_arg, envp_list), 1);
 	return (free_tab((void **)tmp_arg), 0);
 }

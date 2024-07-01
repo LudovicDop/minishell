@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 16:08:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:48:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,9 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
             {
                 ft_error_exec("command not found\n", tmp_arg[0]);
                 free_everything(&root, NULL);
+                free_tab((void**)tmp_arg);
+                free_tab((void**)tmp_envp);
+                free_envp(&envp_list);
                 exit(EXIT_FAILURE);
             }
         }
@@ -219,11 +222,11 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *roo
 int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
 {
     if (!node)
-        return (1);
+        return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
     if (how_many_cmd(root) == 1)
     {
         if (search_builtins_token(root, envp_list))
-            return (close(pipe_fd[0]), close(pipe_fd[1]), 0);
+            return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 0);
     }
     if (node->type != 1)
         fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);

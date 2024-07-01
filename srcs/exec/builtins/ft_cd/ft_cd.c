@@ -6,55 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 16:19:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:01:00 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_key(t_envp **envp, char *key)
-{
-	t_envp	*envp_tmp;
-
-	envp_tmp = *envp;
-	while (envp_tmp)
-	{
-		if (!ft_strcmp(envp_tmp->key, key))
-		{
-			return (envp_tmp->value);
-		}
-		envp_tmp = envp_tmp->next;
-	}
-	return (NULL);
-}
-
-char	*pwd_until_slash(char *pwd)
-{
-	char	*ret;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!pwd)
-		return (NULL);
-	while (pwd[j] && pwd[j] != '/')
-		j++;
-	ret = malloc(sizeof(char) * j + 2);
-	while (pwd[i])
-	{
-		ret[i] = pwd[i];
-		if (pwd[i] == '/')
-		{
-			i++;
-			ret[i] = '\0';
-			return (ret);
-		}
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
 
 int	parse_pwd_bis(t_pwd **pwd_lst, char *pwd_value, int i)
 {
@@ -98,64 +54,36 @@ void	parse_pwd(t_pwd **pwd_lst, char *pwd_value)
 	}
 }
 
-int		compare_path(t_envp **envp, char *path)
+void	remove_last_node(t_pwd **pwd_lst)
 {
-	// char *tmp;
+	t_pwd	*current;
+	t_pwd	*previous;
 
-	// tmp = getcwd(0, 0);
-	printf("path : %s\n", path);
-	if (is_symbolic_link(path) == 1)
+	current = *pwd_lst;
+	if (!current)
+		return ;
+	if (!current->next)
 	{
-		printf("symbolic\n");
+		free(current->node);
+		free(current);
+		*pwd_lst = NULL;
+		return ;
 	}
-	else
+	while (current->next)
 	{
-		printf("not symbolic\n");
+		previous = current;
+		current = current->next;
 	}
-	return (0);
-}
-
-void remove_last_node(t_pwd **pwd_lst)
-{
-    t_pwd *current;
-    t_pwd *previous;
-
-    current = *pwd_lst;
-    if (!current)
-        return ;
-    if (!current->next)
-    {
-        free(current->node);
-        free(current);
-        *pwd_lst = NULL;
-        return ;
-    }
-    while (current->next)
-    {
-        previous = current;
-        current = current->next;
-    }
-    free(current->node);
-    free(current);
-	remove_backslash_end(&(previous->node)); 
-    previous->next = NULL;
-}
-
-
-int	ft_chdir(char *path)
-{
-	if (chdir(path) < 0)
-	{
-		// cmd->tab_ref->return_val = 42;
-		return (ft_error_exec("No such file or directory\n", path), 0);
-	}
-	return (1);
+	free(current->node);
+	free(current);
+	remove_backslash_end(&(previous->node));
+	previous->next = NULL;
 }
 
 int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 {
 	char	*tmp;
-	t_pwd *update_old_path;
+	t_pwd	*update_old_path;
 
 	update_old_path = NULL;
 	if (is_symbolic_link(current_pwd) == 1)
@@ -179,6 +107,7 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 	}
 	return (0);
 }
+
 void	ft_cd(t_token *token, t_envp **envp, char *path)
 {
 	char	*current_pwd;
@@ -191,10 +120,8 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 	if (testing_absolute_path(path, envp))
 		return ;
 	if (!ft_strcmp(path, ".."))
-	{
 		if (update_old_pwd(old_pwd, envp, path))
 			return ;
-	}
 	if (!ft_chdir(path))
 		return ;
 	new_node = malloc(sizeof(t_pwd));
@@ -204,11 +131,6 @@ void	ft_cd(t_token *token, t_envp **envp, char *path)
 	if (!tmp)
 		return (free(new_node));
 	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
-	if (tmp[0] != '\0')
-		new_node->node = ft_strjoin("/", tmp);
-	else
-		new_node->node = getcwd(0, 0);
-	new_node->next = NULL;
-	method_of_list(path, new_node, envp);
-	free(tmp);
+	ft_cd_add_slash(tmp, new_node);
+	return (method_of_list(path, new_node, envp), free(tmp));
 }

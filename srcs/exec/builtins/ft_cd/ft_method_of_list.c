@@ -6,11 +6,24 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/28 12:32:34 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:59:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_cd_add_slash(char *tmp, t_pwd *new_node)
+{
+	if (tmp[0] != '\0')
+	{
+		new_node->node = ft_strjoin("/", tmp);
+	}
+	else
+	{
+		new_node->node = getcwd(0, 0);
+	}
+	new_node->next = NULL;
+}
 
 int	is_symbolic_link(const char *path)
 {

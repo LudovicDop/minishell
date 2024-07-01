@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 15:19:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:59:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	home_path(char *path, t_envp **envp)
 
 	new_path = NULL;
 	if (path)
-		new_path = search_and_replace(path, '~', search_value_envp(envp, "HOME"));
+		new_path = search_and_replace(path, '~', search_value_envp(envp,
+					"HOME"));
 	else
 	{
 		new_path = search_value_envp(envp, "HOME");
