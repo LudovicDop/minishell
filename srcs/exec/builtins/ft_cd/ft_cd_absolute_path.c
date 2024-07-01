@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/27 17:53:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:16:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	testing_absolute_path(char *path, t_envp **envp)
 	if (path[0] == '/')
 	{
 		absolute_path(path, envp);
+		return (1);
+	}
+	if (path[0] == '-')
+	{
+		go_old_pwd(envp);
 		return (1);
 	}
 	return (0);

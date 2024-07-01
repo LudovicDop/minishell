@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/06/28 17:55:41 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:14:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ char				*search_value_envp(t_envp **envp, char *key);
 void				parse_pwd(t_pwd **pwd_lst, char *pwd_value);
 int					is_symbolic_link(const char *path);
 void				remove_backslash_end(char **path);
+int 				go_old_pwd(t_envp **envp);
 /*PWD*/
 void				print_env_export(t_envp **envp);
 void				ft_pwd(t_envp *envp_list);

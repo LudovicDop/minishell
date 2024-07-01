@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/26 09:45:33 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/01 15:11:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

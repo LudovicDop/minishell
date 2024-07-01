@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 14:24:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:19:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	home_path(char *path, t_envp **envp)
 	if (chdir(new_path) < 0)
 	{
 		if (!new_path)
-			ft_putstr_fd("nemshell : PATH is probably unset!\n", 2);
+			ft_putstr_fd("nemshell : HOME is probably unset!\n", 2);
 		else
 			ft_error_exec("No such file or directory\n", new_path);
 		return ;

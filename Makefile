@@ -31,6 +31,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/parsing/ft_parsing_check/ft_redirection_symbol.c \
 	  srcs/parsing/ft_parsing_check/ft_error_msg.c \
 	  srcs/exec/builtins/ft_cd/ft_cd_utils.c \
+	  srcs/exec/builtins/ft_cd/ft_go_old_pwd.c \
 	  \
 	  srcs/minishell_parsing/src/lexer.c srcs/minishell_parsing/src/lexer2.c srcs/minishell_parsing/src/parser.c \
 	  srcs/minishell_parsing/src/check/chek_op.c srcs/minishell_parsing/src/check/check_quote.c srcs/minishell_parsing/src/check/check_par.c\
