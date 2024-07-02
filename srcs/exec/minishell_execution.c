@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 16:48:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/02 17:25:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,17 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *roo
     return (0);
 }
 
+int ft_redirection(t_token *node)
+{
+	if	(node->type >= 6 && node->type <= 8)
+    {
+        fprintf(stderr, "lock\n");
+		return (1);
+    }
+	fprintf(stderr, "start\n");
+	return (0);
+}
+
 int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
 {
     if (!node)
@@ -228,12 +239,15 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
         if (search_builtins_token(root, envp_list))
             return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 0);
     }
-    if (node->type != 1)
-        fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);
     if (node->type == CMD)
         execute_command(node, pipe_fd, envp_list, root);
     else if (node->type == PIPE)
         return (execute_pipeline(node, pipe_fd,envp_list, root));
+    else if (node->type >= 6 && node->type <= 8)
+	{
+		fprintf(stderr, "\033[36;1mRedirection in progress...\033[m\n");
+        ft_redirection(node);
+	}
     execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
 }
