@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/03 17:31:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:27:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int	main(int argc, char **argv, char **envp)
 		t_token *token2;
 		token = malloc(sizeof(t_token));
 		token2 = malloc(sizeof(t_token));
-		token->value = ft_strdup("cat fichier.txt");
+		token->value = ft_strdup("cat");
 		token->type = CMD;
 
 		token->next = token2;
-		token2->type = REDIRECT_OUT;
-		token2->value = ft_strdup("out1 out2");
+		token2->type = REDIRECT_IN;
+		token2->value = ft_strdup("fichier.txt");
 		token2->next = NULL;
 		pipe(pipe_fd);
 		t_token *root;

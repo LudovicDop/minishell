@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/03 17:26:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:21:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,4 +193,5 @@ void				increment_shlvl(t_envp **envp);
 /*REDIRECTION*/
 void	ft_red_out(t_token *token);
 void	ft_red_append(t_token *token);
+int		ft_red_in(t_token *token);
 #endif

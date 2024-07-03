@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/03 17:30:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:24:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ int ft_redirection(t_token *node)
     {
         ft_red_out(node);
         ft_red_append(node);
+        ft_red_in(node);
 		return (1);
     }
 	fprintf(stderr, "start\n");
