@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 17:39:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:44:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_echo(char *string, bool without_ret, t_envp **envp, t_token *token)
 	char	*tmp;
 
 	tmp = NULL;
+	printf("string echo : %s\n", string);
 	if (!string && !without_ret)
 	{
 		printf("\n");

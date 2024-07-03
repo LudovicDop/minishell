@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 17:30:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:39:58 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,18 @@ void	free_node(t_node *node)
 
 int	main(int argc, char **argv, char **envp)
 {
-	// t_tab	*glob;
 	char	*input_cmd;
 	char	*prompt;
 	t_token	*token;
-	// t_cmd	*cmd_list;
 	t_envp	*envp_list;
+	int pipe_fd[2];
 
-	// glob = ft_calloc(sizeof(t_tab), 1);
-	// if (!glob)
-	// 	return (1);
 	envp_list = NULL;
 	init_envp(&envp_list, envp);
 	init_signal();
 	increment_shlvl(&envp_list);
 	while (1)
 	{
-		// cmd_list = NULL;
 		prompt = get_prompt(envp_list);
 		input_cmd = readline(prompt);
 		if (!input_cmd)
@@ -69,14 +64,13 @@ int	main(int argc, char **argv, char **envp)
 		// check_quotes(input_cmd);
 		// check_par(input_cmd);
 		token = lexer(input_cmd);
-		int pipe_fd[2];
+		// check_op(token);
+		// check_token_par(token);
 		pipe(pipe_fd);
 		t_token *root;
 
 		root = token;
 		execute_ast(token, pipe_fd, envp_list, root);
-		// check_op(token);
-		// check_token_par(token);
 		print_token(token);
 		// start_parsing(input_cmd, &cmd_list, &envp_list);
 		// execution_main(&cmd_list);
