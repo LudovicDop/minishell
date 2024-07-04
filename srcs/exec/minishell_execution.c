@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/03 18:24:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:55:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int how_many_cmd(t_token *token)
     nbre_of_cmd = 0;
     while (token)
     {
-        if (token->type == CMD || (token->type >= 6 && token->type  <= 8))
+        if (token->type == CMD || (token->type >= 6 && token->type  <= 9))
             nbre_of_cmd++;
         token = token->next;
     }
@@ -226,12 +226,13 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *roo
 
 int ft_redirection(t_token *node)
 {
-	if	(node->type >= 6 && node->type <= 8)
+	if	(node->type >= 6 && node->type <= 9)
     {
         ft_red_out(node);
         ft_red_append(node);
         ft_red_in(node);
-		return (1);
+        if (ft_heredoc(node))
+            return (1);
     }
 	fprintf(stderr, "start\n");
 	return (0);
@@ -250,11 +251,12 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
         execute_command(node, pipe_fd, envp_list, root);
     else if (node->type == PIPE)
         return (execute_pipeline(node, pipe_fd,envp_list, root));
-    // else if (node->type >= 6 && node->type <= 8)
-	// {
-	// 	fprintf(stderr, "\033[36;1mRedirection in progress...\033[m\n");
-    //     ft_redirection(node);
-	// }
+    else if (node->type >= 6 && node->type <= 9)
+	{
+		fprintf(stderr, "\033[36;1mRedirection in progress...\033[m\n");
+        if (ft_redirection(node))
+            return (0);
+	}
     execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
 }

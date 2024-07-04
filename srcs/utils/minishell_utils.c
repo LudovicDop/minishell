@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/25 09:38:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:38:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int	ft_strcmp(const char *s1, const char *s2)
     {
         if (s1[i] != s2[i])
         {
+			printf("%d - %d\n", s1[i], s2[i]);
             return (s1[i] - s2[i]);
         }
         i++;
     }
+	printf("%d - %d\n", s1[i], s2[i]);
     return (s1[i] - s2[i]);
 }
 
