@@ -6,11 +6,32 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/03 16:14:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:55:34 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void reset_signal(void)
+{
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+}
+
+void handler_heredoc(int signal)
+{
+    if (signal == SIGINT)
+    {
+        // Write a null character to stdin
+		// g_interrupt = 1;
+        write(STDIN_FILENO, "hello", 1);
+    }
+    else if (signal == SIGQUIT)
+    {
+        // Write a null character to stdin
+        write(STDIN_FILENO, "hello", 1);
+    }
+}
 
 void	handler(int signal)
 {
@@ -28,13 +49,24 @@ void	handler(int signal)
 	}
 }
 
-void	init_signal(void)
+void	init_signal(int choice)
 {
 	struct sigaction	action;
 
-	action.sa_handler = &handler;
-	sigemptyset(&action.sa_mask);
-	action.sa_flags = 0;
-	sigaction(SIGINT, &action, NULL);
-	sigaction(SIGQUIT, &action, NULL);
+	if (choice == 1)
+	{
+		action.sa_handler = &handler;
+		sigemptyset(&action.sa_mask);
+		action.sa_flags = 0;
+		sigaction(SIGINT, &action, NULL);
+		sigaction(SIGQUIT, &action, NULL);
+	}
+	else if (choice == 2)
+	{
+		action.sa_handler = &handler_heredoc;
+		sigemptyset(&action.sa_mask);
+		action.sa_flags = 0;
+		sigaction(SIGINT, &action, NULL);
+		sigaction(SIGQUIT, &action, NULL);
+	}
 }

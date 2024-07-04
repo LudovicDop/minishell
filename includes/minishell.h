@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/04 15:11:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:45:45 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # include <unistd.h>
 # define WRITE 1
 # define READ 0
+
+
+// volatile sig_atomic_t g_interrupt = 0;
+
 typedef struct s_tab
 {
 	char			*prompt;
@@ -152,7 +156,8 @@ int					search_builtins_child(t_token *token, t_envp *envp_list);
 int					search_builtins_token(t_token *token, t_envp *envp_list);
 /*SIGNAL*/
 void				handler(int signal);
-void				init_signal(void);
+void				init_signal(int choice);
+void				reset_signal(void);
 
 void				search_key_and_replace_it(t_envp **envp, char *key,
 						char *value);

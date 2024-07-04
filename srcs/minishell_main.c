@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/04 15:13:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 16:34:00 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 
 	envp_list = NULL;
 	init_envp(&envp_list, envp);
-	init_signal();
+	init_signal(1);
 	increment_shlvl(&envp_list);
 	// while (1)
 	// {
@@ -67,15 +67,21 @@ int	main(int argc, char **argv, char **envp)
 		// check_op(token);
 		// check_token_par(token);
 		t_token *token2;
+		t_token	*token3;
 		token = malloc(sizeof(t_token));
 		token2 = malloc(sizeof(t_token));
+		token3 = malloc(sizeof(t_token));
 		token->value = ft_strdup("key");
 		token->type = HEREDOC;
 
 		token->next = token2;
-		token2->type = CMD;
-		token2->value = ft_strdup("cat fichier.txt");
-		token2->next = NULL;
+		token2->type = HEREDOC;
+		token2->value = ft_strdup("key2");
+		token2->next = token3;
+
+		token3->type = CMD;
+		token3->value = ft_strdup("cat fichier.txt");
+		token3->next = NULL;
 		pipe(pipe_fd);
 		t_token *root;
 
