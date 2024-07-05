@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/04 16:46:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:14:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,19 @@ int	ft_heredoc(t_token *node)
 
 	tmp = NULL;
 	if (!node && node->type != HEREDOC)
-		return (1);
+		return (0);
 	while (1)
 	{
-		reset_signal();
-		init_signal(2);
-		tmp = readline(">");
-		// if (tmp)
-		// {
-		// 	max = ft_strlen(tmp);
-		// 	tmp[max] = '\0';
-		// }
-		printf("=> %s", tmp);
+		write(1, "> ", 2);
+		tmp = get_next_line(STDIN_FILENO);
+		if (tmp)
+		{
+			max = ft_strlen(tmp);
+			tmp[max - 1] = '\0';
+		}
 		if (tmp == NULL || tmp[0] == '\0')
 			return (1);
-		if (tmp == NULL || ft_strcmp(node->value, tmp) == 0)
+		else if (ft_strcmp(node->value, tmp) == 0)
 		{
 			free(tmp);
 			break ;

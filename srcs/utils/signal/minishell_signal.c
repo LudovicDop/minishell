@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/04 16:55:34 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 08:51:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void handler_heredoc(int signal)
     {
         // Write a null character to stdin
 		// g_interrupt = 1;
-        write(STDIN_FILENO, "hello", 1);
+        write(STDIN_FILENO, "\0", 1);
     }
     else if (signal == SIGQUIT)
     {
@@ -63,6 +63,7 @@ void	init_signal(int choice)
 	}
 	else if (choice == 2)
 	{
+		printf("\033[31;1mSecond signal mode\033[m\n");
 		action.sa_handler = &handler_heredoc;
 		sigemptyset(&action.sa_mask);
 		action.sa_flags = 0;

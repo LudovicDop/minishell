@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/04 15:55:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:10:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,10 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
 	{
 		fprintf(stderr, "\033[36;1mRedirection in progress...\033[m\n");
         if (ft_redirection(node))
+        {
+            printf("leave\n");
             return (0);
+        }
 	}
     execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
