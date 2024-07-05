@@ -24,7 +24,7 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }	t_lexer;
 
-void	push_stack2(t_lexer **token, t_token_type t, char **value);
+void	push_stack2(t_lexer **token, t_token_type t, char **value, int j);
 void	final_lexer(t_token *t, t_lexer **token);
 
-# endif
+#endif
