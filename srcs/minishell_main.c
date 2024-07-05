@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 11:35:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:08:10 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	// 		add_history(input_cmd);
 		// check_quotes(input_cmd);
 		// check_par(input_cmd);
-		token = lexer(input_cmd);
+		// token = lexer(input_cmd);
 		// check_op(token);
 		// check_token_par(token);
 		t_token *token2;

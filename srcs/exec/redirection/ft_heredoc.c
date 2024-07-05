@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 11:34:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:24:48 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	ft_heredoc(t_token *node, int *pipe_fd, t_token *token)
 		write(1, "> ", 2);
 		tmp = get_next_line(STDIN_FILENO);
 		remove_return_line(tmp);
-		if (ft_strcmp(node->value, tmp) != 0)
+		printf("\033[36;1m%s && %s\033[m\n", node->value, tmp);
+		if (tmp && ft_strcmp(node->value, tmp) != 0)
 		{
 			if (tmp)
 			{
