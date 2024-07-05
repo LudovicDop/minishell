@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 08:42:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:17:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ int	main(int argc, char **argv, char **envp)
 		token3 = malloc(sizeof(t_token));
 		token->value = ft_strdup("key");
 		token->type = HEREDOC;
-
 		token->next = token2;
+
 		token2->type = HEREDOC;
 		token2->value = ft_strdup("key2");
 		token2->next = token3;
 
 		token3->type = CMD;
-		token3->value = ft_strdup("cat fichier.txt");
+		token3->value = ft_strdup("cat");
 		token3->next = NULL;
 		pipe(pipe_fd);
 		t_token *root;

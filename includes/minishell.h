@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/04 16:45:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 10:36:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,13 @@ typedef struct s_pwd
 int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strjoin2(char *s1, char *s2);
 char				*ft_strchr2(const char *s, int c);
-
+char				*search_and_replace(char *string, char c_to_replace, char *insert);
 /*Minishell main function exec*/
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root);
 int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list, t_token *root);
-int 				ft_redirection(t_token *node);
+int					ft_redirection(t_token *node, int *pipe_fd);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
@@ -199,5 +199,5 @@ void				increment_shlvl(t_envp **envp);
 void	ft_red_out(t_token *token);
 void	ft_red_append(t_token *token);
 int		ft_red_in(t_token *token);
-int		ft_heredoc(t_token *node);
+int		ft_heredoc(t_token *node, int *pipe_fd);
 #endif
