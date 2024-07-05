@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 10:36:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:33:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root);
 int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list, t_token *root);
-int					ft_redirection(t_token *node, int *pipe_fd);
+int					ft_redirection(t_token *node, int *pipe_fd, t_token *root);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
@@ -199,5 +199,5 @@ void				increment_shlvl(t_envp **envp);
 void	ft_red_out(t_token *token);
 void	ft_red_append(t_token *token);
 int		ft_red_in(t_token *token);
-int		ft_heredoc(t_token *node, int *pipe_fd);
+int		ft_heredoc(t_token *node, int *pipe_fd, t_token *token);
 #endif

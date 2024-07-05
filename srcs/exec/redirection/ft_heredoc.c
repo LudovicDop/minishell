@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 11:14:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:34:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	remove_return_line(char *string)
 	return ;
 }
 
-int	ft_heredoc(t_token *node, int *pipe_fd)
+int	ft_heredoc(t_token *node, int *pipe_fd, t_token *token)
 {
 	char	*tmp;
 	char	*full_string;
@@ -59,6 +59,7 @@ int	ft_heredoc(t_token *node, int *pipe_fd)
 			return (free(full_string), free(tmp), 1);
 		else if (ft_strcmp(node->value, tmp) == 0)
 		{
+			pipe(pipe_fd);
 			length = ft_strlen(full_string);
 			write(pipe_fd[WRITE], full_string, length);
 			dup2(pipe_fd[READ], STDIN_FILENO);

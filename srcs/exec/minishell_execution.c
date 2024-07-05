@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 10:25:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:33:24 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,11 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
 
     if (token->type != CMD)
         return (-1);
+    if (token == root)
+    {
+        printf("launch pipe\n");
+        pipe(pipe_fd);
+    }
     id = fork();
     if (id < 0)
         return (-1);
@@ -155,7 +160,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
         }
         else if (token->next && (token->next->type >= 6 && token->next->type <= 8))
         {
-            ft_redirection(token->next, pipe_fd);
+            ft_redirection(token->next, pipe_fd, root);
         }
         if (search_builtins_token(token, envp_list))
             return (exit(EXIT_FAILURE), 0);
@@ -224,14 +229,14 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *roo
     return (0);
 }
 
-int ft_redirection(t_token *node, int *pipe_fd)
+int ft_redirection(t_token *node, int *pipe_fd, t_token *root)
 {
 	if	(node->type >= 6 && node->type <= 9)
     {
         ft_red_out(node);
         ft_red_append(node);
         ft_red_in(node);
-        if (ft_heredoc(node, pipe_fd))
+        if (ft_heredoc(node, pipe_fd, root))
             return (1);
     }
 	return (0);
@@ -252,7 +257,7 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
         return (execute_pipeline(node, pipe_fd,envp_list, root));
     else if (node->type >= 6 && node->type <= 9)
 	{
-        if (ft_redirection(node, pipe_fd))
+        if (ft_redirection(node, pipe_fd, root))
         {
             return (0);
         }

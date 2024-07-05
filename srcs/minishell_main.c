@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 11:17:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:35:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ int	main(int argc, char **argv, char **envp)
 	// {
 	// 	prompt = get_prompt(envp_list);
 	// 	input_cmd = readline(prompt);
-		// if (!input_cmd)
-		// {
-		// 	free_envp(&envp_list);
-		// 	free(prompt);
-		// 	free(input_cmd);
-		// 	return (0);
-		// }
+	// 	if (!input_cmd)
+	// 	{
+	// 		free_envp(&envp_list);
+	// 		free(prompt);
+	// 		free(input_cmd);
+	// 		return (0);
+	// 	}
 	// 	if (*input_cmd != '\0')
 	// 		add_history(input_cmd);
 		// check_quotes(input_cmd);
 		// check_par(input_cmd);
-		// token = lexer(input_cmd);
+		token = lexer(input_cmd);
 		// check_op(token);
 		// check_token_par(token);
 		t_token *token2;
@@ -82,7 +82,6 @@ int	main(int argc, char **argv, char **envp)
 		token3->type = CMD;
 		token3->value = ft_strdup("cat");
 		token3->next = NULL;
-		pipe(pipe_fd);
 		t_token *root;
 
 		root = token;
