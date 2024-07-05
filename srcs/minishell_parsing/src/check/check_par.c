@@ -6,7 +6,7 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:44:04 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/24 11:44:05 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/04 13:00:11 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	check_token_close_par(t_token *token)
 {
 	while (token && token->type == SPACE)
 		token = token->next;
-	if (token->type != CLOSE_PAR || \
-		(token->type < REDIRECT_IN && token->type > AND))
+	if (token->type != CLOSE_PAR && \
+		(token->type < REDIRECT_IN || token->type > AND))
 	{
 		ft_printf("syntax error near unexpected par2\n");
 		return ;
@@ -73,8 +73,8 @@ int	check_token_par(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == CLOSE_PAR)
-			check_token_close_par(token);
+		// if (token->type == CLOSE_PAR)
+		// 	check_token_close_par(token);
 		if (token->type == OPEN_PAR)
 		{
 			token = token->next;

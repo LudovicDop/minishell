@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 11:33:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:35:58 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "../srcs/minishell_parsing/includes/check.h"
+# include "../srcs/minishell_parsing/includes/final_lexer.h"
 // # include "../srcs/minishell_parsing/includes/lexer.h"
 // # include "../srcs/minishell_parsing/includes/parser.h"
 // # include "../srcs/minishell_parsing/includes/print_test.h"
@@ -76,12 +76,12 @@ typedef struct s_cmd
 // 	RPARENT,
 // 	SUBSHELL,
 // 	COMMAND
-// }					t_token_type;
+// }					t_lexer_type;
 
 /*New part of my code*/
 // typedef struct s_node
 // {
-// 	t_token_type	type;
+// 	t_lexer_type	type;
 // 	char			*value;
 // 	struct s_node	*left;
 // 	struct s_node	*right;
@@ -109,9 +109,9 @@ char				*search_and_replace(char *string, char c_to_replace, char *insert);
 /*Minishell main function exec*/
 void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
-int 				execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root);
-int 				execute_ast(t_token *node, int pipe[2], t_envp *envp_list, t_token *root);
-int					ft_redirection(t_token *node, int *pipe_fd, t_token *root);
+int 				execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *root);
+int 				execute_ast(t_lexer *node, int pipe[2], t_envp *envp_list, t_lexer *root);
+int					ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
@@ -141,9 +141,9 @@ void				add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst,
 
 /*Minishell freeing memory*/
 void				free_tab(void **my_tab);
-void    			free_everything(t_token **token, char *prompt);
+void    			free_everything(t_lexer **token, char *prompt);
 void				free_envp(t_envp **list);
-void				free_cmd_list(t_token **token_lst);
+void				free_cmd_list(t_lexer **token_lst);
 
 char				*get_prompt(t_envp *envp_list);
 void				ft_signal(void);
@@ -151,9 +151,9 @@ char				*ft_strchr_reverse(char *s1, char c);
 
 /*builtins*/
 void				ft_export(t_envp **envp_list, char *key_value);
-void				ft_cd(t_token *token, t_envp **envp, char *path);
-int					search_builtins_child(t_token *token, t_envp *envp_list);
-int					search_builtins_token(t_token *token, t_envp *envp_list);
+void				ft_cd(t_lexer *token, t_envp **envp, char *path);
+int					search_builtins_child(t_lexer *token, t_envp *envp_list);
+int					search_builtins_token(t_lexer *token, t_envp *envp_list);
 /*SIGNAL*/
 void				handler(int signal);
 void				init_signal(int choice);
@@ -188,16 +188,16 @@ void				ft_pwd(t_envp *envp_list);
 /*UNSET*/
 void				ft_unset(t_envp **envp, char *key_to_remove);
 /*EXIT*/
-void				ft_exit(t_token *token, char *val);
+void				ft_exit(t_lexer *token, char *val);
 /*ECHO*/
 void				ft_echo(char *string, bool without_ret, t_envp **envp,
-						t_token *token);
+						t_lexer *token);
 /*ENVP*/
 void				add_node_to_envp(t_envp **list, t_envp *new_node);
 void				increment_shlvl(t_envp **envp);
 /*REDIRECTION*/
-void	ft_red_out(t_token *token);
-void	ft_red_append(t_token *token);
-int		ft_red_in(t_token *token);
-int		ft_heredoc(t_token *node, int *pipe_fd, t_token *token);
+void	ft_red_out(t_lexer *token);
+void	ft_red_append(t_lexer *token);
+int		ft_red_in(t_lexer *token);
+int		ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token);
 #endif

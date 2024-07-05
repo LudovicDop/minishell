@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 11:33:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:34:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void    ft_error_exec(char *error_msg, char *cmd_name)
     ft_putstr_fd(": ", 2);
     ft_putstr_fd(error_msg, 2);
 }
-int how_many_cmd(t_token *token)
+int how_many_cmd(t_lexer *token)
 {
     int nbre_of_cmd;
 
@@ -130,9 +130,9 @@ void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
 
 // test_good_path_for_exec(tmp_arg[0], search_path(&cmd))
 // tmp_envp = convert_envp(cmd->envp_ref);
-int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *root)
+int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *root)
 {
-    char **tmp_arg;
+    // char **tmp_arg;
     char **tmp_envp;
     char *path;
     int status;
@@ -142,20 +142,22 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
         return (-1);
     if (token == root)
     {
-        printf("launch pipe\n");
+        printf("\033[31;1mlaunch pipe\033[m\n");
         pipe(pipe_fd);
+        printf("\033[36;1mFD 1 : %d && FD 2 : %d (parent process : %d)\033[m\n", pipe_fd[0], pipe_fd[1], getpid());
     }
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
-        fprintf(stderr, "\033[36;1mvalue : READ %d && WRITE %d (for cmd : %s) %d\033[m\n", pipe_fd[READ],pipe_fd[WRITE], token->value, getpid());
+        printf("\033[31;1mClose FD 0 : %d (child process : %d)\033[m\n", pipe_fd[READ], getpid());
         close(pipe_fd[READ]); // ici
         if (token->next && token->next->type == PIPE)
         {
-            // fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value);
+            fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value[0]);
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
+            printf("\033[31;1mClose FD 1 : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
             close(pipe_fd[WRITE]);
         }
         else if (token->next && (token->next->type >= 6 && token->next->type <= 8))
@@ -166,14 +168,16 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
             return (exit(EXIT_FAILURE), 0);
         else
         {
-            tmp_arg = ft_split(token->value, ' ');
-            path = test_good_path_for_exec(tmp_arg[0], search_path(envp_list));
+            // printf("\033[31;1mClose FD 1 : %d (child process : %d)\033[m\n", pipe_fd[WRITE], getpid());
+            // close(pipe_fd[WRITE]);
+            // tmp_arg = ft_split(token->value, ' ');
+            path = test_good_path_for_exec(token->value[0], search_path(envp_list));
             tmp_envp = convert_envp(envp_list);
-            if (execve(path, tmp_arg, tmp_envp) < 0)
+            if (execve(path, token->value, tmp_envp) < 0)
             {
-                ft_error_exec("command not found\n", tmp_arg[0]);
+                ft_error_exec("command not found\n", token->value[0]);
                 free_everything(&root, NULL);
-                free_tab((void**)tmp_arg);
+                // free_tab((void**)tmp_arg);
                 free_tab((void**)tmp_envp);
                 free_envp(&envp_list);
                 exit(EXIT_FAILURE);
@@ -182,7 +186,10 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
     }
     else if (id > 0)
     {
+        printf("\033[31;1mClose FD 1 : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
         close(pipe_fd[WRITE]);
+        // printf("\033[31;1mClose FD 0 : %d (parent process : %d)\033[m\n", pipe_fd[READ], getpid());
+        // close(pipe_fd[READ]);
         waitpid(id, &status, 0);
         return (0);
     }
@@ -194,7 +201,7 @@ int execute_command(t_token *token, int *pipe_fd, t_envp *envp_list, t_token *ro
 }
 
 
-int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *root)
+int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *root)
 {
     int fd_in;
     int status;
@@ -229,7 +236,7 @@ int execute_pipeline(t_token *node,int *pipe_fd, t_envp *envp_list, t_token *roo
     return (0);
 }
 
-int ft_redirection(t_token *node, int *pipe_fd, t_token *root)
+int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root)
 {
 	if	(node->type >= 6 && node->type <= 9)
     {
@@ -239,10 +246,11 @@ int ft_redirection(t_token *node, int *pipe_fd, t_token *root)
         if (ft_heredoc(node, pipe_fd, root))
             return (1);
     }
+    printf("out\n");
 	return (0);
 }
 
-int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
+int execute_ast(t_lexer *node,int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     if (!node)
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
@@ -267,9 +275,9 @@ int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list, t_token *root)
 }
 
 
-// int execute_ast(t_token *node,int pipe_fd[2], t_envp *envp_list)
+// int execute_ast(t_lexer *node,int pipe_fd[2], t_envp *envp_list)
 // {
-//     t_token *root;
+//     t_lexer *root;
 //     if (!node)
 //         return (1);
 //     root = node;

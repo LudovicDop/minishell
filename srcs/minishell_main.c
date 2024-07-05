@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 13:08:10 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/05 15:29:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input_cmd;
 	char	*prompt;
-	t_token	*token;
+	t_token	*t;
+	t_lexer	*token;
 	t_envp	*envp_list;
 	int pipe_fd[2];
 
@@ -48,48 +49,35 @@ int	main(int argc, char **argv, char **envp)
 	init_envp(&envp_list, envp);
 	init_signal(1);
 	increment_shlvl(&envp_list);
-	// while (1)
-	// {
-	// 	prompt = get_prompt(envp_list);
-	// 	input_cmd = readline(prompt);
-	// 	if (!input_cmd)
-	// 	{
-	// 		free_envp(&envp_list);
-	// 		free(prompt);
-	// 		free(input_cmd);
-	// 		return (0);
-	// 	}
-	// 	if (*input_cmd != '\0')
-	// 		add_history(input_cmd);
+	while (1)
+	{
+		prompt = get_prompt(envp_list);
+		input_cmd = readline(prompt);
+		if (!input_cmd)
+		{
+			free_envp(&envp_list);
+			free(prompt);
+			free(input_cmd);
+			return (0);
+		}
+		if (*input_cmd != '\0')
+			add_history(input_cmd);
 		// check_quotes(input_cmd);
 		// check_par(input_cmd);
-		// token = lexer(input_cmd);
+		t = lexer(input_cmd);
+		new_lexer(&t);
+		final_lexer(t, &token);
 		// check_op(token);
 		// check_token_par(token);
-		t_token *token2;
-		t_token	*token3;
-		token = malloc(sizeof(t_token));
-		token2 = malloc(sizeof(t_token));
-		token3 = malloc(sizeof(t_token));
-		token->value = ft_strdup("key");
-		token->type = HEREDOC;
-		token->next = token2;
-
-		token2->type = HEREDOC;
-		token2->value = ft_strdup("key2");
-		token2->next = token3;
-
-		token3->type = CMD;
-		token3->value = ft_strdup("cat");
-		token3->next = NULL;
-		t_token *root;
+		t_lexer *root;
 
 		root = token;
 		execute_ast(token, pipe_fd, envp_list, root);
-		print_token(token);
+		// print_lexer(token);
+		// print_token(t);
 		// free_everything(&token, prompt);
 		// free(input_cmd);
-	// }
+	}
 	return (0);
 	
 }

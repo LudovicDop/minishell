@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:31:43 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/27 16:35:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:25:24 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-	struct s_token	*root;
 	int				pos;
 	int				priority;
 	struct s_token	*next;
@@ -53,6 +52,8 @@ typedef struct s_index
 }	t_index;
 
 t_token			*lexer(char *str);
+void			new_lexer(t_token **token);
+void			del_null_value(t_token *token);
 char			*get_string(char a, char b, char c, int *i);
 t_token_type	get_token_type(char *s);
 void			push_stack(t_token **token, char *s, t_token_type type);

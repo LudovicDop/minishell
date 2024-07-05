@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_test.h                                       :+:      :+:    :+:   */
+/*   final_lexer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 22:18:15 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/04 16:41:15 by alphan           ###   ########.fr       */
+/*   Created: 2024/07/03 17:57:55 by alphan            #+#    #+#             */
+/*   Updated: 2024/07/04 16:19:01 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_TEST_H
-# define PRINT_TEST_H
+#ifndef FINAL_LEXER_H
+# define FINAL_LEXER_H
 
-# include "../includes/check.h"
+# include "../includes/new_lexer.h"
 
-void	print_token(t_token *token);
-void	print_lexer(t_lexer *lex);
-void	print_value(char **value, char *str, t_token *t);
-int		execute_tree(t_node *node);
-void	print_node(t_node *node, int level);
+typedef struct s_lexer
+{
+	t_token_type	type;
+	char			**value;
+	int				pos;
+	int				priority;
+	struct s_lexer	*next;
+}	t_lexer;
 
-#endif
+void	push_stack2(t_lexer **token, t_token_type t, char **value);
+void	final_lexer(t_token *t, t_lexer **token);
+
+# endif

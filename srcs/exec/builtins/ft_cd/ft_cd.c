@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:36:58 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 	return (0);
 }
 
-void	ft_cd(t_token *token, t_envp **envp, char *path)
+void	ft_cd(t_lexer *token, t_envp **envp, char *path)
 {
 	char	*current_pwd;
 	char	*old_pwd;

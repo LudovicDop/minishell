@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 16:19:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:36:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void    free_tab(void   **my_tab)
     free(my_tab);
 }
 
-void    free_everything(t_token **token, char *prompt)
+void    free_everything(t_lexer **token, char *prompt)
 {
-    t_token *current;
+    t_lexer *current;
 
     current = *token;
     if (token)
@@ -41,10 +41,10 @@ void    free_everything(t_token **token, char *prompt)
 }
 
 
-void    free_cmd_list(t_token **token_lst)
+void    free_cmd_list(t_lexer **token_lst)
 {
-    t_token *current;
-    t_token *to_free;
+    t_lexer *current;
+    t_lexer *to_free;
 
     current = *token_lst;
     while (current)

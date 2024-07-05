@@ -27,12 +27,13 @@ int	check_quotes(char *input_cmd)
 			a.i++;
 			while (input_cmd[a.i] && input_cmd[a.i] != c)
 				a.i++;
-			if (input_cmd[a.i] == c)
+			if (input_cmd[a.i] && input_cmd[a.i++] == c)
 				a.j = 0;
 		}
-		a.i++;
+		else
+			a.i++;
 	}
-	if (a.j)
+	if (a.j == 1)
 	{
 		ft_printf("syntax error near unexpected token quote\n");
 		return (1);

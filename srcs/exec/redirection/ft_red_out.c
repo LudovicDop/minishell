@@ -6,13 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:02:43 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/03 17:29:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:24:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_redirection_file(t_token *token, char *file_to_created)
+static void	ft_redirection_file(t_lexer *token, char *file_to_created)
 {
 	int fd;
 
@@ -25,25 +25,25 @@ static void	ft_redirection_file(t_token *token, char *file_to_created)
 	}
 }
 
-void	ft_red_out(t_token *token)
+void	ft_red_out(t_lexer *token)
 {
-	char	**tmp;
 	int	i;
 	int	fd;
 
 	i = 0;
 	if (!token || token->type != REDIRECT_OUT)
 		return ;
-	tmp = ft_split(token->value, ' ');
-	if (!tmp)
-		return ;
-	while (tmp[i + 1])
+	// tmp = ft_split(token->value, ' ');
+	// if (!tmp)
+	// 	return ;
+	printf("value : %s\n", token->value[0]);
+	while (token->value[i + 1])
 	{
-		fd = open(tmp[i], O_CREAT, 0644);
+		fd = open(token->value[i], O_CREAT, 0644);
 		if (fd < 0)
 			perror("open");
 		close(fd);
 		i++;
 	}
-	ft_redirection_file(token, tmp[i]);
+	ft_redirection_file(token, token->value[i]);
 }

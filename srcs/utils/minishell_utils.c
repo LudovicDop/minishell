@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 11:38:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:28:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_strcmp(const char *s1, const char *s2)
     s1_lenght = ft_strlen(s1);
     s2_lenght = ft_strlen(s2);
     i = 0;
-	printf("Size 1 : %d | Size 2 : %d\n", s1_lenght, s2_lenght);
     while (i < s1_lenght && i < s2_lenght)
     {
         if (s1[i] != s2[i])

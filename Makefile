@@ -5,7 +5,6 @@ LIBFT = -lreadline -ltermcap ./libft/libft.a
 SRC = srcs/minishell_main.c \
 	  srcs/exec/minishell_execution.c \
 	  srcs/exec/minishell_special_redirection.c \
-	  srcs/parsing/minishell_parsing.c \
 	  srcs/exec/builtins/minishell_builtins.c \
 	  srcs/utils/minishell_utils.c	\
 	  srcs/utils/envp/minishell_envp.c	\
@@ -26,10 +25,6 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/builtins/ft_exit/ft_exit.c \
 	  srcs/exec/builtins/ft_echo/ft_echo.c \
 	  srcs/utils/envp/SHLVL/ft_shlvl.c \
-	  srcs/parsing/ft_parsing_check/ft_quotes_check.c \
-	  srcs/parsing/ft_parsing_check/ft_pipes_check.c \
-	  srcs/parsing/ft_parsing_check/ft_redirection_symbol.c \
-	  srcs/parsing/ft_parsing_check/ft_error_msg.c \
 	  srcs/exec/builtins/ft_cd/ft_cd_utils.c \
 	  srcs/exec/builtins/ft_cd/ft_go_old_pwd.c \
 	  srcs/exec/redirection/ft_red_out.c \
@@ -40,10 +35,12 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/lexer.c srcs/minishell_parsing/src/lexer2.c srcs/minishell_parsing/src/parser.c \
 	  srcs/minishell_parsing/src/check/chek_op.c srcs/minishell_parsing/src/check/check_quote.c srcs/minishell_parsing/src/check/check_par.c\
 	  srcs/minishell_parsing/src/print_test.c \
+	  srcs/minishell_parsing/src/new_lexer.c \
+	  srcs/minishell_parsing/src/final_lexer.c \
 
 CC = cc
 LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
+CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

@@ -6,13 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:37:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_token *token, char *val)
+void	ft_exit(t_lexer *token, char *val)
 {
 	unsigned int	convert_val;
 

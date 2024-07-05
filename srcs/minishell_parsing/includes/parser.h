@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:17:38 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/27 15:50:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/04 13:37:02 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "../includes/lexer.h"
+# include "../includes/final_lexer.h"
 
 typedef struct s_node
 {

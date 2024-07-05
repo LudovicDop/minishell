@@ -6,11 +6,63 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:17:10 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/23 22:17:12 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:41:01 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/print_test.h"
+
+void	print_value(char **value, char *str, t_token *t)
+{
+	int					i;
+	static const char	*s[] = {"CMD    ", "SPACE  ", "QUOTE  ", "D_QUOTE", \
+	"OP_PAR ", "CL_PAR ", "RED_IN ", "RED_OUT", \
+	"RED_APP", "HEREDOC", "PIPE   ", "OR     ", "AND    ", "SEP    ", \
+	"WCARD  ", "WAVE   "};
+
+	i = 0;
+	if (str)
+		ft_printf("\nTOKEN TYPE: %s\n", str);
+	else
+		ft_printf("\nTOKEN TYPE: %s\n", s[t->type]);
+	while (value[i])
+	{
+		printf("value[%d] = %s\n", i, value[i]);
+		i++;
+	}
+}
+
+void	print_val(char **value)
+{
+	int	i;
+
+	i = 0;
+	printf("value = [");
+	while (value[i])
+	{
+		printf("%s ", value[i]);
+		i++;
+	}
+	printf("]\n");
+}
+
+void	print_lexer(t_lexer *lex)
+{
+	static const char	*s[] = {"CMD    ", "SPACE  ", "QUOTE  ", "D_QUOTE", \
+	"OP_PAR ", "CL_PAR ", "RED_IN ", "RED_OUT", \
+	"RED_APP", "HEREDOC", "PIPE   ", "OR     ", "AND    ", "SEP    ", \
+	"WCARD  ", "WAVE   "};
+
+	ft_printf("print_lexer\n");
+	while (lex)
+	{
+		ft_printf("TOKEN TYPE: %s", s[lex->type]);
+		ft_printf("\t tpos: %d ", lex->pos);
+		ft_printf("\t priority: %d ", lex->priority);
+		print_val(lex->value);
+		lex = lex->next;
+	}
+}
 
 void	print_token(t_token *token)
 {

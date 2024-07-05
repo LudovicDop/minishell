@@ -3,11 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:31:38 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/25 17:46:35 by ldoppler         ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2024/06/14 19:48:54 by alphan           ###   ########.fr       */
+/*············································································*/
 /* ************************************************************************** */
 
 #include "../includes/lexer.h"
@@ -18,10 +18,7 @@ void	tokenize_substr(char *str, t_token **token, t_index *a, char *tmp)
 
 	while (str[a->i + a->j] && !ft_strchr(tmp, str[a->i + a->j]))
 		a->j++;
-	if (tmp[0] == '\'' || tmp[0] == '\"')
-		tmp2 = ft_substr(str, a->i, a->j + 1);
-	else
-		tmp2 = ft_substr(str, a->i, a->j);
+	tmp2 = ft_substr(str, a->i, a->j);
 	if (!tmp2)
 		return ;
 	if (tmp[0] == '\'' || tmp[0] == '\"')
@@ -74,11 +71,15 @@ t_token	*lexer(char *str)
 			tokenize(str, &token, &a, str[a.i]);
 		else if (ft_strchr("|<>&()~ \t*", str[a.i]) || !ft_isprint(str[a.i]))
 			tokenize(str, &token, &a, 0);
+		else if ((str[a.i + a.j] == '\'' || str[a.i + a.j] == '\"') && \
+		str[a.i + a.j + 1] == str[a.i + a.j])
+			a.i++;
 		else if (str[a.i + a.j] == '\'' || str[a.i + a.j] == '\"')
 			tokenize(str, &token, &a, 0);
 		else
-			tokenize_substr(str, &token, &a, "*\"'|&<>()~");
-		a.i++;
+			tokenize_substr(str, &token, &a, "*\"' |&<>()~");
+		if (str[a.i])
+			a.i++;
 	}
 	return (token);
 }
