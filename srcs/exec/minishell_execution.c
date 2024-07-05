@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 16:34:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:05:00 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,8 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
         printf("\033[35;1mfd_in : %d\033[m\n", fd_in);
         dup2(fd_in, STDIN_FILENO);
         close(fd_in);
+        // close(pipe_fd[READ]);
+        // close(pipe_fd[WRITE]);
         execute_ast(node->next, pipe_fd ,envp_list, root);
         exit(EXIT_FAILURE);
     }

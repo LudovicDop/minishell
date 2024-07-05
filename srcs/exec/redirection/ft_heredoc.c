@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 14:40:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:00:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
 				pipe(pipe_fd);
 				write(pipe_fd[WRITE], full_string, ft_strlen(full_string));
 				dup2(pipe_fd[READ], STDIN_FILENO);
-				close(pipe_fd[READ]);
-				close(pipe_fd[WRITE]);
 			}
 			free(tmp);
 			free(full_string);
