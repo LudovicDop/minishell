@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 17:00:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:38:05 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
 
 	tmp = NULL;
 	full_string = NULL;
-	if (!node && node->type != HEREDOC)
+	fprintf(stderr, "START HEREDOC\n");
+	if (!node || node->type != HEREDOC)
 		return (0);
 	while (1)
 	{

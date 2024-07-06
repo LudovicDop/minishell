@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:02:43 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/05 16:24:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:13:51 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	ft_redirection_file(t_lexer *token, char *file_to_created)
 		if (fd < 0)
 			perror("open");
 		dup2(fd, STDOUT_FILENO);
+		// close(fd);
 	}
 }
 
@@ -36,7 +37,6 @@ void	ft_red_out(t_lexer *token)
 	// tmp = ft_split(token->value, ' ');
 	// if (!tmp)
 	// 	return ;
-	printf("value : %s\n", token->value[0]);
 	while (token->value[i + 1])
 	{
 		fd = open(token->value[i], O_CREAT, 0644);

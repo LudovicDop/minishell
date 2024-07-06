@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 17:05:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:37:02 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int how_many_cmd(t_lexer *token)
     nbre_of_cmd = 0;
     while (token)
     {
-        if (token->type == CMD || (token->type >= 6 && token->type  <= 9))
+        if (token->type == CMD)
             nbre_of_cmd++;
         token = token->next;
     }
@@ -140,29 +140,31 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
 
     if (token->type != CMD)
         return (-1);
-    if (token == root)
-    {
-        printf("\033[31;1mlaunch pipe\033[m\n");
-        pipe(pipe_fd);
-        printf("\033[36;1mFD 1 : %d && FD 2 : %d (parent process : %d)\033[m\n", pipe_fd[0], pipe_fd[1], getpid());
-    }
+    // if (token == root)
+    // {
+    //     printf("\033[31;1mlaunch pipe\033[m\n");
+    //     // pipe(pipe_fd);
+    //     printf("\033[36;1mFD READ : %d && FD WRITE : %d (parent process : %d)\033[m\n", pipe_fd[READ], pipe_fd[WRITE], getpid());
+    // }
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
-        printf("\033[31;1mClose FD 0 : %d (child process : %d)\033[m\n", pipe_fd[READ], getpid());
+        printf("\033[31;1mClose FD READ : %d (child process : %d)\033[m\n", pipe_fd[READ], getpid());
         close(pipe_fd[READ]); // ici
         if (token->next && token->next->type == PIPE)
         {
             fprintf(stderr ,"there you go (id : %d) cmd : %s\n", getpid(), token->value[0]);
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
-            printf("\033[31;1mClose FD 1 : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
+            printf("\033[31;1mClose FD WRITE : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
             close(pipe_fd[WRITE]);
         }
         else if (token->next && (token->next->type >= 6 && token->next->type <= 8))
         {
+            fprintf(stderr, "\033[31;1mStart redirection\033[m\n");
             ft_redirection(token->next, pipe_fd, root);
+            fprintf(stderr, "\033[31;1mFinish redirection\033[m\n");
         }
         if (search_builtins_token(token, envp_list))
             return (exit(EXIT_FAILURE), 0);
@@ -173,6 +175,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
             // tmp_arg = ft_split(token->value, ' ');
             path = test_good_path_for_exec(token->value[0], search_path(envp_list));
             tmp_envp = convert_envp(envp_list);
+            fprintf(stderr, "execution start!!\n");
             if (execve(path, token->value, tmp_envp) < 0)
             {
                 ft_error_exec("command not found\n", token->value[0]);
@@ -182,15 +185,22 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
                 free_envp(&envp_list);
                 exit(EXIT_FAILURE);
             }
+            exit(EXIT_SUCCESS);
         }
     }
     else if (id > 0)
     {
-        printf("\033[31;1mClose FD 1 : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
+        printf("\033[31;1mClose FD WRITE : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
         close(pipe_fd[WRITE]);
         // printf("\033[31;1mClose FD 0 : %d (parent process : %d)\033[m\n", pipe_fd[READ], getpid());
         // close(pipe_fd[READ]);
         waitpid(id, &status, 0);
+        if (token->next && (token->next->type >= 6 && token->next->type <= 9))
+        {
+            fprintf(stderr ,"VALID\n");
+            token = token->next->next;
+            // fprintf(stderr, "VALID : %s\n", token->value[0]);
+        }
         return (0);
     }
     else
@@ -248,25 +258,34 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root)
         if (ft_heredoc(node, pipe_fd, root))
             return (1);
     }
-    printf("out\n");
 	return (0);
 }
 
 int execute_ast(t_lexer *node,int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     if (!node)
+    {
+        fprintf(stderr, "endddd\n");
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
+    }
     if (how_many_cmd(root) == 1)
     {
         if (search_builtins_token(root, envp_list))
             return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 0);
     }
+    else if (how_many_cmd(root) > 1 && root == node)
+    {
+        /*if there is more than one cmd I can start the pipe*/
+        printf("\033[31;1mstart new pipe\033[m\n");
+        pipe(pipe_fd);
+    }
     if (node->type == CMD)
         execute_command(node, pipe_fd, envp_list, root);
     else if (node->type == PIPE)
         return (execute_pipeline(node, pipe_fd,envp_list, root));
-    else if (node->type >= 6 && node->type <= 9)
+    else if (root == node && (node->type >= 6 && node->type <= 9))
 	{
+        fprintf(stderr, "PAS BON\n");
         if (ft_redirection(node, pipe_fd, root))
         {
             return (0);
