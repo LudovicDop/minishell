@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/06 14:50:04 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/07 13:22:17 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,37 +49,53 @@ int	main(int argc, char **argv, char **envp)
 	init_envp(&envp_list, envp);
 	init_signal(1);
 	increment_shlvl(&envp_list);
-	while (1)
-	{
-		prompt = get_prompt(envp_list);
-		input_cmd = readline(prompt);
-		if (!input_cmd)
-		{
-			free_envp(&envp_list);
-			free(prompt);
-			free(input_cmd);
-			return (0);
-		}
-		if (*input_cmd != '\0')
-			add_history(input_cmd);
-		// check_quotes(input_cmd);
-		// check_par(input_cmd);
-		t = lexer(input_cmd);
-		new_lexer(&t);
-		final_lexer(t, &token);
-		// check_op(token);
-		// check_token_par(token);
+	// while (1)
+	// {
+		// prompt = get_prompt(envp_list);
+		// input_cmd = readline(prompt);
+		// if (!input_cmd)
+		// {
+		// 	free_envp(&envp_list);
+		// 	free(prompt);
+		// 	free(input_cmd);
+		// 	return (0);
+		// }
+		// if (*input_cmd != '\0')
+		// 	add_history(input_cmd);
+		// // check_quotes(input_cmd);
+		// // check_par(input_cmd);
+		// t = lexer(input_cmd);
+		// new_lexer(&t);
+		// final_lexer(t, &token);
+		// // check_op(token);
+		// // check_token_par(token);
+		t_lexer *token2;
 		t_lexer *root;
 
+		token = malloc(sizeof(t_lexer));
+		token2 = malloc(sizeof(t_lexer));
+		token->value = malloc(sizeof(char*) * 2);
+		token->value[0] = ft_strdup("fichier.txt");
+		token->value[1] = NULL;
+		token->type = REDIRECT_IN;
+		token->next = token2;
+
+		token2->value = malloc(sizeof(char*) * 2);
+		token2->value[0] = ft_strdup("cat");
+		token2->value[1] = NULL;
+		token2->type = CMD;
+		token2->next = NULL;
+
+	
 		root = token;
-		pipe_fd[0] = -1;
-		pipe_fd[1] = -1;
+		// pipe_fd[0] = -1;
+		// pipe_fd[1] = -1;
 		execute_ast(token, pipe_fd, envp_list, root);
-		// print_lexer(token);
+		print_lexer(token);
 		// print_token(t);
 		// free_everything(&token, prompt);
 		// free(input_cmd);
-	}
+	// }
 	return (0);
 	
 }

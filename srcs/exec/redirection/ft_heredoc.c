@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/06 15:38:05 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/07 12:40:41 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
 
 	tmp = NULL;
 	full_string = NULL;
-	fprintf(stderr, "START HEREDOC\n");
 	if (!node || node->type != HEREDOC)
 		return (0);
 	while (1)

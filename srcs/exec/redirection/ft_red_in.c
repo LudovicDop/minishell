@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/06 15:40:45 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/07 13:34:09 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	ft_red_in(t_lexer *token)
 	if (!token || token->type != REDIRECT_IN)
 		return (1);
 	fprintf(stderr ,"ici : %s\n", token->value[0]);
-	fd = open(token->value[0], O_RDONLY, 0644);
+	fd = open(token->value[0], O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
 		return (1);
 	}
-	dup2(fd, STDIN_FILENO);
+	if (dup2(fd, STDIN_FILENO) < 0)
+		perror("dup2");
+	close(fd);
 	return (0);
 }
