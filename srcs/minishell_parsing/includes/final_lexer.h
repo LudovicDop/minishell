@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_lexer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:55 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/04 16:19:01 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/08 15:27:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define FINAL_LEXER_H
 
 # include "../includes/new_lexer.h"
+
+typedef struct s_glob
+{
+	int	fd_out_old;
+	int	fd_int_old;
+}	t_glob;
 
 typedef struct s_lexer
 {

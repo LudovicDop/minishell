@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/06 15:13:07 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/08 17:01:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@
 
 
 // volatile sig_atomic_t g_interrupt = 0;
-
+// int g_signal = 0;
+ 
 typedef struct s_tab
 {
 	char			*prompt;
@@ -158,6 +159,7 @@ int					search_builtins_token(t_lexer *token, t_envp *envp_list);
 void				handler(int signal);
 void				init_signal(int choice);
 void				reset_signal(void);
+void 				handler_heredoc(int sig);
 
 void				search_key_and_replace_it(t_envp **envp, char *key,
 						char *value);

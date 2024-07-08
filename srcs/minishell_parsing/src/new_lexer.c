@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_lexer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:30:31 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/28 11:30:32 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/08 11:24:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,30 +93,28 @@ void	rm_space_or_null(t_token *token)
 	}
 }
 
-void	change_red(t_token *token)
+void    change_red(t_token *token)
 {
-	t_token	*current;
-	t_token	*tmp;
-	t_token	*prec;
+    t_token    *current;
+    t_token    *tmp;
 
-	tmp = token;
-	current = token;
-	while (current)
-	{
-		if (current->next && (current->type == REDIRECT_OUT || \
-			current->type == REDIRECT_IN || current->type == REDIRECT_APPEND || \
-			current->type == HEREDOC))
-		{
-			tmp = current->next;
-			tmp->type = current->type;
-			free(current->value);
-			free(current);
-			prec->next = tmp;
-			current = tmp;
-		}
-		prec = current;
-		current = current->next;
-	}
+    tmp = token;
+    current = token;
+    while (current)
+    {
+        if (current->type == REDIRECT_OUT || \
+            current->type == REDIRECT_IN || current->type == REDIRECT_APPEND || \
+            current->type == HEREDOC)
+        {
+            tmp = current->next->next;
+            free(current->value);
+            current->value = ft_strdup(current->next->value);
+            free(current->next->value);
+            free(current->next);
+            current->next = tmp;
+        }
+        current = current->next;
+    }
 }
 
 void	change_for_value(t_token *token)

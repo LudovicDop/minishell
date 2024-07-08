@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 08:51:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:06:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,33 @@ void reset_signal(void)
     signal(SIGQUIT, SIG_DFL);
 }
 
-void handler_heredoc(int signal)
+void handler_heredoc(int sig)
 {
-    if (signal == SIGINT)
-    {
-        // Write a null character to stdin
-		// g_interrupt = 1;
-        write(STDIN_FILENO, "\0", 1);
-    }
-    else if (signal == SIGQUIT)
-    {
-        // Write a null character to stdin
-        write(STDIN_FILENO, "hello", 1);
-    }
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		
+	}
+	if (sig == SIGQUIT)
+	{
+		write(1, "\b\b  \b\b", 7);
+		return ;
+	}
 }
 
-void	handler(int signal)
+void	handler(int sig)
 {
-	if (signal == SIGINT)
+	if (sig == SIGINT)
 	{
-		printf("\n");
+		printf("^C\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (signal == SIGQUIT)
+	else if (sig == SIGQUIT)
 	{
-		rl_on_new_line();
+		// signal(SIGQUIT, SIG_IGN);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
