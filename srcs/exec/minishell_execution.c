@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/09 18:07:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:12:23 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list
 	return (0);
 }
 
+// << key cat fichier.txt | grep Ceci
 int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     static int fd_in_old;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/08 16:45:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 21:01:26 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	main(int argc, char **argv, char **envp)
 
 	rl_catch_signals = 0;
 	envp_list = NULL;
-	init_signal(1);
 	init_envp(&envp_list, envp);
 	increment_shlvl(&envp_list);
 	while (1)
 	{
+		init_signal(1);
 		prompt = get_prompt(envp_list);
 		input_cmd = readline(prompt);
 		if (!input_cmd)
