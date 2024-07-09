@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/09 16:16:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:07:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
 
     if (node->type != PIPE)
         return (-1);
-    close(pipe_fd[WRITE]);
+    //close(pipe_fd[WRITE]);
     fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
@@ -169,11 +169,10 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
     if (node == root)
         fd_in_old = dup(STDIN_FILENO);
-    // if ((how_many_cmd(root) > 1 || root->type == HEREDOC) && root == node)
-    // {
-    //     /*if there is more than one cmd I can start the pipe*/
-    //     pipe(pipe_fd);
-    // }
+    if (how_many_cmd(root) > 1 && root == node)
+    {
+        pipe(pipe_fd);
+    }
     if (node->type == PIPE)
     {
         return (execute_pipeline(node, pipe_fd,envp_list, root));
@@ -194,7 +193,6 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
         execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }
-    // dup2(fd_in_old, STDIN_FILENO);
     execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
 }
