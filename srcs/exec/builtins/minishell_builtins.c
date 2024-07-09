@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 15:14:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:19:22 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 {
 	if (token->value[1] && !ft_strcmp(token->value[1], "-n"))
+	{
 		ft_echo(token->value[2], true, &(envp_list), token);
+	}
 	else
+	{
 		ft_echo(token->value[1], false, &(envp_list), token);
+	}
 	return ;
 }
 

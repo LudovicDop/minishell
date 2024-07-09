@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:02:43 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/06 15:13:51 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/09 15:05:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_red_out(t_lexer *token)
 	// 	return ;
 	while (token->value[i + 1])
 	{
-		fd = open(token->value[i], O_CREAT, 0644);
+		fd = open(token->value[i], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd < 0)
 			perror("open");
 		close(fd);

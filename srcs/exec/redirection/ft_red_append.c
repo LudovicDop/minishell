@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:24:32 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/08 12:29:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:05:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_red_append(t_lexer *token)
 		return ;
 	while (token->value[i + 1])
 	{
-		fd = open(token->value[i], O_CREAT, 0644);
+		fd = open(token->value[i], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd < 0)
 			perror("open");
 		close(fd);

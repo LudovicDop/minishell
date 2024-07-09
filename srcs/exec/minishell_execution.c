@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/08 16:44:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:16:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ int how_many_cmd(t_lexer *token)
     return (nbre_of_cmd);
 }
 
-// void    execution_pipe(t_cmd *cmd)
-// {
-//     char    **tmp_arg;
-//     char    **tmp_envp;
-
-//     if (cmd->any_redirection)
-//     {
-//         special_carac(cmd);
-//     }
-//     if (search_builtins_cmd(cmd))
-//         return ;
-//     tmp_arg = ft_split(cmd->arg, ' ');
-//     cmd->pathname = test_good_path_for_exec(tmp_arg[0], search_path(&cmd));
-//     tmp_envp = convert_envp(cmd->envp_ref);
-//     if (execve(cmd->pathname, tmp_arg, tmp_envp) < 0)
-//     {
-//         ft_error_exec("command not found\n", tmp_arg[0]);
-//         free_tab((void**)tmp_arg);
-//         free_tab((void**)tmp_envp);
-//         return ;
-//         //need to free everything
-//     }
-// }
-
 void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
 {
     int i;
@@ -66,8 +42,8 @@ void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
     i = 0;
     while (i < nbre_cmd)
     {
-        // waitpid(cmd_list->tab_ref->process_id[i], 0, WNOHANG);
         waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
+        // waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
         i++;
     }
     wait(NULL);
@@ -79,66 +55,9 @@ void    ft_null(int sig)
     (void)sig;
     return ;
 }
-// void    child_process(int fd_in, int nbre_cmd, t_cmd *cmd_list)
-// {
-//     close(cmd_list->tab_ref->pipe_fd[0]);
-//     dup2(fd_in, STDIN_FILENO);
-//     if (cmd_list->next)
-//         dup2(cmd_list->tab_ref->pipe_fd[1], STDOUT_FILENO);
-//     close(cmd_list->tab_ref->pipe_fd[1]);
-//     execution_pipe(cmd_list);
-//     // exit(EXIT_SUCCESS);
-// }
 
-// void    parent_process(t_cmd *cmd_list, int *fd_in, int i)
-// {
-//     close(cmd_list->tab_ref->pipe_fd[1]);
-//     *fd_in = cmd_list->tab_ref->pipe_fd[0];
-// }
-
-// void    execution_main(t_cmd **cmd)
-// {
-//     t_cmd   *cmd_list;
-//     int nbre_cmd;
-//     int fd_in;
-//     int i;
-
-//     i = 0;
-//     fd_in = 0;
-//     cmd_list = *cmd;
-//     nbre_cmd = how_many_cmd(cmd_list);
-//     if (nbre_cmd == 0)
-//         return ;
-//     cmd_list->tab_ref->process_id = malloc(sizeof(pid_t) * nbre_cmd);
-//     if (nbre_cmd == 1)
-//     {
-//         if (search_builtins_cmd(cmd_list))
-//             return ;
-//     }
-//     while (cmd_list)
-//     {
-//         pipe(cmd_list->tab_ref->pipe_fd);
-//         cmd_list->tab_ref->process_id[i] = fork();
-//         if (cmd_list->tab_ref->process_id[i] == 0)
-//         {
-//             child_process(fd_in, nbre_cmd, cmd_list);
-//             free_everything(cmd, NULL);
-//             exit(EXIT_SUCCESS);
-//         }
-//         parent_process(cmd_list, &fd_in, i);
-//         cmd_list = cmd_list->next;
-//         i++;
-//     }
-//     close(fd_in);
-//     cmd_list = *cmd;
-//     wait_everyone(cmd_list, nbre_cmd);
-// }
-
-// test_good_path_for_exec(tmp_arg[0], search_path(&cmd))
-// tmp_envp = convert_envp(cmd->envp_ref);
 int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *root)
 {
-    // char **tmp_arg;
     char **tmp_envp;
     char *path;
     int status;
@@ -146,45 +65,33 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
 
     if (token->type != CMD)
         return (-1);
-    // if (token == root)
-    // {
-    //     printf("\033[31;1mlaunch pipe\033[m\n");
-    //     // pipe(pipe_fd);
-    //     printf("\033[36;1mFD READ : %d && FD WRITE : %d (parent process : %d)\033[m\n", pipe_fd[READ], pipe_fd[WRITE], getpid());
-    // }
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
-        // fprintf(stderr, "\033[31;1mClose read : %d (child process : %d)\033[m\n", pipe_fd[READ], getpid());
         close(pipe_fd[READ]);
         if (token->next && token->next->type == PIPE)
         {
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
-            // fprintf(stderr, "\033[31;1mClose write : %d (child process : %d)\033[m\n", pipe_fd[WRITE], getpid());
             close(pipe_fd[WRITE]);
         }
         else if (token->next && (token->next->type >= 6 && token->next->type <= 9))
         {
-            // fprintf(stderr, "\033[31;1mStart redirection\033[m\n");
-            ft_redirection(token->next, pipe_fd, root);
-            // fprintf(stderr, "\033[31;1mFinish redirection\033[m\n");
+            ft_redirection(token->next, pipe_fd, root, envp_list);
         }
         if (search_builtins_token(token, envp_list))
+        {
             return (exit(EXIT_FAILURE), 0);
+        }
         else
         {
-            // printf("\033[31;1mClose FD 1 : %d (child process : %d)\033[m\n", pipe_fd[WRITE], getpid());
-            // close(pipe_fd[WRITE]);
-            // tmp_arg = ft_split(token->value, ' ');
             path = test_good_path_for_exec(token->value[0], search_path(envp_list));
             tmp_envp = convert_envp(envp_list);
             if (execve(path, token->value, tmp_envp) < 0)
             {
                 ft_error_exec("command not found\n", token->value[0]);
                 free_everything(&root, NULL);
-                // free_tab((void**)tmp_arg);
                 free_tab((void**)tmp_envp);
                 free_envp(&envp_list);
                 exit(EXIT_FAILURE);
@@ -193,27 +100,11 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
     }
     else if (id > 0)
     {
-        // fprintf(stderr, "\033[31;1mClose write : %d (parent process : %d)\033[m\n", pipe_fd[WRITE], getpid());
-        // reset_signal();
-        // signal(SIGQUIT, ft_null);
-        // signal(SIGINT, ft_null);
         close(pipe_fd[WRITE]);
-        // printf("\033[31;1mClose FD 0 : %d (parent process : %d)\033[m\n", pipe_fd[READ], getpid());
-        // close(pipe_fd[READ]);
         waitpid(id, &status, 0);
-
-        // if (WIFEXITED(status)) {
-        //     int exit_status = WEXITSTATUS(status);
-        //     printf("Child exited with status %d\n", exit_status);
-        // } 
-        // else {
-        //     printf("Child did not exit successfully\n");
-        // }
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
         {
-            // fprintf(stderr ,"VALID\n");
             token = token->next->next;
-            // fprintf(stderr, "VALID : %s\n", token->value[0]);
         }
         return (0);
     }
@@ -235,47 +126,37 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
     if (node->type != PIPE)
         return (-1);
     close(pipe_fd[WRITE]);
-    // close(pipe_fd[READ]);
     fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
-    // fprintf(stderr, "\033[36;1mStart pipe! \033[32;1m(write : %d && read : %d)\033[m\n", pipe_fd[WRITE], pipe_fd[READ]);
-    // printf("\033[32;1mREAD : %d || WRITE : %d\033[m\n",pipe_fd[READ], pipe_fd[WRITE]);
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
         dup2(fd_in, STDIN_FILENO);
-        // fprintf(stderr, "\033[31;1mClose fd_in : %d (child process : %d)\033[m\n", fd_in, getpid());
         close(fd_in);
-        // close(pipe_fd[READ]);
-        // close(pipe_fd[WRITE]);
         execute_ast(node->next, pipe_fd ,envp_list, root);
         exit(EXIT_FAILURE);
     }
     else
     {
-        // fprintf(stderr, "\033[31;1mClose fd_in : %d (child process : %d)\033[m\n", fd_in, getpid());
         close(fd_in);
-        // fprintf(stderr, "\033[31;1mClose read : %d (child process : %d)\033[m\n", pipe_fd[READ], getpid());
         close(pipe_fd[READ]);
-        // fprintf(stderr, "\033[31;1mClose write : %d (child process : %d)\033[m\n", pipe_fd[WRITE], getpid());
         close(pipe_fd[WRITE]);
         waitpid(id, &status, 0);
     }
     return (0);
 }
 
-int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root)
+int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 {
 	if	(node->type >= 6 && node->type <= 9)
     {
         ft_red_out(node);
         ft_red_append(node);
         ft_red_in(node);
-        if (ft_heredoc(node, pipe_fd, root))
-            return (1);
+        ft_heredoc(node, pipe_fd, root, envp_list);
     }
 	return (0);
 }
@@ -284,58 +165,36 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     static int fd_in_old;
 
-    if (node == root)
-    {
-        fd_in_old = dup(STDIN_FILENO);
-    }
     if (!node)
-    {
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
-    }
-    if (how_many_cmd(root) == 1)
+    if (node == root)
+        fd_in_old = dup(STDIN_FILENO);
+    // if ((how_many_cmd(root) > 1 || root->type == HEREDOC) && root == node)
+    // {
+    //     /*if there is more than one cmd I can start the pipe*/
+    //     pipe(pipe_fd);
+    // }
+    if (node->type == PIPE)
     {
-        if (search_builtins_token(root, envp_list))
-            return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 0);
+        return (execute_pipeline(node, pipe_fd,envp_list, root));
     }
-    else if (how_many_cmd(root) > 1 && root == node)
+    if (root == node && (node->type >= 6 && node->type <= 9))
+	{
+        if (ft_redirection(node, pipe_fd, root, envp_list))
+            return (0);
+	}
+    if (how_many_cmd(root) == 1 && root == node && !node->next)
     {
-        /*if there is more than one cmd I can start the pipe*/
-        pipe(pipe_fd);
-        // fprintf(stderr, "\033[36;1mStart pipe!! \033[32;1m(write : %d && read : %d)\033[m\n", pipe_fd[WRITE], pipe_fd[READ]);
+        if (!search_builtins_token(root, envp_list))
+            execute_command(node, pipe_fd, envp_list, root);
+        dup2(fd_in_old, STDIN_FILENO);
     }
-    if (node->type == CMD)
+    else if (node->type == CMD)
     {
         execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }
-    else if (node->type == PIPE)
-        return (execute_pipeline(node, pipe_fd,envp_list, root));
-    else if (root == node && (node->type >= 6 && node->type <= 9))
-	{
-        if (ft_redirection(node, pipe_fd, root))
-            return (0);
-	}
+    // dup2(fd_in_old, STDIN_FILENO);
     execute_ast(node->next, pipe_fd ,envp_list, root);
     return (0);
 }
-
-
-// int execute_ast(t_lexer *node,int pipe_fd[2], t_envp *envp_list)
-// {
-//     t_lexer *root;
-//     if (!node)
-//         return (1);
-//     root = node;
-//     while (node)
-//     {
-//         if ()
-//         if (node->type != 1)
-//             fprintf(stderr ,"\033[31;1m\n\nStart new node (%s + %d)\033[m\n\n", node->value, node->type);
-//         if (node->type == CMD)
-//             execute_command(node, pipe_fd, envp_list);
-//         else if (node->type == PIPE)
-//             return (execute_pipeline(node, pipe_fd, envp_list));
-//         node = node->next;
-//     }
-//     return (0);
-// }

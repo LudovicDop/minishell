@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/08 17:04:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:16:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	remove_return_line(char *string)
 	return ;
 }
 
-int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
+int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 {
 	char	*tmp;
 	char	*full_string;
@@ -37,21 +37,18 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
 	tmp = NULL;
 	full_string = NULL;
 	signal(SIGQUIT, handler_heredoc);
+	signal(SIGINT, SIG_IGN);
 	if (!node || node->type != HEREDOC)
 		return (0);
-	fprintf(stderr, "START HEREDOC\n");
-	while (node->type == HEREDOC)
+	while (node && node->type == HEREDOC)
 	{
 		write(1, "> ", 2);
 		tmp = get_next_line(STDIN_FILENO);
 		remove_return_line(tmp);
 		if (tmp && ft_strcmp(node->value[0], tmp) != 0)
 		{
-			if (tmp)
-			{
-				max = ft_strlen(tmp);
-				tmp[max] = '\n';
-			}
+			max = ft_strlen(tmp);
+			tmp[max] = '\n';
 			full_string = ft_strjoin2(full_string, tmp);
 		}
 		if (tmp == NULL || tmp[0] == '\0')
@@ -61,7 +58,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token)
 		}
 		else if (ft_strcmp(node->value[0], tmp) == 0)
 		{
-			if (node->next->type != HEREDOC)
+			if (!node->next || node->next->type != HEREDOC)
 			{
 				pipe(pipe_fd);
 				write(pipe_fd[WRITE], full_string, ft_strlen(full_string));

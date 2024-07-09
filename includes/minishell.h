@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/08 17:01:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:38:24 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *root);
 int 				execute_ast(t_lexer *node, int pipe[2], t_envp *envp_list, t_lexer *root);
-int					ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root);
+int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
 
 /*Quêtes secondaires*/
 void				special_carac(t_cmd *cmd);
@@ -201,5 +201,5 @@ void				increment_shlvl(t_envp **envp);
 void	ft_red_out(t_lexer *token);
 void	ft_red_append(t_lexer *token);
 int		ft_red_in(t_lexer *token);
-int		ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *token);
+int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
 #endif
