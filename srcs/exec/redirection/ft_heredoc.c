@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/09 22:55:29 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/10 15:16:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 
 	tmp = NULL;
 	full_string = NULL;
+	pipe(pipe_fd);
 	id = fork();
-
+	old_stdin = dup(STDIN_FILENO);
 	if (!node || node->type != HEREDOC)
 		return (0);
 	if (id == 0)
@@ -66,19 +67,12 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 			{
 				if (!node->next || node->next->type != HEREDOC)
 				{
-					pipe(pipe_fd);
-					write(pipe_fd[WRITE], full_string, ft_strlen(full_string));
-					old_stdin = dup(STDIN_FILENO);
-					dup2(pipe_fd[READ], STDIN_FILENO);
 					close(pipe_fd[READ]);
+					write(pipe_fd[WRITE], full_string, ft_strlen(full_string));
 					close(pipe_fd[WRITE]);
-					free(tmp);
 					free(full_string);
-					if (node->next)
-						pipe(pipe_fd);
-					if (!node->next)
-						dup2(old_stdin, STDIN_FILENO);
-					exit(0);
+					free(tmp);
+					exit(EXIT_SUCCESS);
 					break;
 				}
 				else
@@ -94,9 +88,16 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 	}
 	else
 	{
+		close(pipe_fd[WRITE]);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_IGN);
 		waitpid(id, 0, 0);
+		dup2(pipe_fd[READ], STDIN_FILENO);
+		close(pipe_fd[READ]);
+		if (node->next)
+			pipe(pipe_fd);
+		if (!node->next)
+			dup2(old_stdin, STDIN_FILENO);
 	}
 	return (0);
 }

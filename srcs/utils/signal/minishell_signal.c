@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_signal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/09 21:46:20 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/10 14:52:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void handler_heredoc(int sig)
 	if (sig == SIGQUIT)
 	{
 		write(1, "\b\b  \b\b", 7);
+		exit(0);
 		return ;
 	}
 }
