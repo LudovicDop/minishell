@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 16:59:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:28:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 	}
 	else if (is_symbolic_link(path) <= 0)
 	{
-		printf("is not Symbolic\n");
+		printf("is not Symbolic (path : %s)\n", path);
 		tmp = getcwd(0, 0);
+		printf("my current path : %s\n", tmp);
 		search_key_and_replace_it(envp, "PWD", tmp);
 		free(new_node->node);
 		free(new_node);
