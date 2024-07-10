@@ -6,27 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/10 17:30:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:13:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	remove_return_line(char *string)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!string)
-// 		return ;
-// 	while (string[i] && string[i] != '\n')
-// 	{
-// 		i++;	
-// 	}
-// 	if (string[i] == '\n')
-// 		string[i] = '\0';
-// 	return ;
-// }
 
 void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string, char *tmp)
 {
@@ -74,6 +58,44 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
 	exit(EXIT_SUCCESS);
 }
 
+int	ft_empty_after_heredoc(t_lexer *node)
+{
+	t_lexer *current;
+
+	current = node;
+	if (!node)
+		return (1);
+	while (node)
+	{
+		if (node->type != HEREDOC)
+			return (0);
+		node = node->next;
+	}
+	return (1);
+}
+
+int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
+{
+	close(pipe_fd[WRITE]);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	waitpid(id, 0, 0);
+	if (dup2(pipe_fd[READ], STDIN_FILENO) == -1)
+		return (close(pipe_fd[READ]), 1);
+	close(pipe_fd[READ]);
+	if (node->next)
+	{
+		if (pipe(pipe_fd) < 0)
+			return (exit(EXIT_FAILURE), 1);
+	}
+	if (ft_empty_after_heredoc(node) == 1)
+	{
+		if (dup2(old_stdin, STDIN_FILENO) == -1)
+			return (exit(EXIT_FAILURE), 1);
+	}
+	return (0);
+}
+
 int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 {
 	int		old_stdin;
@@ -94,28 +116,8 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 	if (old_stdin == -1)
 		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 	if (id == 0)
-	{
 		ft_heredoc_child(node, pipe_fd, tmp, full_string);
-	}
 	else
-	{
-		close(pipe_fd[WRITE]);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
-		waitpid(id, 0, 0);
-		if (dup2(pipe_fd[READ], STDIN_FILENO) == -1)
-			return (close(pipe_fd[READ]), 1);
-		close(pipe_fd[READ]);
-		if (node->next)
-		{
-			if (pipe(pipe_fd) < 0)
-				return (exit(EXIT_FAILURE), 1);
-		}
-		if (!node->next)
-		{
-			if (dup2(old_stdin, STDIN_FILENO) == -1)
-				return (exit(EXIT_FAILURE), 1);
-		}
-	}
+		ft_heredoc_parent(pipe_fd, id, node, old_stdin);
 	return (0);
 }
