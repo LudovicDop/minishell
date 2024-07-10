@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/09 20:12:23 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/10 19:11:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,12 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
     else if (id > 0)
     {
         close(pipe_fd[WRITE]);
-        waitpid(id, &status, 0);
+        if (!token->next)
+        {
+            fprintf(stderr, "closed (node->value : %s)\n", token->value[0]);
+            close(pipe_fd[READ]);
+        }
+        // waitpid(id, &status, 0);
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
         {
             token = token->next->next;
@@ -167,7 +172,10 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     static int fd_in_old;
 
     if (!node)
+    {
+        wait(NULL);
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
+    }
     if (node == root)
         fd_in_old = dup(STDIN_FILENO);
     if (how_many_cmd(root) > 1 && root == node)
@@ -191,6 +199,7 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     }
     else if (node->type == CMD)
     {
+        fprintf(stderr, "Execution\n");
         execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }
