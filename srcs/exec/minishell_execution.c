@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/10 19:11:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:18:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void    ft_error_exec(char *error_msg, char *cmd_name)
     ft_putstr_fd(": ", 2);
     ft_putstr_fd(error_msg, 2);
 }
+
 int how_many_cmd(t_lexer *token)
 {
     int nbre_of_cmd;
@@ -31,7 +32,6 @@ int how_many_cmd(t_lexer *token)
             nbre_of_cmd++;
         token = token->next;
     }
-    // printf("nbre of cmd : %d\n", nbre_of_cmd);
     return (nbre_of_cmd);
 }
 
@@ -43,7 +43,6 @@ void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
     while (i < nbre_cmd)
     {
         waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
-        // waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
         i++;
     }
     wait(NULL);
@@ -101,22 +100,12 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
     else if (id > 0)
     {
         close(pipe_fd[WRITE]);
-        if (!token->next)
-        {
-            fprintf(stderr, "closed (node->value : %s)\n", token->value[0]);
-            close(pipe_fd[READ]);
-        }
-        // waitpid(id, &status, 0);
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
-        {
             token = token->next->next;
-        }
         return (0);
     }
     else
-    {
         perror("fork");
-    }
     return (0);
 }
 
@@ -130,7 +119,6 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
 
     if (node->type != PIPE)
         return (-1);
-    //close(pipe_fd[WRITE]);
     fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
@@ -166,7 +154,6 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list
 	return (0);
 }
 
-// << key cat fichier.txt | grep Ceci
 int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     static int fd_in_old;
@@ -199,7 +186,6 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     }
     else if (node->type == CMD)
     {
-        fprintf(stderr, "Execution\n");
         execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }
