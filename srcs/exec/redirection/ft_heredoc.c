@@ -6,13 +6,14 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/10 18:13:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:16:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string, char *tmp)
+void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
+		char *tmp)
 {
 	if (!node->next || node->next->type != HEREDOC)
 	{
@@ -60,7 +61,7 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
 
 int	ft_empty_after_heredoc(t_lexer *node)
 {
-	t_lexer *current;
+	t_lexer	*current;
 
 	current = node;
 	if (!node)
