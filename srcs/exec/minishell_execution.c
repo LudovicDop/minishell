@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/11 17:40:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:17:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
         else if (token->next && (token->next->type >= 6 && token->next->type <= 9))
         {
             ft_redirection(token->next, pipe_fd, root, envp_list);
+            fprintf(stderr, "ici\n");
         }
         if (search_builtins_token(token, envp_list))
         {

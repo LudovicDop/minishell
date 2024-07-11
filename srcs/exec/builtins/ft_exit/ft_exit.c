@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/11 17:25:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:21:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	ft_exit(t_lexer *token, char *val)
 	convert_val = 0;
 	if (!val)
 	{
+		printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
 	convert_val = ft_atoi(val);
 	convert_val %= 256;
+	printf("exit\n");
 	exit(convert_val);
 }
