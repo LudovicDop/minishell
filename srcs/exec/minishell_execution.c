@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/10 19:18:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:26:12 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,16 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     if (!node)
     {
         wait(NULL);
+        if (how_many_cmd(root) <= 1)
+            return (1);
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
     }
     if (node == root)
+    {
         fd_in_old = dup(STDIN_FILENO);
+        if (fd_in_old == -1)
+            return (1);
+    }
     if (how_many_cmd(root) > 1 && root == node)
     {
         pipe(pipe_fd);

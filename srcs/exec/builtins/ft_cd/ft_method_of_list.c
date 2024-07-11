@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/10 19:28:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:30:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 	remove_backslash_end(&path);
 	if (is_symbolic_link(path) == 1)
 	{
-		printf("is Symbolic\n");
 		parse_pwd(&pwd_lst, search_value_envp(envp, "PWD"));
 		ft_add_pwd_node(&pwd_lst, new_node);
 		init_pwd_w_envp(envp, &pwd_lst);
@@ -54,10 +53,9 @@ void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 	}
 	else if (is_symbolic_link(path) <= 0)
 	{
-		printf("is not Symbolic (path : %s)\n", path);
 		tmp = getcwd(0, 0);
-		printf("my current path : %s\n", tmp);
-		search_key_and_replace_it(envp, "PWD", tmp);
+		if (tmp)
+			search_key_and_replace_it(envp, "PWD", tmp);
 		free(new_node->node);
 		free(new_node);
 		free(tmp);

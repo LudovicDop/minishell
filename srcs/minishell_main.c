@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/09 21:01:26 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/11 16:16:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char **envp)
 
 	rl_catch_signals = 0;
 	envp_list = NULL;
+	input_cmd = NULL;
 	init_envp(&envp_list, envp);
 	increment_shlvl(&envp_list);
 	while (1)
@@ -56,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		input_cmd = readline(prompt);
 		if (!input_cmd)
 		{
+			fprintf(stderr, "exit\n");
 			free_envp(&envp_list);
 			free(prompt);
 			free(input_cmd);
@@ -93,7 +95,6 @@ int	main(int argc, char **argv, char **envp)
 		// pipe_fd[1] = -1;
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
-		int old_fd = dup(STDIN_FILENO);
 		execute_ast(token, pipe_fd, envp_list, root);
 		// print_lexer(token);
 		// print_token(t);
