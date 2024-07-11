@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/11 18:17:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:10:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
         return (-1);
     if (id == 0)
     {
+        signal(SIGQUIT, handler_heredoc);
+	    signal(SIGINT, handler_heredoc);
         close(pipe_fd[READ]);
         if (token->next && token->next->type == PIPE)
         {
@@ -128,6 +130,8 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
         return (-1);
     if (id == 0)
     {
+        signal(SIGQUIT, handler_heredoc);
+	    signal(SIGINT, handler_heredoc);
         dup2(fd_in, STDIN_FILENO);
         close(fd_in);
         execute_ast(node->next, pipe_fd ,envp_list, root);
@@ -171,16 +175,14 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
         fd_in_old = dup(STDIN_FILENO);
         if (fd_in_old == -1)
             return (1);
-    }
-    if (how_many_cmd(root) > 1 && root == node)
-    {
-        if (pipe(pipe_fd) < 0)
-            return (1);
+        if (how_many_cmd(root) > 1)
+        {
+            if (pipe(pipe_fd) < 0)
+                return (1);
+        }
     }
     if (node->type == PIPE)
-    {
         return (execute_pipeline(node, pipe_fd,envp_list, root));
-    }
     if (root == node && (node->type >= 6 && node->type <= 9))
 	{
         if (ft_redirection(node, pipe_fd, root, envp_list))
