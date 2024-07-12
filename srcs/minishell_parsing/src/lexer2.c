@@ -90,3 +90,25 @@ void	push_stack(t_token **token, char *s, t_token_type type)
 		tmp = tmp->next;
 	tmp->next = element;
 }
+
+void	push_stack2(t_lexer **token, t_token_type t, char **value)
+{
+	t_lexer				*element;
+	t_lexer				*tmp;
+	static const int	a[] = {9, 9, 9, 9, 8, 8, 2, 2, 2, 3, 1, 0, 0, 9, 9, 9};
+	static int			b;
+
+	element = ft_calloc(sizeof(t_token), 1);
+	if (!element)
+		return ;
+	*element = (t_lexer){t, value, b++, a[t], NULL};
+	tmp = *token;
+	if (!tmp)
+	{
+		*token = element;
+		return ;
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = element;
+}

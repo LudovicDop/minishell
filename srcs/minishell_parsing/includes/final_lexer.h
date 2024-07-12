@@ -13,7 +13,7 @@
 #ifndef FINAL_LEXER_H
 # define FINAL_LEXER_H
 
-# include "../includes/new_lexer.h"
+# include "../includes/create_token_final.h"
 
 typedef struct s_glob
 {
@@ -21,16 +21,6 @@ typedef struct s_glob
 	int	fd_int_old;
 }	t_glob;
 
-typedef struct s_lexer
-{
-	t_token_type	type;
-	char			**value;
-	int				pos;
-	int				priority;
-	struct s_lexer	*next;
-}	t_lexer;
-
-void	push_stack2(t_lexer **token, t_token_type t, char **value, int j);
 void	final_lexer(t_token *t, t_lexer **token);
 
 #endif

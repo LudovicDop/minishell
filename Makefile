@@ -36,6 +36,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/print_test.c \
 	  srcs/minishell_parsing/src/new_lexer.c \
 	  srcs/minishell_parsing/src/final_lexer.c \
+	  srcs/minishell_parsing/src/create_token_final.c\
 
 CC = cc
 LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline

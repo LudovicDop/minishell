@@ -44,6 +44,15 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_lexer
+{
+	t_token_type	type;
+	char			**value;
+	int				pos;
+	int				priority;
+	struct s_lexer	*next;
+}	t_lexer;
+
 typedef struct s_index
 {
 	int		i;
@@ -57,5 +66,6 @@ void			del_null_value(t_token *token);
 char			*get_string(char a, char b, char c, int *i);
 t_token_type	get_token_type(char *s);
 void			push_stack(t_token **token, char *s, t_token_type type);
+void			push_stack2(t_lexer **token, t_token_type t, char **value);
 
 #endif
