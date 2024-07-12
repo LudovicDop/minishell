@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/09 13:38:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:52:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void				ft_echo(char *string, bool without_ret, t_envp **envp,
 void				add_node_to_envp(t_envp **list, t_envp *new_node);
 void				increment_shlvl(t_envp **envp);
 /*REDIRECTION*/
-void	ft_red_out(t_lexer *token);
+void	ft_red_out(t_lexer *token, bool is_cmd);
 void	ft_red_append(t_lexer *token);
 int		ft_red_in(t_lexer *token);
 int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);

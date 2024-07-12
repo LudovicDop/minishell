@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token_final.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 11:37:22 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/12 11:37:23 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/12 16:13:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,15 +126,20 @@ void	create_token(t_token **c, t_lexer **token)
 	tmp = *c;
 	a = (t_index){0, 0, 0};
 	count_value(*c, &a);
-	create_cmd_value(token, c, a);
-	if (a.j)
-	{
-		*c = tmp;
-		create_red_value(token, c, a);
-	}
+
 	if (a.k)
 	{
 		*c = tmp;
 		create_red_in_value(token, c, a);
+	}
+	if (a.i)
+	{
+		*c = tmp;
+		create_cmd_value(token, c, a);
+	}
+	if (a.j)
+	{
+		*c = tmp;
+		create_red_value(token, c, a);
 	}
 }

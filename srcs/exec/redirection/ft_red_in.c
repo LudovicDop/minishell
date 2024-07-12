@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/08 15:33:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:40:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,24 @@
 
 int	ft_red_in(t_lexer *token)
 {
+	int	i;
 	int	fd;
 
+	i = 0;
 	if (!token || token->type != REDIRECT_IN)
 		return (1);
-	if (token->next && token->next->type == CMD && token->next->value[1])
-		return (0);
-	fd = open(token->value[0], O_RDONLY);
+	while (token->value[i + 1])
+	{
+		fd = open(token->value[i], O_RDONLY);
+		if (fd < 0)
+		{
+			perror("open");
+			return (1);
+		}
+		close(fd);
+		i++;
+	}
+	fd = open(token->value[i], O_RDONLY);
 	if (fd < 0)
 	{
 		perror("open");
@@ -29,5 +40,7 @@ int	ft_red_in(t_lexer *token)
 	if (dup2(fd, STDIN_FILENO) < 0)
 		perror("dup2");
 	close(fd);
+	if (!token->next)
+		return (1);
 	return (0);
 }
