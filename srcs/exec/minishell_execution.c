@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/13 12:57:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/13 16:33:24 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
     }
     else if (id > 0)
     {
+        // waitpid(id, 0, 0);
         close(pipe_fd[WRITE]);
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
             token = token->next->next;
@@ -188,7 +189,6 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     }
     if (node == root)
     {
-        // wait(NULL);
         fd_in_old = dup(STDIN_FILENO);
         if (fd_in_old == -1)
             return (1);

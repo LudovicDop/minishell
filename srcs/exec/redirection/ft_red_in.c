@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_in.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/12 17:05:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/13 16:33:19 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_red_in(t_lexer *token)
 
 	i = 0;
 	if (!token || token->type != REDIRECT_IN)
-		return (1);
+		return (0);
 	while (token->value[i + 1])
 	{
 		fd = open(token->value[i], O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/13 12:20:06 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/13 16:29:03 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		input_cmd = readline(prompt);
 		if (!input_cmd)
 		{
-			fprintf(stderr, "exit\n");
+			printf("exit\n");
 			free_envp(&envp_list);
 			free(prompt);
 			free(input_cmd);
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
 		execute_ast(token, pipe_fd, envp_list, root);
-		print_lexer(token);
+		// print_lexer(token);
 		// print_token(t);
 		// free_everything(&token, prompt);
 		// free(input_cmd);
