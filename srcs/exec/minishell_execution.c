@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/12 16:48:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:57:28 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
 
     if (token->type != CMD)
         return (-1);
+    signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
-        signal(SIGQUIT, handler_heredoc);
-	    signal(SIGINT, handler_heredoc);
+        signal(SIGINT, handler_heredoc);
         close(pipe_fd[READ]);
         if (token->next && token->next->type == PIPE)
         {
@@ -79,7 +80,6 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *ro
         }
         else if (token->next && (token->next->type >= 6 && token->next->type <= 9))
         {
-            fprintf(stderr, "ici3\n");
             ft_redirection(token->next, pipe_fd, root, envp_list);
         }
         if (search_builtins_token(token, envp_list))
@@ -125,12 +125,13 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_lexer *roo
     fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
+    signal(SIGQUIT, SIG_IGN);
+    signal(SIGINT, SIG_IGN);
     id = fork();
     if (id < 0)
         return (-1);
     if (id == 0)
     {
-        signal(SIGQUIT, handler_heredoc);
 	    signal(SIGINT, handler_heredoc);
         dup2(fd_in, STDIN_FILENO);
         close(fd_in);
@@ -178,7 +179,7 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
 {
     static int fd_in_old;
 
-    if (!node)
+    if (!node || node->type == SPACE)
     {
         wait(NULL);
         if (how_many_cmd(root) <= 1)
@@ -187,6 +188,7 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     }
     if (node == root)
     {
+        // wait(NULL);
         fd_in_old = dup(STDIN_FILENO);
         if (fd_in_old == -1)
             return (1);
@@ -198,25 +200,21 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_lexer *root)
     }
     if (node->type == PIPE)
     {
-        //fprintf(stderr, "saaaaaaa");
         return (execute_pipeline(node, pipe_fd,envp_list, root));
     }
     if (root == node && (node->type >= 6 && node->type <= 9))
 	{
-        //fprintf(stderr, "sa;ut");
         if (ft_redirection(node, pipe_fd, root, envp_list))
             return (0);
 	}
     if (how_many_cmd(root) == 1 && root == node && !node->next)
     {
-        //fprintf(stderr, "dgbhbgkbgi");
         if (!search_builtins_token(root, envp_list))
             execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }
     else if (node->type == CMD)
     {
-        //fprintf(stderr, "yoyoooo");
         execute_command(node, pipe_fd, envp_list, root);
         dup2(fd_in_old, STDIN_FILENO);
     }

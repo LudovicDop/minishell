@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/12 16:07:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:20:06 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
 		execute_ast(token, pipe_fd, envp_list, root);
-		// print_lexer(token);
+		print_lexer(token);
 		// print_token(t);
 		// free_everything(&token, prompt);
 		// free(input_cmd);
