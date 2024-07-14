@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_lexer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:55 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/08 15:27:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/14 14:02:31 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define FINAL_LEXER_H
 
 # include "../includes/create_token_final.h"
-
-typedef struct s_glob
-{
-	int	fd_out_old;
-	int	fd_int_old;
-}	t_glob;
 
 void	final_lexer(t_token *t, t_lexer **token);
 

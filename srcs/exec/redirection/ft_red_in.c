@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/13 17:29:35 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/14 13:23:31 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	ft_red_in(t_lexer *token)
 		perror("open");
 		return (1);
 	}
-	fprintf(stderr, "\033[36;1mtoken->next : %p\ntoken->value : %s\ntoken->type : %d\033[m\n" \
-	, token->next, token->next->value[0], token->next->type);
-	if (!token->next || token->next->type == SPACE)
+	if (token->next)
+		fprintf(stderr, "\033[36;1mtoken->next : %p\ntoken->value : %s\ntoken->type : %d\033[m\n" \
+		, token->next, token->next->value[0], token->next->type);
+	if (!token->next || (token->next && token->next->type == 1))
 	{
-		fprintf(stderr, "LA\n");
 		return (1);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)

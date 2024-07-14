@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/12 16:52:04 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/14 14:22:46 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,11 @@
 
 // volatile sig_atomic_t g_interrupt = 0;
 // int g_signal = 0;
- 
-typedef struct s_tab
+typedef struct s_glob
 {
-	char			*prompt;
-	pid_t			*process_id;
-	int				pipe_fd[2];
-	int				nbre_cmd;
-	int				return_val;
-	struct s_envp	*envp;
-}					t_tab;
+	t_lexer *root;
+	pid_t	*id_list;
+} t_glob;
 
 typedef struct s_envp
 {
@@ -54,18 +49,6 @@ typedef struct s_envp
 	char			*value;
 	struct s_envp	*next;
 }					t_envp;
-
-typedef struct s_cmd
-{
-	char			*pathname;
-	char			*arg;
-	char			*arg_redirection;
-	bool			any_redirection;
-	bool			last_cmd;
-	t_tab			*tab_ref;
-	t_envp			*envp_ref;
-	struct s_cmd	*next;
-}					t_cmd;
 
 // typedef enum
 // {
@@ -107,26 +90,27 @@ int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strjoin2(char *s1, char *s2);
 char				*ft_strchr2(const char *s, int c);
 char				*search_and_replace(char *string, char c_to_replace, char *insert);
+int 				how_many_cmd(t_lexer *token);
 /*Minishell main function exec*/
-void				execution_main(t_cmd **cmd);
+// void				execution_main(t_cmd **cmd);
 void				ft_error_exec(char *error_msg, char *cmd_name);
-int 				execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_lexer *root);
-int 				execute_ast(t_lexer *node, int pipe[2], t_envp *envp_list, t_lexer *root);
-int ft_redirection(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
+int 				execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glob);
+int 				execute_ast(t_lexer *node, int pipe[2], t_envp *envp_list, t_glob *glob);
+int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list);
 
 /*Quêtes secondaires*/
-void				special_carac(t_cmd *cmd);
-int					search_builtins_cmd(t_cmd *cmd);
+// void				special_carac(t_cmd *cmd);
+// int					search_builtins_cmd(t_cmd *cmd);s
 
 /*Minishell parsing*/
-int					start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
-int					check_simple_quotes(char *input_cmd, t_cmd *cmd);
-int					check_double_quotes(char *input_cmd, t_cmd *cmd);
-int					check_pipes(char *input_cmd, t_cmd *cmd);
+// int					start_parsing(char *input_cmd, t_cmd **cmd, t_envp **envp);
+// int					check_simple_quotes(char *input_cmd, t_cmd *cmd);
+// int					check_double_quotes(char *input_cmd, t_cmd *cmd);
+// int					check_pipes(char *input_cmd, t_cmd *cmd);
 int					empty_after_symbol(char *input_cmd);
-int					check_redirection_symbol(char *input_cmd, t_cmd *cmd);
-int					ft_error_msg(t_cmd *cmd, char *error_msg,
-						char near_this_char, int error_val);
+// int					check_redirection_symbol(char *input_cmd, t_cmd *cmd);
+// int					ft_error_msg(t_cmd *cmd, char *error_msg,
+						// char near_this_char, int error_val);
 
 /*Minishell search good path in envp*/
 void				ft_env(t_envp **envp_list);
@@ -137,8 +121,8 @@ t_envp				*search_envp_key(t_envp **envp, char *key);
 
 void				init_envp(t_envp **envp_list, char **envp);
 void				print_envp(t_envp *list);
-void				add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst,
-						t_tab **global, t_envp **envp);
+// void				add_cmd_node(t_cmd *new_node, t_cmd **cmd_lst,
+						// t_tab **global, t_envp **envp);
 
 /*Minishell freeing memory*/
 void				free_tab(void **my_tab);
