@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/14 14:22:46 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/15 10:49:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,16 @@
 
 // volatile sig_atomic_t g_interrupt = 0;
 // int g_signal = 0;
+typedef struct s_id
+{
+	pid_t id;
+	struct s_id *next;
+}	t_id;
+
 typedef struct s_glob
 {
 	t_lexer *root;
-	pid_t	*id_list;
+	t_id	*id_node;
 } t_glob;
 
 typedef struct s_envp
@@ -186,4 +192,6 @@ void	ft_red_out(t_lexer *token, bool is_cmd);
 void	ft_red_append(t_lexer *token);
 int		ft_red_in(t_lexer *token);
 int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
+/*linked list for fork pid_t*/
+void    ft_add_lst_id_node(t_id **id_node, pid_t new_id_value);
 #endif

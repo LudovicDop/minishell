@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/14 14:19:30 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/15 11:35:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		// // check_token_par(token);
 		// t_lexer *token2;
 		t_glob *glob;
+		t_id	*id_node;
 		glob = malloc(sizeof(t_glob) * 1);
 		// token = malloc(sizeof(t_lexer));
 		// token2 = malloc(sizeof(t_lexer));
@@ -83,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		// token->type = REDIRECT_IN;
 		// token->next = token2;
 		glob->root = token;
-		glob->id_list = malloc(sizeof(pid_t) * how_many_cmd(token));
+		glob->id_node = NULL;
 		// token2->value = malloc(sizeof(char*) * 2);
 		// token2->value[0] = ft_strdup("cat");
 		// token2->value[1] = NULL;
@@ -96,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
 		execute_ast(token, pipe_fd, envp_list, glob);
-		print_lexer(token);
+		// print_lexer(token);
 		// print_token(t);
 		// free_everything(&token, prompt);
 		// free(input_cmd);

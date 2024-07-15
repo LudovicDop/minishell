@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_execution.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/14 14:20:37 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/15 11:57:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
     }
     else if (id > 0)
     {
-        // waitpid(id, 0, 0);
+        ft_add_lst_id_node(&(glob->id_node), id);
         close(pipe_fd[WRITE]);
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
             token = token->next->next;
@@ -178,13 +178,27 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 	return (0);
 }
 
+void    ft_wait_everyone(t_glob *glob)
+{
+    t_id *tmp;
+
+    if (!glob || !glob->id_node)
+        return ;
+    tmp = glob->id_node;
+    while (tmp)
+    {
+        waitpid(tmp->id, 0, 0);
+        tmp = tmp->next;
+    }
+    return ;
+}
 int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
 {
     static int fd_in_old;
 
     if (!node || node->type == 1)
     {
-        wait(NULL);
+        ft_wait_everyone(glob);
         if (how_many_cmd(glob->root) <= 1)
             return (1);
         return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
