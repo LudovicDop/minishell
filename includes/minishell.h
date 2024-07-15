@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/15 10:49:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:33:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_glob
 {
 	t_lexer *root;
 	t_id	*id_node;
+	int		fd_in_old;
 } t_glob;
 
 typedef struct s_envp
@@ -194,4 +195,9 @@ int		ft_red_in(t_lexer *token);
 int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
 /*linked list for fork pid_t*/
 void    ft_add_lst_id_node(t_id **id_node, pid_t new_id_value);
+void    ft_free_id_list(t_id **my_list);
+/*minishell exec_bis*/
+int    ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd);
+void    ft_wait_everyone(t_glob *glob);
+int 	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd);
 #endif

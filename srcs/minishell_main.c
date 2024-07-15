@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/15 11:35:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:43:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,13 @@ int	main(int argc, char **argv, char **envp)
 		t_glob *glob;
 		t_id	*id_node;
 		glob = malloc(sizeof(t_glob) * 1);
-		// token = malloc(sizeof(t_lexer));
-		// token2 = malloc(sizeof(t_lexer));
-		// token->value = malloc(sizeof(char*) * 2);
-		// token->value[0] = ft_strdup("fichier.txt");
-		// token->value[1] = NULL;
-		// token->type = REDIRECT_IN;
-		// token->next = token2;
+
 		glob->root = token;
 		glob->id_node = NULL;
-		// token2->value = malloc(sizeof(char*) * 2);
-		// token2->value[0] = ft_strdup("cat");
-		// token2->value[1] = NULL;
-		// token2->type = CMD;
-		// token2->next = NULL;
 
-		
-		// pipe_fd[0] = -1;
-		// pipe_fd[1] = -1;
-		// pipe_fd[0] = 0;
-		// pipe_fd[1] = 0;
 		execute_ast(token, pipe_fd, envp_list, glob);
+		ft_free_id_list(&glob->id_node);
+		
 		// print_lexer(token);
 		// print_token(t);
 		// free_everything(&token, prompt);

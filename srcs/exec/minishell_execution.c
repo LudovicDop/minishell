@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 11:57:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:36:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,6 @@ int how_many_cmd(t_lexer *token)
     return (nbre_of_cmd);
 }
 
-// void    wait_everyone(t_cmd *cmd_list, int nbre_cmd)
-// {
-//     int i;
-
-//     i = 0;
-//     while (i < nbre_cmd)
-//     {
-//         waitpid(cmd_list->tab_ref->process_id[i], 0, 0);
-//         i++;
-//     }
-//     wait(NULL);
-// }
-
-
-void    ft_null(int sig)
-{
-    (void)sig;
-    return ;
-}
-
 int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glob)
 {
     char **tmp_envp;
@@ -72,7 +52,8 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
     if (id == 0)
     {
         signal(SIGINT, handler_heredoc);
-        close(pipe_fd[READ]);
+        if (pipe_fd)
+            close(pipe_fd[READ]);
         if (token->next && token->next->type == PIPE)
         {
             dup2(pipe_fd[WRITE], STDOUT_FILENO);
@@ -96,6 +77,9 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
                 free_everything(&glob->root, NULL);
                 free_tab((void**)tmp_envp);
                 free_envp(&envp_list);
+                close(pipe_fd[READ]);
+                close(pipe_fd[WRITE]);
+                close(glob->fd_in_old);
                 exit(EXIT_FAILURE);
             }
         }
@@ -103,7 +87,8 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
     else if (id > 0)
     {
         ft_add_lst_id_node(&(glob->id_node), id);
-        close(pipe_fd[WRITE]);
+        if (pipe_fd)
+            close(pipe_fd[WRITE]);
         if (token->next && (token->next->type >= 6 && token->next->type <= 9))
             token = token->next->next;
         return (0);
@@ -126,28 +111,9 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_glob *glob
     fd_in = pipe_fd[READ];
     if (pipe(pipe_fd) < 0)
         return (-1);
-    signal(SIGQUIT, SIG_IGN);
-    signal(SIGINT, SIG_IGN);
-    // id = fork();
-    // if (id < 0)
-    //     return (-1);
-    // if (id == 0)
-    // {
-	    signal(SIGINT, handler_heredoc);
-        dup2(fd_in, STDIN_FILENO);
-        close(fd_in);
-        // execute_ast(node->next, pipe_fd ,envp_list, root);
-        // exit(EXIT_FAILURE);
-    // }
-    // else
-    // {
-        // close(fd_in);
-        // close(pipe_fd[READ]);
-        // close(pipe_fd[WRITE]);
-        // waitpid(id, &status, 0);
-        execute_ast(node->next, pipe_fd ,envp_list, glob);
-        // wait(NULL);
-    // }
+    dup2(fd_in, STDIN_FILENO);
+    close(fd_in);
+    execute_ast(node->next, pipe_fd ,envp_list, glob);
     return (0);
 }
 
@@ -194,30 +160,12 @@ void    ft_wait_everyone(t_glob *glob)
 }
 int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
 {
-    static int fd_in_old;
-
-    if (!node || node->type == 1)
-    {
-        ft_wait_everyone(glob);
-        if (how_many_cmd(glob->root) <= 1)
-            return (1);
-        return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
-    }
-    if (glob->root == node)
-    {
-        fd_in_old = dup(STDIN_FILENO);
-        if (fd_in_old == -1)
-            return (1);
-        if (how_many_cmd(glob->root) > 1)
-        {
-            if (pipe(pipe_fd) < 0)
-                return (1);
-        }
-    }
+    if (ft_end_cmd(node, glob, pipe_fd))
+        return (1);
+    if (ft_first_node_init(node, glob, pipe_fd))
+        return (1);
     if (node->type == PIPE)
-    {
         return (execute_pipeline(node, pipe_fd,envp_list, glob));
-    }
     if (glob->root == node && (node->type >= 6 && node->type <= 9))
 	{
         if (ft_redirection(node, pipe_fd, glob, envp_list))
@@ -227,12 +175,12 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
     {
         if (!search_builtins_token(glob->root, envp_list))
             execute_command(node, pipe_fd, envp_list, glob);
-        dup2(fd_in_old, STDIN_FILENO);
+        dup2(glob->fd_in_old, STDIN_FILENO);
     }
     else if (node->type == CMD)
     {
         execute_command(node, pipe_fd, envp_list, glob);
-        dup2(fd_in_old, STDIN_FILENO);
+        dup2(glob->fd_in_old, STDIN_FILENO);
     }
     execute_ast(node->next, pipe_fd ,envp_list, glob);
     return (0);

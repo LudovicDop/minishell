@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 12:01:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:11:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("^C\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
+		printf("^C\n");
 		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
