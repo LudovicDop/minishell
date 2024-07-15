@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 15:31:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:18:18 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,19 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_glob *glob
     return (0);
 }
 
+t_lexer *ft_skip_to_next_cmd(t_lexer *node)
+{
+    t_lexer *current;
+
+    current = node;
+    if (!node)
+        return (NULL);
+    while (current && current->type != PIPE)
+    {
+        current = current->next;
+    }
+    return (current);
+}
 int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
     int i = 0;
@@ -130,10 +143,10 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
         if (ft_red_in(node))
         {
             dup2(glob->fd_in_old, STDIN_FILENO);
-            if (node->next && node->next->type == CMD)
-            {
-                return (execute_ast(node->next->next, pipe_fd, envp_list, glob));
-            }
+            // if (node->next && node->next->type == CMD)
+            // {
+                return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, envp_list, glob));
+            // }
         }
         ft_heredoc(node, pipe_fd, glob->root, envp_list);
     }
@@ -170,6 +183,7 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
 	}
     if (ft_single_cmd(node, glob, pipe_fd, envp_list))
     {
+        fprintf(stderr, "ICI\n");
         return (1);
     }
     else if (node->type == CMD && how_many_cmd(glob->root) > 1)
