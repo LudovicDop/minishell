@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/15 14:33:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:21:24 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <term.h>
 # include <time.h>
 # include <unistd.h>
+# include <stdbool.h>
 # define WRITE 1
 # define READ 0
 
@@ -145,7 +146,7 @@ char				*ft_strchr_reverse(char *s1, char c);
 void				ft_export(t_envp **envp_list, char *key_value);
 void				ft_cd(t_lexer *token, t_envp **envp, char *path);
 int					search_builtins_child(t_lexer *token, t_envp *envp_list);
-int					search_builtins_token(t_lexer *token, t_envp *envp_list);
+int					search_builtins_token(t_lexer *token, t_envp *envp_list, t_glob *glob);
 /*SIGNAL*/
 void				handler(int signal);
 void				init_signal(int choice);
@@ -200,4 +201,5 @@ void    ft_free_id_list(t_id **my_list);
 int    ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd);
 void    ft_wait_everyone(t_glob *glob);
 int 	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd);
+int 	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp *envp_list);
 #endif

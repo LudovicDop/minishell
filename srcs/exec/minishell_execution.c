@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 14:36:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:31:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
         {
             ft_redirection(token->next, pipe_fd, glob, envp_list);
         }
-        if (search_builtins_token(token, envp_list))
+        if (search_builtins_token(token, envp_list, glob))
         {
             return (exit(EXIT_FAILURE), 0);
         }
@@ -119,12 +119,8 @@ int execute_pipeline(t_lexer *node,int *pipe_fd, t_envp *envp_list, t_glob *glob
 
 int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
-    static int fd_in_old;
     int i = 0;
 
-    fd_in_old = dup(STDIN_FILENO);
-    if (fd_in_old < 0)
-        return (1);
 	if	(node->type >= 6 && node->type <= 9)
     {
         if (glob->root == node)
@@ -133,7 +129,7 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
         ft_red_append(node);
         if (ft_red_in(node))
         {
-            dup2(fd_in_old, STDIN_FILENO);
+            dup2(glob->fd_in_old, STDIN_FILENO);
             if (node->next && node->next->type == CMD)
             {
                 return (execute_ast(node->next->next, pipe_fd, envp_list, glob));
@@ -153,6 +149,7 @@ void    ft_wait_everyone(t_glob *glob)
     tmp = glob->id_node;
     while (tmp)
     {
+        // fprintf(stderr ,"\033[31;1mWaiting for : %d\033[m\n", tmp->id);
         waitpid(tmp->id, 0, 0);
         tmp = tmp->next;
     }
@@ -171,16 +168,16 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
         if (ft_redirection(node, pipe_fd, glob, envp_list))
             return (0);
 	}
-    if (how_many_cmd(glob->root) == 1 && glob->root == node && !node->next)
+    if (ft_single_cmd(node, glob, pipe_fd, envp_list))
     {
-        if (!search_builtins_token(glob->root, envp_list))
-            execute_command(node, pipe_fd, envp_list, glob);
-        dup2(glob->fd_in_old, STDIN_FILENO);
+        return (1);
     }
-    else if (node->type == CMD)
+    else if (node->type == CMD && how_many_cmd(glob->root) > 1)
     {
         execute_command(node, pipe_fd, envp_list, glob);
         dup2(glob->fd_in_old, STDIN_FILENO);
+        if (glob->fd_in_old == -1)
+            return (1);
     }
     execute_ast(node->next, pipe_fd ,envp_list, glob);
     return (0);

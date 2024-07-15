@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/10 18:18:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:21:18 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 	return ;
 }
 
-int	search_builtins_token(t_lexer *token, t_envp *envp_list)
+int	search_builtins_token(t_lexer *token, t_envp *envp_list, t_glob *glob)
 {
 	if (!token)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_red_in.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/14 13:23:31 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/15 15:32:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	ft_red_in(t_lexer *token)
 		perror("open");
 		return (1);
 	}
-	if (token->next)
-		fprintf(stderr, "\033[36;1mtoken->next : %p\ntoken->value : %s\ntoken->type : %d\033[m\n" \
-		, token->next, token->next->value[0], token->next->type);
 	if (!token->next || (token->next && token->next->type == 1))
 	{
 		return (1);
