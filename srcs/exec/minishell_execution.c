@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 17:53:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:59:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
             dup2(glob->fd_in_old, STDIN_FILENO);
             // if (node->next && node->next->type == CMD)
             // {
+            fprintf(stderr, "PROBLEME\n");
                 return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, envp_list, glob));
             // }
         }
@@ -184,7 +185,6 @@ int execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
 	}
     if (ft_single_cmd(node, glob, pipe_fd, envp_list))
     {
-        fprintf(stderr, "ICI\n");
         return (1);
     }
     else if (node->type == CMD && how_many_cmd(glob->root) > 1)
