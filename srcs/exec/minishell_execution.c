@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 17:18:18 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:53:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glo
                 free_everything(&glob->root, NULL);
                 free_tab((void**)tmp_envp);
                 free_envp(&envp_list);
+                ft_free_id_list(&glob->id_node);
                 close(pipe_fd[READ]);
                 close(pipe_fd[WRITE]);
                 close(glob->fd_in_old);
