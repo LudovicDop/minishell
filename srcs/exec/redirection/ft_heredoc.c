@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/13 16:33:17 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/07/16 14:57:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 	}
 }
 
-int	
-ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
+int	ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
 {
 	signal(SIGQUIT, handler_heredoc);
 	signal(SIGINT, handler_heredoc);
@@ -51,7 +50,8 @@ ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
 		}
 		else if (tmp == NULL || tmp[0] == '\0')
 			return (printf("\n"), free(full_string), free(tmp), exit(0), 1);
-		else if (ft_strlen(tmp) > 1 && ft_strncmp(node->value[0], tmp, ft_strlen(tmp) - 1) == 0)
+		else if (ft_strlen(tmp) > 1 && ft_strncmp(node->value[0], tmp,
+				ft_strlen(tmp) - 1) == 0)
 		{
 			ft_heredoc_init(node, pipe_fd, &full_string, tmp);
 			node = node->next;

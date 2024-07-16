@@ -6,11 +6,31 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/15 19:01:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:01:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_red_in_bis(t_lexer *token, int i)
+{
+	int	fd;
+
+	fd = open(token->value[i], O_RDONLY);
+	if (fd < 0)
+	{
+		perror("open");
+		return (1);
+	}
+	if (!token->next || token->next->type != CMD)
+	{
+		return (1);
+	}
+	if (dup2(fd, STDIN_FILENO) < 0)
+		perror("dup2");
+	close(fd);
+	return (0);
+}
 
 int	ft_red_in(t_lexer *token)
 {
@@ -31,18 +51,7 @@ int	ft_red_in(t_lexer *token)
 		close(fd);
 		i++;
 	}
-	fd = open(token->value[i], O_RDONLY);
-	if (fd < 0)
-	{
-		perror("open");
+	if (ft_red_in_bis(token, i))
 		return (1);
-	}
-	if (!token->next || token->next->type != CMD)
-	{
-		return (1);
-	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-		perror("dup2");
-	close(fd);
 	return (0);
 }

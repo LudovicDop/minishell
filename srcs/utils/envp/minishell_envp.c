@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 15:11:33 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:02:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*search_path(t_envp *envp_list)
 		}
 		current = current->next;
 	}
-    return (NULL);
+	return (NULL);
 }
 
 void	add_node_to_envp(t_envp **list, t_envp *new_node)
@@ -85,7 +85,7 @@ void	init_envp(t_envp **envp_list, char **envp)
 		new_node = malloc(sizeof(t_envp));
 		if (!new_node)
 		{
-			free_tab((void**)envp_list);
+			free_tab((void **)envp_list);
 			return ;
 		}
 		new_node->value = ft_strdup(ft_strchr2(envp[i], '='));

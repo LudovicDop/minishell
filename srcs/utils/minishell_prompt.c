@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 13:47:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:03:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ char	*init_prompt_path(char *tmp_path, t_envp **envp_list)
 
 char	*init_prompt_path2(void)
 {
-	char *tmp;
-	char *cwd;
-	char *without_user;
+	char	*tmp;
+	char	*cwd;
+	char	*without_user;
 
 	cwd = getcwd(0, 0);
 	without_user = remove_users(cwd);
@@ -95,7 +95,7 @@ char	*get_prompt(t_envp *envp_list)
 	}
 	if (tmp_user && tmp_path)
 		prompt = ft_strjoin(tmp_user, tmp_path);
-	else 
+	else
 	{
 		prompt = ft_strdup("\033[32;1m@?\033[m:");
 		if (!prompt)

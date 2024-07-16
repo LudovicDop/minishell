@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/15 15:21:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:44:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int 				how_many_cmd(t_lexer *token);
 void				ft_error_exec(char *error_msg, char *cmd_name);
 int 				execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list, t_glob *glob);
 int 				execute_ast(t_lexer *node, int pipe[2], t_envp *envp_list, t_glob *glob);
-int ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list);
+int					ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list);
+void				execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list, int *pipe_fd);
 
 /*Quêtes secondaires*/
 // void				special_carac(t_cmd *cmd);

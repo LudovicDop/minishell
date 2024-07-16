@@ -6,19 +6,19 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/15 13:11:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:04:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void reset_signal(void)
+void	reset_signal(void)
 {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
-void handler_heredoc(int sig)
+void	handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -46,7 +46,6 @@ void	handler(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		// signal(SIGQUIT, SIG_IGN);
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}

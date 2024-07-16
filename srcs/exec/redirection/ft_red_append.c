@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:24:32 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/09 15:05:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:58:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_redirection_file(t_lexer *token, char *file_to_created)
 {
-	int fd;
+	int	fd;
 
 	if (file_to_created)
 	{

@@ -6,15 +6,16 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:02:43 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/12 16:51:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:58:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_redirection_file(t_lexer *token, char *file_to_created, bool is_cmd)
+static void	ft_redirection_file(t_lexer *token, char *file_to_created,
+		bool is_cmd)
 {
-	int fd;
+	int	fd;
 
 	if (file_to_created)
 	{
