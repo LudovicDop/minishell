@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 14:33:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:32:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,46 +86,9 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_id_list(&glob->id_node);
 		
 		// print_lexer(token);
-		// print_token(t);
-		// free_everything(&token, prompt);
+		free_everything(&token, prompt);
 		// free(input_cmd);
 	}
 	return (0);
 	
 }
-
-
-// int	main(int ac, char **av)
-// {
-// 	int		fd;
-// 	char	*str;
-// 	t_token	*token;
-// 	t_node	*node;
-
-// 	if (ac != 2)
-// 	{
-// 		ft_printf("Error arguments\n");
-// 		exit(1);
-// 	}
-// 	fd = open(av[1], O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		ft_printf("Error open file\n");
-// 		exit(1);
-// 	}
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// 	check_quotes(str);
-// 	check_par(str);
-// 	token = lexer(str);
-// 	check_op(token);
-// 	check_token_par(token);
-// 	node = parse(token);
-// 	free(str);
-// 	while ((str = get_next_line(fd)))
-// 		free(str);
-// 	free_token(token);
-// 	free_node(node);
-	
-// 	return (0);
-// }

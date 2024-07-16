@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 14:44:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:42:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void				add_node_to_envp(t_envp **list, t_envp *new_node);
 void				increment_shlvl(t_envp **envp);
 /*REDIRECTION*/
 void	ft_red_out(t_lexer *token, bool is_cmd);
-void	ft_red_append(t_lexer *token);
+void	ft_red_append(t_lexer *token, bool is_cmd);
 int		ft_red_in(t_lexer *token);
 int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
 /*linked list for fork pid_t*/
@@ -203,4 +203,5 @@ int    ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd);
 void    ft_wait_everyone(t_glob *glob);
 int 	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd);
 int 	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp *envp_list);
+t_lexer	*ft_skip_to_next_cmd(t_lexer *node);
 #endif

@@ -10,4 +10,4 @@ PROGRAM="/home/ldoppler/Desktop/minishell_merge/./minishell"
 SUPPRESSION_FILE="/home/ldoppler/Desktop/minishell_merge/ignore_readline.supp"
 
 # Run Valgrind with the specified suppression file
-valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM
+valgrind --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all -s --trace-children=yes --suppressions=$SUPPRESSION_FILE $PROGRAM
