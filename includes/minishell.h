@@ -6,12 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 15:42:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:37:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+extern int	g_signal;
 
 # include "../libft/libft.h"
 # include "../srcs/minishell_parsing/includes/final_lexer.h"
@@ -37,7 +38,7 @@
 
 
 // volatile sig_atomic_t g_interrupt = 0;
-// int g_signal = 0;
+
 typedef struct s_id
 {
 	pid_t id;

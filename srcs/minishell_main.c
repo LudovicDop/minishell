@@ -6,12 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 16:32:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:46:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "./minishell_parsing/includes/print_test.h"
+int g_signal = 0;
 
 void	free_token(t_token *token)
 {
@@ -48,7 +49,10 @@ int	main(int argc, char **argv, char **envp)
 	rl_catch_signals = 0;
 	envp_list = NULL;
 	input_cmd = NULL;
+	g_signal = 0;
 	init_envp(&envp_list, envp);
+	if (!search_value_envp(&envp_list, "PWD"))
+		search_key_and_replace_it(&envp_list, "PWD", getcwd(0, 0));
 	increment_shlvl(&envp_list);
 	while (1)
 	{
@@ -86,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_id_list(&glob->id_node);
 		
 		// print_lexer(token);
-		free_everything(&token, prompt);
+		// free_everything(&token, prompt);
 		// free(input_cmd);
 	}
 	return (0);

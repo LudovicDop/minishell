@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:27:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 15:04:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:53:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	increment_shlvl(t_envp **envp)
 	}
 	else
 	{
-		search_key_and_replace_it(envp, "SHLVL", "0");
+		search_key_and_replace_it(envp, "SHLVL", "1");
 	}
 }
