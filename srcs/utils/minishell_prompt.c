@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 17:25:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:41:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*get_prompt(t_envp *envp_list)
 	prompt = NULL;
 	current = envp_list;
 	i = 0;
+
 	while (current)
 	{
 		if (!ft_strcmp(current->key, "USER"))

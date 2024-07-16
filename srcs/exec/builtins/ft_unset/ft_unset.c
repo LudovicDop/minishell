@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:28:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 19:29:34 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 19:44:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 
 void	ft_unset(t_envp **envp, char *key_to_remove)
 {
-	t_envp	*i;
+	t_envp	*current;
 	t_envp	*tmp;
 
-	i = *envp;
-	if (!key_to_remove)
+	if (!envp || !*envp || !key_to_remove)
 		return ;
-	while (i)
+	
+	current = *envp;
+	if (!ft_strcmp(current->key, key_to_remove))
 	{
-		if (!ft_strcmp(i->key, key_to_remove))
-		{
-			tmp->next = i->next;
-			return (free(i->key), free(i->value), free(i));
-		}
-		tmp = i;
-		i = i->next;
+		fprintf(stderr, "\033[31;1mTHERE\033[m\n");
+		*envp = current->next;
+		return (free(current->key), free(current->value), free(current));
 	}
-	return ;
+	
+	while (current && current->next)
+	{
+		if (!ft_strcmp(current->next->key, key_to_remove))
+		{
+			tmp = current->next;
+			current->next = tmp->next;
+			return (free(tmp->key), free(tmp->value), free(tmp));
+		}
+		current = current->next;
+	}
 }
+
