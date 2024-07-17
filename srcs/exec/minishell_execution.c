@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/17 17:12:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:55:25 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 		execute_child(glob, token, envp_list, pipe_fd);
 	else if (id > 0)
 	{
+		// fprintf(stderr, "\033[31;1mEXIT (cmd : %s)\033[m\n", token->value[0]);
 		ft_add_lst_id_node(&(glob->id_node), id);
 		if (pipe_fd)
 			close(pipe_fd[WRITE]);
