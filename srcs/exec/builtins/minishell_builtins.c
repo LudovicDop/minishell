@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/17 15:23:23 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:27:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 
 int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob)
 {
+	int	i;
+
+	i = 1;
 	if (!token)
 		return (0);
 	if (!ft_strcmp(token->value[0], "export"))
@@ -32,7 +35,11 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob)
 	else if (!ft_strcmp(token->value[0], "env"))
 		return (ft_env(envp_list), free_tab((void **)token->value), 1);
 	else if (!ft_strcmp(token->value[0], "unset"))
-		return (ft_unset(envp_list, token->value[1]), 1);
+	{
+		while (token->value[i])
+			ft_unset(envp_list, token->value[i++]);
+		return (1);
+	}
 	else if (!ft_strcmp(token->value[0], "pwd"))
 		return (ft_pwd(*envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "exit"))
