@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 16:45:46 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:16:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*ft_check_dollar(char *string, t_envp **envp, t_lexer *token)
 
 	if (!ft_strcmp(string, "$"))
 		return (ft_strdup("$"));
+	else if (!ft_strcmp(string, "$?"))
+		return (ft_itoa(g_signal));
 	if (string[0] == '$')
 	{
 		node = search_envp_value(envp, skip_dollar(string));

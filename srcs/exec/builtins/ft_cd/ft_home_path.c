@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:48:38 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 16:59:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:26:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	home_path(char *path, t_envp **envp)
 	}
 	if (chdir(new_path) < 0)
 	{
+		g_signal = 1;
 		if (!new_path)
 			ft_putstr_fd("nemshell : HOME is probably unset!\n", 2);
 		else

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 17:08:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:24:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_wait_everyone(t_glob *glob)
 	tmp = glob->id_node;
 	while (tmp)
 	{
-		waitpid(tmp->id, 0, 0);
+		waitpid(tmp->id, &g_signal, 0);
+		if (g_signal > 0)
+			g_signal = 127;
 		tmp = tmp->next;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:30:44 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:32:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int	ft_chdir(char *path)
 {
 	if (chdir(path) < 0)
 	{
+		g_signal = 1;
 		return (ft_error_exec("No such file or directory\n", path), 0);
 	}
+	g_signal = 0;
 	return (1);
 }

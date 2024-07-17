@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/05 14:36:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:36:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 	update_old_path = NULL;
 	if (is_symbolic_link(current_pwd) == 1)
 	{
+		g_signal = 0;
 		search_key_and_replace_it(envp, "OLDPWD", current_pwd);
 		parse_pwd(&update_old_path, search_value_envp(envp, "PWD"));
 		remove_last_node(&update_old_path);
@@ -123,7 +124,9 @@ void	ft_cd(t_lexer *token, t_envp **envp, char *path)
 		if (update_old_pwd(old_pwd, envp, path))
 			return ;
 	if (!ft_chdir(path))
+	{
 		return ;
+	}
 	new_node = malloc(sizeof(t_pwd));
 	if (!new_node)
 		return ;

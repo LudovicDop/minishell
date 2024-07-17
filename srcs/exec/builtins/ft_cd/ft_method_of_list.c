@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 13:29:38 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/11 16:32:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:35:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	method_of_list(char *path, t_pwd *new_node, t_envp **envp)
 		tmp = getcwd(0, 0);
 		if (tmp)
 			search_key_and_replace_it(envp, "PWD", tmp);
-		else
-			fprintf(stderr, "\033[31;1mNice try bitch.\033[m\n");
 		free(new_node->node);
 		free(new_node);
 		free(tmp);

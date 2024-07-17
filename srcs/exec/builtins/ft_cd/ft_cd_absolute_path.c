@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/01 16:58:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:33:45 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,8 @@ void	absolute_path(char *path, t_envp **envp)
 	old_pwd = getcwd(0, 0);
 	pwd_lst = NULL;
 	new_node = NULL;
-	if (chdir(path) < 0)
-	{
-		ft_error_exec("No such file or directory\n", path);
+	if (ft_chdir(path) < 0)
 		return (free(old_pwd));
-	}
 	search_key_and_replace_it(envp, "OLDPWD", old_pwd);
 	free(old_pwd);
 	new_node = malloc(sizeof(t_pwd));
