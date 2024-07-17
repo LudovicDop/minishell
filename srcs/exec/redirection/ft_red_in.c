@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 15:01:29 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:10:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_red_in_bis(t_lexer *token, int i)
 	fd = open(token->value[i], O_RDONLY);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_error_exec("no such file or directory\n", token->value[i]);
 		return (1);
 	}
 	if (!token->next || token->next->type != CMD)
@@ -45,7 +45,7 @@ int	ft_red_in(t_lexer *token)
 		fd = open(token->value[i], O_RDONLY);
 		if (fd < 0)
 		{
-			perror("open");
+			ft_error_exec("no such file or directory\n", token->value[i]);
 			return (1);
 		}
 		close(fd);

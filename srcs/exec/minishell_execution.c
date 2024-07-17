@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/17 15:21:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:07:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,14 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
 	if (ft_end_cmd(node, glob, pipe_fd))
+	{
 		return (1);
+	}
 	if (ft_first_node_init(node, glob, pipe_fd))
 		return (1);
 	if (node->type == PIPE)
 		return (execute_pipeline(node, pipe_fd, *envp_list, glob));
-	if (glob->root == node && (node->type >= 6 && node->type <= 9))
+	if ((how_many_cmd(glob->root) == 0 || how_many_cmd(glob->root) == 1) && (node->type >= 6 && node->type <= 9))
 	{
 		if (ft_redirection(node, pipe_fd, glob, *envp_list))
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 15:24:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:07:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	main(int argc, char **argv, char **envp)
 		if (t && !check_op(t) && !check_red(t) && !check_token_par(t))
 		{
 			new_lexer(&t);
-			print_token(t);
+			// print_token(t);
 			final_lexer(t, &token);
-			print_lexer(token);
+			// print_lexer(token);
 		
 		// t = lexer(input_cmd);
 		// new_lexer(&t);
