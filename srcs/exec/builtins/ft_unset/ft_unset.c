@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:28:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 15:23:31 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:12:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ void	ft_unset(t_envp **envp, char *key_to_remove)
 
 	if (!envp || !*envp || !key_to_remove)
 		return ;
-	
 	current = *envp;
 	if (!ft_strcmp(current->key, key_to_remove))
 	{
 		*envp = current->next;
 		return (free(current->key), free(current->value), free(current));
 	}
-	
 	while (current && current->next)
 	{
 		if (!ft_strcmp(current->next->key, key_to_remove))
@@ -38,4 +36,3 @@ void	ft_unset(t_envp **envp, char *key_to_remove)
 		current = current->next;
 	}
 }
-
