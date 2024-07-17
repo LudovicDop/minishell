@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 19:41:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:23:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_prompt(t_envp *envp_list)
 
 	while (current)
 	{
-		if (!ft_strcmp(current->key, "USER"))
+		if (current && !ft_strcmp(current->key, "USER"))
 			tmp_user = init_prompt_user(tmp_user, &current);
 		else if (*(current->value) != '\0' && !ft_strcmp(current->key, "PWD"))
 			tmp_path = init_prompt_path(tmp_path, &current);

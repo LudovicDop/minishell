@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 18:46:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:24:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
 
-		execute_ast(token, pipe_fd, envp_list, glob);
+		execute_ast(token, pipe_fd, &envp_list, glob);
 		ft_free_id_list(&glob->id_node);
 		
 		// print_lexer(token);

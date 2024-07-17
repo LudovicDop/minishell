@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 14:56:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:21:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	}
 	else if (token->next && (token->next->type >= 6 && token->next->type <= 9))
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
-	if (search_builtins_token(token, envp_list, glob))
+	if (search_builtins_token(token, &envp_list, glob))
 		return (exit(EXIT_FAILURE));
 	else
 	{
@@ -100,21 +100,21 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 		return (-1);
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
-	execute_ast(node->next, pipe_fd, envp_list, glob);
+	execute_ast(node->next, pipe_fd, &envp_list, glob);
 	return (0);
 }
 
-int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
+int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
 	if (ft_end_cmd(node, glob, pipe_fd))
 		return (1);
 	if (ft_first_node_init(node, glob, pipe_fd))
 		return (1);
 	if (node->type == PIPE)
-		return (execute_pipeline(node, pipe_fd, envp_list, glob));
+		return (execute_pipeline(node, pipe_fd, *envp_list, glob));
 	if (glob->root == node && (node->type >= 6 && node->type <= 9))
 	{
-		if (ft_redirection(node, pipe_fd, glob, envp_list))
+		if (ft_redirection(node, pipe_fd, glob, *envp_list))
 			return (0);
 	}
 	if (ft_single_cmd(node, glob, pipe_fd, envp_list))
@@ -123,7 +123,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp *envp_list, t_glob *glob)
 	}
 	else if (node->type == CMD && how_many_cmd(glob->root) > 1)
 	{
-		execute_command(node, pipe_fd, envp_list, glob);
+		execute_command(node, pipe_fd, *envp_list, glob);
 		dup2(glob->fd_in_old, STDIN_FILENO);
 		if (glob->fd_in_old == -1)
 			return (1);
