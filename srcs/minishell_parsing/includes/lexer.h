@@ -6,7 +6,7 @@
 /*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:31:43 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/18 09:25:24 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/16 02:07:08 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_index
 	int		i;
 	int		j;
 	int		k;
+	int		l;
 }	t_index;
 
 t_token			*lexer(char *str);

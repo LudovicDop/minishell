@@ -12,7 +12,7 @@
 
 #include "../includes/parser.h"
 
-t_node	*create_node(t_token *token)
+t_node	*create_node(t_lexer *token)
 {
 	t_node	*node;
 
@@ -20,12 +20,57 @@ t_node	*create_node(t_token *token)
 	if (!node)
 		return (NULL);
 	node->type = token->type;
-	node->value = ft_strdup(token->value);
+	node->value = token->value;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
 }
 
+t_lexer	*parse2(t_lexer *token)
+{
+	t_lexer	*current_token;
+	t_lexer	*tmp;
+
+	current_token = token;
+	tmp = token;
+	while (current_token)
+	{
+		if (tmp->priority > current_token->priority)
+			tmp = current_token;
+		current_token = current_token->next;
+	}
+	return (tmp);
+}
+
+t_node	*ast(t_lexer *token, t_lexer *start, t_lexer *end)
+{
+	t_lexer	*current_token;
+	t_lexer	*tmp;
+	t_node	*root;
+	t_node	*current_node;
+	t_node	*new_node;
+
+	current_token = start;
+	root = NULL;
+	current_node = NULL;
+	while (current_token && (&current_token != &end))
+	{
+		tmp = parse2(current_token);
+		new_node = create_node(tmp);
+		if (!new_node)
+			return (NULL);
+		if (!root)
+			root = new_node;
+		else
+			current_node = new_node;
+		current_node->left = ast(token, token, tmp);
+		current_node->right = ast(token, tmp->next, NULL);
+		current_token = current_token->next;
+	}
+	return (root);
+}
+
+/*
 t_node	*parse(t_token *token)
 {
 	t_node	*root;
@@ -63,4 +108,4 @@ t_node	*parse(t_token *token)
 		current_token = current_token->next;
 	}
 	return (root);
-}
+}*/

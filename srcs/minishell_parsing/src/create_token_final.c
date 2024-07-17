@@ -3,90 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   create_token_final.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 11:37:22 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/12 16:13:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 03:16:19 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/create_token_final.h"
 
+void	incr_index(t_token *c, t_index *a)
+{
+	if (c->type == CMD)
+		a->i++;
+	else if (c->type == REDIRECT_OUT || c->type == REDIRECT_APPEND)
+		a->j++;
+	else if (c->type == REDIRECT_IN)
+		a->k++;
+	else if (c->type == HEREDOC)
+		a->l++;
+}
+
 void	count_value(t_token *c, t_index *a)
 {
 	while (c->next && (c->type == CMD || c->type == REDIRECT_OUT || \
-		c->type == REDIRECT_APPEND || c->type == REDIRECT_IN))
+		c->type == REDIRECT_APPEND || c->type == REDIRECT_IN || \
+		c->type == HEREDOC))
 	{
-		if (c->type == CMD)
-			a->i++;
-		else if (c->type == REDIRECT_OUT || c->type == REDIRECT_APPEND)
-			a->j++;
-		else if (c->type == REDIRECT_IN)
-			a->k++;
+		incr_index(c, a);
 		c = c->next;
 	}
 	if (!c->next && (c->type == CMD || c->type == REDIRECT_OUT || \
-		c->type == REDIRECT_APPEND || c->type == REDIRECT_IN))
+		c->type == REDIRECT_APPEND || c->type == REDIRECT_IN || \
+		c->type == HEREDOC))
 	{
-		if (c->type == CMD)
-			a->i++;
-		else if (c->type == REDIRECT_OUT || c->type == REDIRECT_APPEND)
-			a->j++;
-		else if (c->type == REDIRECT_IN)
-			a->k++;
+		incr_index(c, a);
 		c = c->next;
 	}
 }
 
-void	create_cmd_value(t_lexer **token, t_token **c, t_index a)
+void	create_value(t_lexer **token, t_token **c, t_token_type type, int i)
 {
 	char	**value;
+	int		j;
 
-	a.j = 0;
-	if (a.i)
+	j = 0;
+	if (i)
 	{
-		value = ft_calloc(sizeof(char *), a.i + 1);
+		value = ft_calloc(sizeof(char *), i + 1);
 		if (!value)
 			return ;
 		while ((*c)->next && ((*c)->type == CMD || (*c)->type == REDIRECT_OUT \
-			|| (*c)->type == REDIRECT_APPEND || (*c)->type == REDIRECT_IN))
+			|| (*c)->type == REDIRECT_APPEND || (*c)->type == REDIRECT_IN || \
+			(*c)->type == HEREDOC))
 		{
-			if ((*c)->type == CMD)
-				value[a.j++] = ft_strdup((*c)->value);
+			if ((*c)->type == type)
+				value[j++] = ft_strdup((*c)->value);
 			(*c) = (*c)->next;
 		}
-		if (!(*c)->next && (*c)->type == CMD)
+		if (!(*c)->next && (*c)->type == type)
 		{
-			value[a.j++] = ft_strdup((*c)->value);
+			value[j++] = ft_strdup((*c)->value);
 			(*c) = (*c)->next;
 		}
-		push_stack2(token, CMD, value);
+		push_stack2(token, type, value);
 	}
 }
 
-void	create_red_in_value(t_lexer **t, t_token **c, t_index a)
+t_token_type	search_red_type(t_token **c)
 {
-	char	**value;
+	t_token_type	type;
+	t_token			*t;
 
-	a.i = 0;
-	value = ft_calloc(sizeof(char *), a.k + 1);
-	if (!value)
-		return ;
-	while ((*c)->next && ((*c)->type == CMD || (*c)->type == REDIRECT_OUT || \
-	(*c)->type == REDIRECT_APPEND || (*c)->type == REDIRECT_IN))
+	t = *c;
+	while (t->next && (t->type == CMD || t->type == REDIRECT_OUT || \
+	t->type == REDIRECT_APPEND || t->type == REDIRECT_IN || \
+	t->type == HEREDOC))
 	{
-		if ((*c)->type == REDIRECT_IN)
-		{
-			value[a.i++] = ft_strdup((*c)->value);
-		}
-		(*c) = (*c)->next;
+		if (t->type == REDIRECT_OUT || t->type == REDIRECT_APPEND)
+			type = t->type;
+		t = t->next;
 	}
-	if (!(*c)->next && (*c)->type == REDIRECT_IN)
+	if (!t->next && \
+		(t->type == REDIRECT_OUT || t->type == REDIRECT_APPEND))
 	{
-		value[a.i++] = ft_strdup((*c)->value);
-		(*c) = (*c)->next;
+		type = t->type;
+		t = t->next;
 	}
-	push_stack2(t, REDIRECT_IN, value);
+	return (type);
 }
 
 void	create_red_value(t_lexer **t, t_token **c, t_index a)
@@ -95,51 +99,23 @@ void	create_red_value(t_lexer **t, t_token **c, t_index a)
 	t_token_type	type;
 
 	a.i = 0;
+	type = search_red_type(c);
 	value = ft_calloc(sizeof(char *), a.j + 1);
 	if (!value)
 		return ;
 	while ((*c)->next && ((*c)->type == CMD || (*c)->type == REDIRECT_OUT || \
-	(*c)->type == REDIRECT_APPEND || (*c)->type == REDIRECT_IN))
+	(*c)->type == REDIRECT_APPEND || (*c)->type == REDIRECT_IN || \
+	(*c)->type == HEREDOC))
 	{
 		if ((*c)->type == REDIRECT_OUT || (*c)->type == REDIRECT_APPEND)
-		{
 			value[a.i++] = ft_strdup((*c)->value);
-			type = (*c)->type;
-		}
 		(*c) = (*c)->next;
 	}
 	if (!(*c)->next && \
 		((*c)->type == REDIRECT_OUT || (*c)->type == REDIRECT_APPEND))
 	{
 		value[a.i++] = ft_strdup((*c)->value);
-		type = (*c)->type;
 		(*c) = (*c)->next;
 	}
 	push_stack2(t, type, value);
-}
-
-void	create_token(t_token **c, t_lexer **token)
-{
-	t_token	*tmp;
-	t_index	a;
-
-	tmp = *c;
-	a = (t_index){0, 0, 0};
-	count_value(*c, &a);
-
-	if (a.k)
-	{
-		*c = tmp;
-		create_red_in_value(token, c, a);
-	}
-	if (a.i)
-	{
-		*c = tmp;
-		create_cmd_value(token, c, a);
-	}
-	if (a.j)
-	{
-		*c = tmp;
-		create_red_value(token, c, a);
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_lexer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:30:31 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/08 11:24:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:25:53 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ char	*remove_quotes(char *str)
 void	remove_quote_and_space(t_token *token)
 {
 	t_token	*current;
-	char	*str;
+	// char	*str;
 
 	current = token;
 	while (current)
 	{
-		if (current->type == CMD)
-		{
-			str = ft_strtrim(current->value, " \t\b\n\v\f\r");
-			free(current->value);
-			current->value = ft_strdup(str);
-			free(str);
-		}
+		// if (current->type == CMD)
+		// {
+		// 	str = ft_strtrim(current->value, " \t\b\n\v\f\r");
+		// 	free(current->value);
+		// 	current->value = ft_strdup(str);
+		// 	free(str);
+		// }
 		if (current->type == QUOTE || current->type == DOUBLE_QUOTE)
 		{
 			current->value = remove_quotes(current->value);
@@ -93,30 +93,54 @@ void	rm_space_or_null(t_token *token)
 	}
 }
 
-void    change_red(t_token *token)
+void	change_red(t_token *token)
 {
-    t_token    *current;
-    t_token    *tmp;
+	t_token	*current;
+	t_token	*tmp;
 
-    tmp = token;
-    current = token;
-    while (current)
-    {
-        if (current->type == REDIRECT_OUT || \
-            current->type == REDIRECT_IN || current->type == REDIRECT_APPEND || \
-            current->type == HEREDOC)
-        {
-            tmp = current->next->next;
-            free(current->value);
-            current->value = ft_strdup(current->next->value);
-            free(current->next->value);
-            free(current->next);
-            current->next = tmp;
-        }
-        current = current->next;
-    }
+	tmp = token;
+	current = token;
+	while (current)
+	{
+		if (current->next && (current->type == REDIRECT_OUT || \
+			current->type == REDIRECT_IN || current->type == REDIRECT_APPEND || \
+			current->type == HEREDOC))
+		{
+			tmp = current->next->next;
+			free(current->value);
+			current->value = ft_strdup(current->next->value);
+			free(current->next->value);
+			free(current->next);
+			current->next = tmp;
+		}
+		current = current->next;
+	}
 }
 
+void	change_cmd(t_token *token)
+{
+	t_token	*current;
+	t_token	*tmp;
+	char	*str;
+
+	current = token;
+	while (current)
+	{
+		if (current->next && current->type == CMD && current->next->type == CMD)
+		{
+			str = ft_strjoin(current->value, current->next->value);
+			tmp = current->next->next;
+			free(current->value);
+			current->value = ft_strdup(str);
+			free(current->next->value);
+			free(current->next);
+			free(str);
+			current->next = tmp;
+		}
+		else
+			current = current->next;
+	}
+}
 void	change_for_value(t_token *token)
 {
 	t_token	*current;
@@ -185,6 +209,7 @@ void	new_lexer(t_token **token)
 	//search cmd == envp && do wave for d_quote et cmd 
 	// change_for_value(*token);
 	remove_quote_and_space(*token);
+	change_cmd(*token);
 	rm_space_or_null(*token);
 	change_red(*token);
 	rm_space_or_null(*token);

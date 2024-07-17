@@ -46,6 +46,11 @@ int	main(int argc, char **argv, char **envp)
 	t_envp	*envp_list;
 	int pipe_fd[2];
 
+	if (argc != 1)
+	{
+		printf("Error: too many arguments\n");
+		return (1);
+	}
 	rl_catch_signals = 0;
 	envp_list = NULL;
 	input_cmd = NULL;
@@ -71,24 +76,33 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input_cmd);
 		// // check_quotes(input_cmd);
 		// // check_par(input_cmd);
-		t = lexer(input_cmd);
-		new_lexer(&t);
-		final_lexer(t, &token);
+		if (!check_quotes(input_cmd) && !check_par(input_cmd))
+			t = lexer(input_cmd);
+		if (t && !check_op(t) && !check_red(t) && !check_token_par(t))
+		{
+			new_lexer(&t);
+			print_token(t);
+			final_lexer(t, &token);
+			print_lexer(token);
+		
+		// t = lexer(input_cmd);
+		// new_lexer(&t);
+		// final_lexer(t, &token);
 		// // check_op(token);
 		// // check_token_par(token);
 		// t_lexer *token2;
-		t_glob *glob;
-		t_id	*id_node;
-		glob = malloc(sizeof(t_glob) * 1);
+			t_glob *glob;
+			t_id	*id_node;
+			glob = malloc(sizeof(t_glob) * 1);
 
-		glob->root = token;
-		glob->id_node = NULL;
+			glob->root = token;
+			glob->id_node = NULL;
 		// pipe_fd[0] = 0;
 		// pipe_fd[1] = 0;
 
-		execute_ast(token, pipe_fd, &envp_list, glob);
-		ft_free_id_list(&glob->id_node);
-		
+			execute_ast(token, pipe_fd, &envp_list, glob);
+			ft_free_id_list(&glob->id_node);
+		}	
 		// print_lexer(token);
 		// free_everything(&token, prompt);
 		// free(input_cmd);

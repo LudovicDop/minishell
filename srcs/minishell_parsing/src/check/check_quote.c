@@ -6,7 +6,7 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 22:45:17 by alphan            #+#    #+#             */
-/*   Updated: 2024/06/22 22:45:20 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/16 02:08:06 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_quotes(char *input_cmd)
 	t_index	a;
 	char	c;
 
-	a = (t_index){0, 0, 0};
+	a = (t_index){0, 0, 0, 0};
 	while (input_cmd[a.i])
 	{
 		if (input_cmd[a.i] == '\'' || input_cmd[a.i] == '"')

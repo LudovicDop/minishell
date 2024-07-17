@@ -6,7 +6,7 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:44:04 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/04 13:00:11 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/16 02:08:20 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_close_par(char *input_cmd)
 {
 	t_index	a;
 
-	a = (t_index){0, 0, 0};
+	a = (t_index){0, 0, 0, 0};
 	while (input_cmd[a.i] && input_cmd[a.i] != '(')
 	{
 		if (input_cmd[a.i] == ')')
@@ -35,7 +35,7 @@ int	check_par(char *input_cmd)
 {
 	t_index	a;
 
-	a = (t_index){0, 0, 0};
+	a = (t_index){0, 0, 0, 0};
 	a.k = check_close_par(input_cmd);
 	if (!(a.k))
 	{

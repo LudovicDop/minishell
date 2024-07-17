@@ -18,10 +18,11 @@
 typedef struct s_node
 {
 	t_token_type	type;
-	char			*value;
+	char			**value;
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
 
 t_node	*parse(t_token *token);
+t_node	*ast(t_lexer *token, t_lexer *start, t_lexer *end);
 #endif
