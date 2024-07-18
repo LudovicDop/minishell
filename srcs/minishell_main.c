@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 14:48:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:52:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_init_default_envp(t_envp **envp_list)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input_cmd;
-	char	*prompt;
+	t_glob *glob;
 	t_token	*t;
 	t_lexer	*token;
 	t_envp	*envp_list;
@@ -107,16 +107,19 @@ int	main(int argc, char **argv, char **envp)
 	init_envp(&envp_list, envp);
 	ft_init_default_envp(&envp_list);
 	increment_shlvl(&envp_list);
+	glob = malloc(sizeof(t_glob) * 1);
 	while (1)
 	{
+		token = NULL;
 		init_signal(1);
-		prompt = get_prompt(envp_list);
-		input_cmd = readline(prompt);
+		glob->prompt = get_prompt(envp_list);
+		input_cmd = readline(glob->prompt);
 		if (!input_cmd)
 		{
 			printf("exit\n");
 			free_envp(&envp_list);
-			free(prompt);
+			free(glob->prompt);
+			free(glob);
 			free(input_cmd);
 			return (0);
 		}
@@ -130,22 +133,18 @@ int	main(int argc, char **argv, char **envp)
 				new_lexer(&t);
 				final_lexer(t, &token);
 			}
-			t_glob *glob;
-			t_id	*id_node;
-			glob = malloc(sizeof(t_glob) * 1);
+			free_token(t);
+		}
+		t_id	*id_node;
 
-			glob->root = token;
-			glob->id_node = NULL;
-
-			if (t)
-				free_token(t);
-			if (token)
-				free_lexer(token);
-			execute_ast(token, pipe_fd, &envp_list, glob);
-			ft_free_id_list(&glob->id_node);
-		}	
+		glob->root = token;
+		glob->id_node = NULL;
+		execute_ast(token, pipe_fd, &envp_list, glob);
+		ft_free_id_list(&glob->id_node);
 		//  print_lexer(token);
-		// free_everything(&token, prompt);
+		if (token)
+			free_lexer(token);
+		free(glob->prompt);
 		free(input_cmd);
 		input_cmd = NULL;
 	}

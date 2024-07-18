@@ -6,13 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/11 18:21:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:56:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(t_lexer *token, char *val)
+void	ft_exit(t_lexer *token, char *val, t_glob *glob)
 {
 	unsigned int	convert_val;
 
@@ -25,6 +25,6 @@ void	ft_exit(t_lexer *token, char *val)
 	convert_val = ft_atoi(val);
 	convert_val %= 256;
 	printf("exit\n");
-	free_lexer(token);
+	free_lexer(glob->root);
 	exit(convert_val);
 }

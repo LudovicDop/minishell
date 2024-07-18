@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 14:50:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:02:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@ void	execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		int *pipe_fd)
 {
 	ft_error_exec("command not found\n", token->value[0]);
+	free(glob->prompt);
 	free_lexer(glob->root);
-	free_everything(&glob->root, NULL);
+	// free_everything(&glob->root, NULL);
 	free_envp(&envp_list);
 	ft_free_id_list(&glob->id_node);
-	close(pipe_fd[READ]);
-	close(pipe_fd[WRITE]);
-	close(glob->fd_in_old);
+	if (pipe_fd[0])
+		close(pipe_fd[READ]);
+	if (pipe_fd[1])
+		close(pipe_fd[WRITE]);
+	if (glob->fd_in_old)
+		close(glob->fd_in_old);
+	free(glob);
 	exit(EXIT_FAILURE);
 }
 
@@ -32,9 +37,10 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd, t_glob *glob)
 	char	*path;
 	char	**tmp_envp;
 
+	path = NULL;
 	path = test_good_path_for_exec(token->value[0], search_path(envp_list));
 	tmp_envp = convert_envp(envp_list);
-	if (execve(path, token->value, tmp_envp) < 0)
+	if (!path || execve(path, token->value, tmp_envp) < 0)
 	{
 		free_tab((void **)tmp_envp);
 		execute_fail(glob, token, envp_list, pipe_fd);
@@ -48,7 +54,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	char	*path;
 
 	signal(SIGINT, handler_heredoc);
-	if (pipe_fd)
+	if (pipe_fd[0])
 		close(pipe_fd[READ]);
 	if (token->next && token->next->type == PIPE)
 	{
@@ -83,7 +89,7 @@ int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 	else if (id > 0)
 	{
 		ft_add_lst_id_node(&(glob->id_node), id);
-		if (pipe_fd)
+		if (pipe_fd[1])
 			close(pipe_fd[WRITE]);
 		if (token->next && (token->next->type >= 6 && token->next->type <= 9))
 			token = token->next->next;
@@ -108,7 +114,8 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 	if (pipe(pipe_fd) < 0)
 		return (-1);
 	dup2(fd_in, STDIN_FILENO);
-	close(fd_in);
+	if (fd_in)
+		close(fd_in);
 	execute_ast(node->next, pipe_fd, &envp_list, glob);
 	return (0);
 }
