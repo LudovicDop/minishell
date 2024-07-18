@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 14:57:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:44:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_empty_after_heredoc(t_lexer *node)
 		return (1);
 	while (node)
 	{
-		if (node->type != HEREDOC)
+		if (node->type != HEREDOC && !(node->type >= 6 && node->type <= 9) && node->type != 1)
 			return (0);
 		node = node->next;
 	}
