@@ -69,6 +69,19 @@ void	change_value(t_token *current, t_token_type type)
 	current->value = NULL;
 }
 
+void	free_token2(t_token *token)
+{
+	t_token	*tmp;
+	while (token)
+	{
+		tmp = token;
+		if (token->value)
+			free(token->value);
+		token = token->next;
+		free(tmp);
+	}
+}
+
 void	rm_space_or_null(t_token *token)
 {
 	t_token	*current;
@@ -79,14 +92,22 @@ void	rm_space_or_null(t_token *token)
 	current = token;
 	while (current)
 	{
-		while (current->next && (!current->value || current->type == SPACE))
+		while (current->next && (current->type == SPACE))
 		{
 			tmp = current->next;
 			if (current->value)
 				free(current->value);
 			free(current);
-			prec->next = tmp;
-			current = tmp;
+			if (tmp == NULL)
+			{
+				free(current->value);
+				free(current);
+			}
+			else
+			{
+				prec->next = tmp;
+				current = tmp;
+			}
 		}
 		prec = current;
 		current = current->next;
@@ -209,6 +230,8 @@ void	new_lexer(t_token **token)
 	//search cmd == envp && do wave for d_quote et cmd 
 	// change_for_value(*token);
 	remove_quote_and_space(*token);
+	if (!token)
+		printf("test");
 	change_cmd(*token);
 	rm_space_or_null(*token);
 	change_red(*token);

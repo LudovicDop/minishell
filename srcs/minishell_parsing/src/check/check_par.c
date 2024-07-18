@@ -16,6 +16,8 @@ int	check_close_par(char *input_cmd)
 {
 	t_index	a;
 
+	if (!input_cmd)
+		return (0);
 	a = (t_index){0, 0, 0, 0};
 	while (input_cmd[a.i] && input_cmd[a.i] != '(')
 	{
@@ -35,6 +37,8 @@ int	check_par(char *input_cmd)
 {
 	t_index	a;
 
+	if (!input_cmd)
+		return (0);
 	a = (t_index){0, 0, 0, 0};
 	a.k = check_close_par(input_cmd);
 	if (!(a.k))

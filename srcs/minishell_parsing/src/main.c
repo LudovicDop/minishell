@@ -78,23 +78,28 @@ int	main(int ac, char **av)
 	str = get_next_line(fd);
 	token = NULL;
 	printf("str = %s\n", str);
+	while (1)
+	{
 	if (!check_quotes(str) && !check_par(str))
 	{
 		token = lexer(str);
 		print_token(token);
-	}
-	if (token && !check_op(token) && !check_red(token) && !check_token_par(token))
-	{
-		new_lexer(&token);
-		print_token(token);
-		final_lexer(token, &lex);
-		print_lexer(lex);
-		free(str);
-		while ((str = get_next_line(fd)))
-			free(str);
+		if (token && !check_op(token) && !check_red(token) && !check_token_par(token))
+		{
+			new_lexer(&token);
+			print_token(token);
+			if (token)
+			{
+				final_lexer(token, &lex);
+				print_lexer(lex);
+				free_lexer(lex);
+			}
+		}
 		free_token(token);
-		free_lexer(lex);
 	}
+	free(str);
+	while ((str = get_next_line(fd)))
+		free(str);
 	// check_quotes(str);
 	// check_par(str);
 	// token = lexer(str);
@@ -118,5 +123,6 @@ int	main(int ac, char **av)
 	// free_lexer(lex);
 	// free_node(node);
 	close(fd);
+	}
 	return (0);
 }

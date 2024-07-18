@@ -62,6 +62,8 @@ t_token	*lexer(char *str)
 	t_token	*token;
 	t_index	a;
 
+	if (!str)
+		return (NULL);
 	a = (t_index){0, 0, 0, 0};
 	token = NULL;
 	while (str[a.i])

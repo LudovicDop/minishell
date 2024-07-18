@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:38 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/18 11:30:12 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:29:58 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	final_lexer(t_token *t, t_lexer **token)
 		if ((c->type == CMD || c->type == REDIRECT_OUT || \
 			c->type == REDIRECT_APPEND || c->type == REDIRECT_IN))
 			create_token(&c, token);
-		else
+		else if (c->type != SPACE)
 		{
 			value = ft_calloc(sizeof(char *), 2);
 			if (!value)
@@ -55,5 +55,7 @@ void	final_lexer(t_token *t, t_lexer **token)
 			push_stack2(token, c->type, value);
 			c = c->next;
 		}
+		else
+			c = c->next;
 	}
 }

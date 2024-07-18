@@ -24,7 +24,7 @@ int	check_red(t_token *token)
 			if (token == NULL || \
 				(token->type >= REDIRECT_IN && token->type <= HEREDOC))
 			{
-				ft_printf("syntax error near unexpected token \n");
+				ft_printf("syntax error near unexpected token 1\n");
 				return (1);
 			}
 		}

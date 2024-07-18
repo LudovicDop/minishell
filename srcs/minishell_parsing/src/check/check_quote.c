@@ -17,6 +17,8 @@ int	check_quotes(char *input_cmd)
 	t_index	a;
 	char	c;
 
+	if (!input_cmd)
+		return (0);
 	a = (t_index){0, 0, 0, 0};
 	while (input_cmd[a.i])
 	{
