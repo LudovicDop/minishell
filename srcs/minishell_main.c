@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 12:28:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:48:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,34 @@ void	free_node(t_node *node)
 	}
 }
 
+t_envp	*ft_search_envp_node(t_envp **envp, char *key)
+{
+	t_envp *current;
+
+	current = *envp;
+	while (current)
+	{
+		if (!ft_strcmp(current->key, key))
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+void	ft_init_default_envp(t_envp **envp_list)
+{
+	t_envp *current;
+
+	current = NULL;
+	if (!search_value_envp(envp_list, "PWD"))
+		search_key_and_replace_it(envp_list, "PWD", getcwd(0, 0));
+	if (!search_value_envp(envp_list, "PATH"))
+	{
+		ft_export(envp_list, "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
+		current = ft_search_envp_node(envp_list, "PATH");
+		current->hidden = true;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input_cmd;
@@ -77,8 +105,7 @@ int	main(int argc, char **argv, char **envp)
 	input_cmd = NULL;
 	g_signal = 0;
 	init_envp(&envp_list, envp);
-	if (!search_value_envp(&envp_list, "PWD"))
-		search_key_and_replace_it(&envp_list, "PWD", getcwd(0, 0));
+	ft_init_default_envp(&envp_list);
 	increment_shlvl(&envp_list);
 	while (1)
 	{

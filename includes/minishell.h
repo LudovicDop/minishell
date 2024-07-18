@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 15:18:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:30:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_envp
 	char			*key;
 	char			*value;
 	struct s_envp	*next;
+	bool			hidden;
 }					t_envp;
 
 // typedef enum
