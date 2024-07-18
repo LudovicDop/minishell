@@ -140,6 +140,7 @@ void				free_tab(void **my_tab);
 void    			free_everything(t_lexer **token, char *prompt);
 void				free_envp(t_envp **list);
 void				free_cmd_list(t_lexer **token_lst);
+void				free_lexer(t_lexer *lex);
 
 char				*get_prompt(t_envp *envp_list);
 void				ft_signal(void);

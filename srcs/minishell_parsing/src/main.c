@@ -78,8 +78,6 @@ int	main(int ac, char **av)
 	str = get_next_line(fd);
 	token = NULL;
 	printf("str = %s\n", str);
-	while (1)
-	{
 	if (str && !check_str(str) && !check_quotes(str) && !check_par(str))
 	{
 		token = lexer(str);
@@ -123,6 +121,5 @@ int	main(int ac, char **av)
 	// free_lexer(lex);
 	// free_node(node);
 	close(fd);
-	}
 	return (0);
 }

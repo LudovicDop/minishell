@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*t;
 	t_lexer	*token;
 	t_envp	*envp_list;
-	int pipe_fd[2];
+	static int pipe_fd[2];
 
 	if (argc != 1)
 	{
@@ -137,6 +137,10 @@ int	main(int argc, char **argv, char **envp)
 			glob->root = token;
 			glob->id_node = NULL;
 
+			if (t)
+				free_token(t);
+			if (token)
+				free_lexer(token);
 			execute_ast(token, pipe_fd, &envp_list, glob);
 			ft_free_id_list(&glob->id_node);
 		}	

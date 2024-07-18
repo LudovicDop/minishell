@@ -25,5 +25,6 @@ void	ft_exit(t_lexer *token, char *val)
 	convert_val = ft_atoi(val);
 	convert_val %= 256;
 	printf("exit\n");
+	free_lexer(token);
 	exit(convert_val);
 }

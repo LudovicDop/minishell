@@ -77,8 +77,6 @@ int	check_token_par(t_token *token)
 {
 	while (token)
 	{
-		// if (token->type == CLOSE_PAR)
-		// 	check_token_close_par(token);
 		if (token->type == OPEN_PAR)
 		{
 			token = token->next;

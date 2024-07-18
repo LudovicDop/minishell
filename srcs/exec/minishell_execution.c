@@ -17,6 +17,7 @@ void	execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		int *pipe_fd)
 {
 	ft_error_exec("command not found\n", token->value[0]);
+	free_lexer(glob->root);
 	free_everything(&glob->root, NULL);
 	free_envp(&envp_list);
 	ft_free_id_list(&glob->id_node);

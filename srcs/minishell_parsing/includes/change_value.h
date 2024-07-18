@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_lexer.h                                        :+:      :+:    :+:   */
+/*   change_value.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 11:31:26 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/07 12:53:13 by alphan           ###   ########.fr       */
+/*   Created: 2024/07/18 14:14:28 by alphan            #+#    #+#             */
+/*   Updated: 2024/07/18 14:14:29 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NEW_LEXER_H
-# define NEW_LEXER_H
+#ifndef CHANGE_VALUE_H
+# define CHANGE_VALUE_H
 
-# include "../includes/change_value.h"
+# include "../includes/lexer.h"
 
-void	change_value(t_token *current, t_token_type type);
-void	new_lexer(t_token **token);
-void	del_null_value(t_token *token);
+char	*remove_quotes(char *str);
+void	remove_quote(t_token *token);
+void	change_red(t_token *token);
+void	change_cmd(t_token *token);
+void	change_for_value(t_token *token);
+
 #endif

@@ -43,6 +43,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/final_lexer.c \
 	  srcs/minishell_parsing/src/create_token_final.c\
 	  srcs/minishell_parsing/src/check/check_str.c \
+			srcs/minishell_parsing/src/change_value.c \
 
 CC = cc
 LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline

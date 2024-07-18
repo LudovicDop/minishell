@@ -17,7 +17,7 @@
 
 void			incr_index(t_token *c, t_index *a);
 void			count_value(t_token *c, t_index *a);
-void			create_value(t_lexer **token, t_token **c, t_token_type type, int i);
+void			create_value(t_lexer **t, t_token **c, t_token_type tp, int i);
 t_token_type	search_red_type(t_token **c);
 void			create_red_value(t_lexer **t, t_token **c, t_index a);
 

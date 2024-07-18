@@ -12,26 +12,6 @@
 
 #include "../includes/print_test.h"
 
-void	print_value(char **value, char *str, t_token *t)
-{
-	int					i;
-	static const char	*s[] = {"CMD    ", "SPACE  ", "QUOTE  ", "D_QUOTE", \
-	"OP_PAR ", "CL_PAR ", "RED_IN ", "RED_OUT", \
-	"RED_APP", "HEREDOC", "PIPE   ", "OR     ", "AND    ", "SEP    ", \
-	"WCARD  ", "WAVE   "};
-
-	i = 0;
-	if (str)
-		ft_printf("\nTOKEN TYPE: %s\n", str);
-	else
-		ft_printf("\nTOKEN TYPE: %s\n", s[t->type]);
-	while (value[i])
-	{
-		printf("value[%d] = %s\n", i, value[i]);
-		i++;
-	}
-}
-
 void	print_val(char **value)
 {
 	int	i;
