@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 16:52:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:10:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*t;
 	t_lexer	*token;
 	t_envp	*envp_list;
-	static int pipe_fd[2];
+	static	int pipe_fd[2];
 
 	if (argc != 1)
 	{
