@@ -1,18 +1,11 @@
-print_lexer
-TOKEN TYPE: HEREDOC	 tpos: 0 	 priority: 3 value = [key ]
-TOKEN TYPE: RED_OUT	 tpos: 1 	 priority: 2 value = [out ]
 [?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m 
-[?2004lprint_lexer
-TOKEN TYPE: HEREDOC	 tpos: 0 	 priority: 3 value = [key ]
-TOKEN TYPE: RED_OUT	 tpos: 1 	 priority: 2 value = [out ]
-[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m 
-[?2004lprint_lexer
-TOKEN TYPE: HEREDOC	 tpos: 0 	 priority: 3 value = [key ]
-TOKEN TYPE: RED_OUT	 tpos: 1 	 priority: 2 value = [out ]
-[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m 
-[?2004lprint_lexer
-TOKEN TYPE: HEREDOC	 tpos: 0 	 priority: 3 value = [key ]
-TOKEN TYPE: RED_OUT	 tpos: 1 	 priority: 2 value = [out ]
-[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m ^C
+[?2004l[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m 
+[?2004l[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m 
+[?2004l[?2004h[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m ^C
+[32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m ^C
 [32;1m@ldoppler[m:[35;1m/ldoppler/Desktop/minishell_merge[m [?2004l
 exit
+élassant sur l'herbe, d'autres jouant à des jeux ou lisant un bon livre à l'ombre des arbres. 
+C'est l'occasion idéale pour une balade à vélo, une randonnée en pleine nature, ou simplement pour flâner et savourer ces instants de bonheur simples que nous offre le beau temps. 
+Les terrasses des cafés sont animées, les rires et les conversations résonnent, ajoutant à l'atmosphère festive et détendue. 
+En cette belle journée, la vie semble plus légère, plus joyeuse, et chaque moment est une invitation à apprécier la beauté de notre environnement.
