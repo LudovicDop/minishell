@@ -45,7 +45,7 @@ SRC = srcs/minishell_main.c \
 
 CC = cc
 LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
+CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
