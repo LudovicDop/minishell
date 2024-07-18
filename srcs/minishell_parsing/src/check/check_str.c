@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.h                                            :+:      :+:    :+:   */
+/*   check_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 14:41:48 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/16 03:23:45 by alphan           ###   ########.fr       */
+/*   Created: 2024/07/18 12:52:02 by alphan            #+#    #+#             */
+/*   Updated: 2024/07/18 12:52:12 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECK_H
-# define CHECK_H
+#include "../../includes/check.h"
 
-# include "../includes/parser.h"
+int	check_str(char *str)
+{
+	int	i;
+	int	j;
 
-int	check_quotes(char *input_cmd);
-int	check_red(t_token *token);
-int	check_op(t_token *token);
-int	check_par(char *input_cmd);
-int	check_token_par(t_token *token);
-int	check_str(char *str);
-
-#endif
+	if (!str)
+		return (1);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (!ft_strchr(" \t\b\n\v\f\r", str[i]))
+			j++;
+		i++;
+	}
+	if (j == 0)
+		return (1);
+	return (0);
+}

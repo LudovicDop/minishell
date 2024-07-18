@@ -42,10 +42,11 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/new_lexer.c \
 	  srcs/minishell_parsing/src/final_lexer.c \
 	  srcs/minishell_parsing/src/create_token_final.c\
+	  srcs/minishell_parsing/src/check/check_str.c \
 
 CC = cc
 LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) -fsanitize=address
+CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 

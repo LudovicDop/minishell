@@ -20,8 +20,29 @@ void	free_token(t_token *token)
 	while (token)
 	{
 		tmp = token;
-		free(token->value);
+		if (token->value)
+			free(token->value);
 		token = token->next;
+		free(tmp);
+	}
+}
+
+void	free_lexer(t_lexer *lex)
+{
+	t_lexer	*tmp;
+	int		i;
+
+	while (lex)
+	{
+		i = 0;
+		tmp = lex;
+		while (lex->value[i])
+		{
+			free(lex->value[i]);
+			i++;
+		}
+		free(lex->value);
+		lex = lex->next;
 		free(tmp);
 	}
 }
@@ -74,15 +95,14 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input_cmd != '\0')
 			add_history(input_cmd);
-		if (!check_quotes(input_cmd) && !check_par(input_cmd))
-			t = lexer(input_cmd);
-		if (t && !check_op(t) && !check_red(t) && !check_token_par(t))
+		if (input_cmd && !check_str(input_cmd) && !check_quotes(input_cmd) && !check_par(input_cmd))
 		{
-			new_lexer(&t);
-			// print_token(t);
-			final_lexer(t, &token);
-			// print_lexer(token);
-		
+			t = lexer(input_cmd);
+			if (t && !check_op(t) && !check_red(t) && !check_token_par(t))
+			{
+				new_lexer(&t);
+				final_lexer(t, &token);
+			}
 			t_glob *glob;
 			t_id	*id_node;
 			glob = malloc(sizeof(t_glob) * 1);
