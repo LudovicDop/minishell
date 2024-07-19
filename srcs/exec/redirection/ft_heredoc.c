@@ -6,12 +6,21 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 11:44:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:15:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	ft_heredoc_free(t_lexer *node, t_glob *glob)
+{
+	free(glob->prompt);
+	free_lexer(glob->root);
+	free_envp(&glob->envp);
+	ft_free_id_list(&glob->id_node);
+	if (!node->next || node->next->type != HEREDOC)
+		exit(EXIT_SUCCESS);
+}
 void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 		char *tmp)
 {
@@ -22,7 +31,7 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 		close(pipe_fd[WRITE]);
 		free(*full_string);
 		free(tmp);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -33,8 +42,11 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 	}
 }
 
-int	ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
+int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob, char *full_string)
 {
+	char *tmp;
+
+	tmp = NULL;
 	signal(SIGQUIT, handler_heredoc);
 	signal(SIGINT, handler_heredoc);
 	while (node && node->type == HEREDOC)
@@ -54,6 +66,7 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, char *tmp, char *full_string)
 				ft_strlen(tmp) - 1) == 0)
 		{
 			ft_heredoc_init(node, pipe_fd, &full_string, tmp);
+			ft_heredoc_free(node, glob);
 			node = node->next;
 		}
 	}
@@ -98,7 +111,7 @@ int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
 	return (0);
 }
 
-int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
+int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int		old_stdin;
 	pid_t	id;
@@ -118,7 +131,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list)
 	if (old_stdin == -1)
 		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 	if (id == 0)
-		ft_heredoc_child(node, pipe_fd, tmp, full_string);
+		ft_heredoc_child(node, pipe_fd, glob,full_string);
 	else
 		ft_heredoc_parent(pipe_fd, id, node, old_stdin);
 	return (0);

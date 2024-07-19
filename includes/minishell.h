@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 16:35:12 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:58:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@ typedef struct s_id
 	struct s_id *next;
 }	t_id;
 
-typedef struct s_glob
-{
-	t_lexer *root;
-	t_id	*id_node;
-	int		fd_in_old;
-	char	*prompt;
-} t_glob;
-
 typedef struct s_envp
 {
 	char			*key;
@@ -60,6 +52,16 @@ typedef struct s_envp
 	struct s_envp	*next;
 	bool			hidden;
 }					t_envp;
+
+typedef struct s_glob
+{
+	t_lexer *root;
+	t_envp	*envp;
+	t_id	*id_node;
+	int		fd_in_old;
+	char	*prompt;
+} t_glob;
+
 
 // typedef enum
 // {
@@ -198,7 +200,7 @@ void				increment_shlvl(t_envp **envp);
 void	ft_red_out(t_lexer *token, bool is_cmd);
 void	ft_red_append(t_lexer *token, bool is_cmd);
 int		ft_red_in(t_lexer *token);
-int	ft_heredoc(t_lexer *node, int *pipe_fd, t_lexer *root, t_envp *envp_list);
+int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list);
 /*linked list for fork pid_t*/
 void    ft_add_lst_id_node(t_id **id_node, pid_t new_id_value);
 void    ft_free_id_list(t_id **my_list);
