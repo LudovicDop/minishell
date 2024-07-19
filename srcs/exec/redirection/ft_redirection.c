@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:53:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/18 12:14:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:44:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int	i;
-
+	int test;
+	
 	i = 0;
 	if (node->type >= 6 && node->type <= 9)
 	{
@@ -25,9 +26,20 @@ int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		ft_red_append(node, i);
 		if (ft_red_in(node))
 		{
-			dup2(glob->fd_in_old, STDIN_FILENO);
+			if (how_many_cmd(glob->root) > 1)
+			{
+				if (pipe(pipe_fd) == -1)
+					return (1);
+				close(pipe_fd[WRITE]);
+				if (dup2(pipe_fd[READ], STDIN_FILENO) < 0)
+					return (1);
+				return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, &envp_list,
+					glob), 1);
+			}
+			else
+				dup2(glob->fd_in_old, STDIN_FILENO);
 			return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, &envp_list,
-					glob));
+					glob), 1);
 		}
 		ft_heredoc(node, pipe_fd, glob->root, envp_list);
 	}

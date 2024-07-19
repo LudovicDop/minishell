@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 17:24:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:57:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_lexer	*ft_skip_to_next_cmd(t_lexer *node)
 	while (current && current->type != PIPE)
 	{
 		current = current->next;
+	}
+	if (current)
+	{
+		current = current->next;
+		fprintf(stderr, "\033[31;1mcurrent : %s\033[m\n", current->value[0]);
 	}
 	return (current);
 }
