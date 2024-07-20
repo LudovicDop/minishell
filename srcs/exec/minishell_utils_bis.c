@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/20 15:05:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:11:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,4 @@ void	ft_error_exec(char *error_msg, char *cmd_name)
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(error_msg, 2);
 }
+
