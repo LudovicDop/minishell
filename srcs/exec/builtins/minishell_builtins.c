@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 16:10:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:24:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob)
 	else if (!ft_strcmp(token->value[0], "cd"))
 		return (ft_cd(token, envp_list, token->value[1]), 1);
 	else if (!ft_strcmp(token->value[0], "env"))
-		return (ft_env(envp_list), free_tab((void **)token->value), 1);
+		return (ft_env(envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "unset"))
 	{
 		while (token->value[i])
