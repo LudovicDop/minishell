@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/19 12:15:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:48:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 		close(pipe_fd[WRITE]);
 		free(*full_string);
 		free(tmp);
-		// exit(EXIT_SUCCESS);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/19 10:57:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:05:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_lexer	*ft_skip_to_next_cmd(t_lexer *node)
 	if (current)
 	{
 		current = current->next;
-		fprintf(stderr, "\033[31;1mcurrent : %s\033[m\n", current->value[0]);
 	}
 	return (current);
 }
@@ -41,8 +40,12 @@ void	ft_wait_everyone(t_glob *glob)
 	while (tmp)
 	{
 		waitpid(tmp->id, &g_signal, 0);
+		g_signal = WEXITSTATUS(g_signal);
 		if (g_signal > 0)
+		{
+			fprintf(stderr, "\033[31;1msignal : %d\033[m\n", g_signal);
 			g_signal = 127;
+		}
 		tmp = tmp->next;
 	}
 	return ;
