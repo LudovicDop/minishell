@@ -45,7 +45,7 @@ void	remove_quote(t_token *token, t_envp **envp)
 			// printf("current->value = %s\n", current->value);
 			current->value = remove_quotes(current->value);
 			change_for_value(current, envp);
-			printf("current->value = %s\n", current->value);
+			// printf("current->value = %s\n", current->value);
 			current->type = CMD;
 		}
 		else if (current->type == QUOTE)
