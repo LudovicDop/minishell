@@ -56,10 +56,7 @@ void	remove_quote(t_token *token, t_envp **envp)
 			current->type = CMD;
 		}
 		else if (current->type == CMD)
-		{
-			if (current->value[0] == '$')
 				change_for_value(current, envp);
-		}
 		else if (current->type == WAVE) 
 			change_for_value(current, envp);
 		current = current->next;
