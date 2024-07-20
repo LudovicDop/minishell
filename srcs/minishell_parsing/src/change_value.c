@@ -222,7 +222,24 @@ void	change_for_value(t_token *token, t_envp **envp)
 			s2 = NULL;
 		}
 		else
-			a.i++;
+		{
+			a.j = a.i + 1;
+			while (token->value[a.j] && token->value[a.j] != ' ' && token->value[a.j] != '$')
+				a.j++;
+			s2 = ft_calloc(a.j - a.i + 1, sizeof(char));
+			if (!s2)
+				break ;
+			a.k = 0;
+			while (a.i < a.j)
+			{
+				s2[a.k] = token->value[a.i];
+				a.i++;
+				a.k++;
+			}
+			s = ft_strjoin2(s, s2);
+			free(s2);
+			s2 = NULL;
+		}
 	}
 	if (s)
 	{
