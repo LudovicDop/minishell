@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:27:01 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 14:27:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:12:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_envp	*search_envp_key(t_envp **envp, char *key)
 	i = *envp;
 	while (i)
 	{
-		if (!ft_strcmp(i->key, "SHLVL"))
+		if (!ft_strcmp(i->key, key))
 			return (i);
 		i = i->next;
 	}
