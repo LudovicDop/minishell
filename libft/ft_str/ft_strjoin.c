@@ -48,7 +48,9 @@ char	*ft_strjoin2(char *s1, char *s2)
 	i = 0;
 	if (!s1)
 		s1 = ft_calloc(1, 1);
-	if (!s1 || !s2)
+	if (!s1)
+		return (NULL);
+	if (!s2)
 		return (NULL);
 	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!ret)
@@ -62,7 +64,5 @@ char	*ft_strjoin2(char *s1, char *s2)
 	while (s2[j])
 		ret[i++] = s2[j++];
 	ret[i] = 0;
-	free(s1);
-	s1 = NULL;
-	return (ret);
+	return (free(s1), s1 = NULL, ret);
 }

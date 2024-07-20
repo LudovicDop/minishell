@@ -17,6 +17,8 @@ t_envp	*search_envp_key(t_envp **envp, char *key)
 {
 	t_envp	*i;
 
+	if (!key)
+		return (NULL);
 	i = *envp;
 	while (i)
 	{

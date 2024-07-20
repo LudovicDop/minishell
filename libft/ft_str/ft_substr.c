@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:54:04 by alphan            #+#    #+#             */
-/*   Updated: 2023/11/07 16:00:39 by alainphan        ###   ########.fr       */
+/*   Updated: 2024/07/20 20:56:16 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		*(ret + i) = *(s + start + i);
 		i++;
 	}
-	*(ret + i) = 0;
+	*(ret + i) = '\0';
 	return (ret);
 }
