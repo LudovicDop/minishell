@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:46:54 by alphan            #+#    #+#             */
-/*   Updated: 2023/12/19 15:32:42 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/20 21:25:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ char	*get_next_line(int fd)
 	if (!fline)
 		return (free(fline), NULL);
 	line = ft_getline(fline);
-	fline = next_line(fline);
+	free(fline);
+	fline = NULL;
 	return (line);
 }
 

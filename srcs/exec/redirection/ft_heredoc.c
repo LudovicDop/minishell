@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/20 14:48:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:48:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 void	ft_heredoc_free(t_lexer *node, t_glob *glob)
 {
-	free(glob->prompt);
-	free_lexer(glob->root);
-	free_envp(&glob->envp);
-	ft_free_id_list(&glob->id_node);
-	if (!node->next || node->next->type != HEREDOC)
+	if (!node->next || (node->next && node->next->type != HEREDOC))
+	{
+		free(glob->prompt);
+		close(glob->fd_in_old);
+		free_lexer(glob->root);
+		free_envp(&glob->envp);
+		ft_free_id_list(&glob->id_node);
+		free(glob);
 		exit(EXIT_SUCCESS);
+	}
 }
 void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
-		char *tmp)
+		char **tmp)
 {
 	if (!node->next || node->next->type != HEREDOC)
 	{
@@ -30,13 +34,14 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 		write(pipe_fd[WRITE], *full_string, ft_strlen(*full_string));
 		close(pipe_fd[WRITE]);
 		free(*full_string);
-		free(tmp);
+		free(*tmp);
+		*tmp = NULL;
 	}
 	else
 	{
 		free(*full_string);
-		free(tmp);
-		tmp = NULL;
+		free(*tmp);
+		*tmp = NULL;
 		*full_string = NULL;
 	}
 }
@@ -60,11 +65,11 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob, char *full_strin
 			free(tmp);
 		}
 		else if (tmp == NULL || tmp[0] == '\0')
-			return (printf("\n"), free(full_string), free(tmp), exit(0), 1);
+			return (printf("\n"), close(pipe_fd[READ]), close(pipe_fd[WRITE]), free(full_string), free(tmp), ft_heredoc_free(node, glob), exit(0), 1);
 		else if (ft_strlen(tmp) > 1 && ft_strncmp(node->value[0], tmp,
 				ft_strlen(tmp) - 1) == 0)
 		{
-			ft_heredoc_init(node, pipe_fd, &full_string, tmp);
+			ft_heredoc_init(node, pipe_fd, &full_string, &tmp);
 			ft_heredoc_free(node, glob);
 			node = node->next;
 		}
@@ -99,6 +104,7 @@ int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
 	close(pipe_fd[READ]);
 	if (node->next)
 	{
+		close(old_stdin);
 		if (pipe(pipe_fd) < 0)
 			return (exit(EXIT_FAILURE), 1);
 	}
@@ -106,6 +112,7 @@ int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
 	{
 		if (dup2(old_stdin, STDIN_FILENO) == -1)
 			return (exit(EXIT_FAILURE), 1);
+		close(old_stdin);
 	}
 	return (0);
 }
@@ -114,10 +121,8 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int		old_stdin;
 	pid_t	id;
-	char	*tmp;
 	char	*full_string;
 
-	tmp = NULL;
 	full_string = NULL;
 	if (!node || node->type != HEREDOC)
 		return (0);
@@ -126,12 +131,14 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 	id = fork();
 	if (id < 0)
 		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
-	old_stdin = dup(STDIN_FILENO);
-	if (old_stdin == -1)
-		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 	if (id == 0)
 		ft_heredoc_child(node, pipe_fd, glob,full_string);
 	else
+	{
+		old_stdin = dup(STDIN_FILENO);
+		if (old_stdin == -1)
+			return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 		ft_heredoc_parent(pipe_fd, id, node, old_stdin);
+	}
 	return (0);
 }
