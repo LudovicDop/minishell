@@ -56,6 +56,8 @@ void	remove_quote(t_token *token, t_envp **envp)
 		}
 		else if (current->type == CMD)
 			change_for_value(current, envp, current->value);
+		else if (current->type == WAVE) 
+			change_for_value(current, envp, current->value);
 		current = current->next;
 	}
 }
@@ -117,32 +119,28 @@ void	change_for_value2(t_token *token, t_envp **envp, char *str)
 	char	*str2;
 
 	current = token;
-	while (current)
+	if (!ft_strncmp(current->value, "$?", 3))
 	{
-		if (!ft_strncmp(current->value, "$?", 3))
-		{
-			free(current->value);
-			current->value = ft_itoa(g_signal);
-		}
-		else if (!ft_strncmp(current->value, "$$", 3))
-		{
-			free(current->value);
-			current->value = ft_itoa(getpid());
-		}
-		else if (current->value[0] == '$')
-		{
-			tmp = search_envp_key(envp, current->value + 1);
-			free(current->value);
-			if (tmp->value)
-				current->value = ft_strdup(tmp->value);
-		}
-		else if (current->value[0] == '~')
-		{
-			tmp = search_envp_key(envp, "HOME");
-			free(current->value);
-			current->value = ft_strdup(str);
-		}
-		current = current->next;
+		free(current->value);
+		current->value = ft_itoa(g_signal);
+	}
+	else if (!ft_strncmp(current->value, "$$", 3))
+	{
+		free(current->value);
+		current->value = ft_itoa(getpid());
+	}
+	else if (current->value[0] == '$')
+	{
+		tmp = search_envp_key(envp, current->value + 1);
+		free(current->value);
+		if (tmp->value)
+			current->value = ft_strdup(tmp->value);
+	}
+	else if (current->value[0] == '~')
+	{
+		tmp = search_envp_key(envp, "HOME");
+		free(current->value);
+		current->value = ft_strdup(str);
 	}
 }
 
@@ -171,13 +169,16 @@ void	change_for_value(t_token *token, t_envp **envp, char *str)
 		free(current->value);
 		if (tmp->value)
 			current->value = ft_strdup(tmp->value);
+		// free(str);
 		// current->value = ft_strdup(tmp->value);
 	}
-	else if (current->value[0] == '~')
+	else if (current->type == WAVE)
 	{
 		tmp = search_envp_key(envp, "HOME");
 		free(current->value);
-		current->value = ft_strdup(str);
+		if (tmp->value)
+			current->value = ft_strdup(tmp->value);
+		current->type = CMD;
 		// free(str);
 	}
 }
