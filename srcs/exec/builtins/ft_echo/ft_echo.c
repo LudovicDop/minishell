@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 17:16:04 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:01:12 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ char	*ft_check_dollar(char *string, t_envp **envp, t_lexer *token)
 
 void	ft_echo(char *string, bool without_ret, t_envp **envp, t_lexer *token)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (!string && !without_ret)
 	{
 		printf("\n");
@@ -86,14 +83,10 @@ void	ft_echo(char *string, bool without_ret, t_envp **envp, t_lexer *token)
 	}
 	if (without_ret)
 	{
-		tmp = ft_check_dollar(string, envp, token);
-		printf("%s", tmp);
+		printf("%s", string);
 	}
 	else if (!without_ret)
 	{
-		tmp = ft_check_dollar(string, envp, token);
-		printf("%s\n", tmp);
+		printf("%s\n", string);
 	}
-	if (tmp)
-		free(tmp);
 }

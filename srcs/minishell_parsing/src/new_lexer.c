@@ -49,11 +49,11 @@ void	rm_space(t_token *token)
 	}
 }
 
-void	new_lexer(t_token **token)
+void	new_lexer(t_token **token, t_envp **envp)
 {
 	//search cmd == envp && do wave for d_quote et cmd 
 	// change_for_value(*token);
-	remove_quote(*token);
+	remove_quote(*token, envp);
 	if (!token)
 		printf("test");
 	change_cmd(*token);

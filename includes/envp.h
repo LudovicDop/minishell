@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_lexer.h                                        :+:      :+:    :+:   */
+/*   envp.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/28 11:31:26 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/07 12:53:13 by alphan           ###   ########.fr       */
+/*   Created: 2024/07/20 15:58:20 by alphan            #+#    #+#             */
+/*   Updated: 2024/07/20 15:58:22 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NEW_LEXER_H
-# define NEW_LEXER_H
+#ifndef ENVP_H
+# define ENVP_H
 
-# include "../includes/change_value.h"
+# include <stdbool.h>
 
-void	change_value(t_token *current, t_token_type type);
-void	new_lexer(t_token **token, t_envp **envp);
-// void	new_lexer(t_token **token);
-void	del_null_value(t_token *token);
+extern int	g_signal;
+
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+	struct s_envp	*next;
+	bool			hidden;
+}					t_envp;
+
+t_envp	*search_envp_key(t_envp **envp, char *key);
+
 #endif

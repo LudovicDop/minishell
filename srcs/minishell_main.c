@@ -130,7 +130,7 @@ int	main(int argc, char **argv, char **envp)
 			t = lexer(input_cmd);
 			if (t && !check_op(t) && !check_red(t) && !check_token_par(t))
 			{
-				new_lexer(&t);
+				new_lexer(&t, &envp_list);
 				final_lexer(t, &token);
 			}
 			free_token(t);

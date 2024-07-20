@@ -13,7 +13,8 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "../libft/libft.h"
+# include "../../../libft/libft.h"
+# include "../../../includes/envp.h"
 
 typedef enum e_token_type
 {
@@ -62,7 +63,6 @@ typedef struct s_index
 }	t_index;
 
 t_token			*lexer(char *str);
-void			new_lexer(t_token **token);
 void			del_null_value(t_token *token);
 char			*get_string(char a, char b, char c, int *i);
 t_token_type	get_token_type(char *s);

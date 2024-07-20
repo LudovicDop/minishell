@@ -32,18 +32,30 @@ char	*remove_quotes(char *str)
 	return (s);
 }
 
-void	remove_quote(t_token *token)
+void	remove_quote(t_token *token, t_envp **envp)
 {
 	t_token	*current;
 
 	current = token;
 	while (current)
 	{
-		if (current->type == QUOTE || current->type == DOUBLE_QUOTE)
+		if (current->type == DOUBLE_QUOTE)
 		{
+			// printf("current->value = %s\n", current->value);
 			current->value = remove_quotes(current->value);
+			change_for_value(current, envp, current->value);
+			printf("current->value = %s\n", current->value);
 			current->type = CMD;
 		}
+		else if (current->type == QUOTE)
+		{
+			// printf("current->value = %s\n", current->value);
+			current->value = remove_quotes(current->value);
+			// printf("current->value = %s\n", current->value);
+			current->type = CMD;
+		}
+		else if (current->type == CMD)
+			change_for_value(current, envp, current->value);
 		current = current->next;
 	}
 }
@@ -97,7 +109,86 @@ void	change_cmd(t_token *token)
 	}
 }
 
-void	change_for_value(t_token *token)
+void	change_for_value2(t_token *token, t_envp **envp, char *str)
+{
+	t_token	*current;
+	int		i;
+	t_envp	*tmp;
+
+	current = token;
+	while (current)
+	{
+		if (!ft_strncmp(current->value, "$?", 3))
+		{
+			free(current->value);
+			current->value = ft_itoa(g_signal);
+		}
+		else if (!ft_strncmp(current->value, "$$", 3))
+		{
+			free(current->value);
+			current->value = ft_itoa(getpid());
+		}
+		else if (current->value[0] == '$')
+		{
+			// printf("current->value = %s\n", current->value);
+			tmp = search_envp_key(envp, current->value + 1);
+			// printf("tmp->value = %s\n", tmp->value);
+			free(current->value);
+			if (tmp->value)
+				current->value = ft_strdup(tmp->value);
+			// current->value = ft_strdup(tmp->value);
+		}
+		else if (current->value[0] == '~')
+		{
+			tmp = search_envp_key(envp, "HOME");
+			free(current->value);
+			current->value = ft_strdup(str);
+			// free(str);
+		}
+		current = current->next;
+	}
+}
+void	change_for_value(t_token *token, t_envp **envp, char *str)
+{
+	t_token	*current;
+	int		i;
+	t_envp	*tmp;
+
+	current = token;
+	while (current)
+	{
+		if (!ft_strncmp(current->value, "$?", 3))
+		{
+			free(current->value);
+			current->value = ft_itoa(g_signal);
+		}
+		else if (!ft_strncmp(current->value, "$$", 3))
+		{
+			free(current->value);
+			current->value = ft_itoa(getpid());
+		}
+		else if (current->value[0] == '$')
+		{
+			// printf("current->value = %s\n", current->value);
+			tmp = search_envp_key(envp, current->value + 1);
+			// printf("tmp->value = %s\n", tmp->value);
+			free(current->value);
+			if (tmp->value)
+				current->value = ft_strdup(tmp->value);
+			// current->value = ft_strdup(tmp->value);
+		}
+		else if (current->value[0] == '~')
+		{
+			tmp = search_envp_key(envp, "HOME");
+			free(current->value);
+			current->value = ft_strdup(str);
+			// free(str);
+		}
+		current = current->next;
+	}
+}
+
+/*
 {
 	t_token	*current;
 	char	*str;
@@ -112,33 +203,7 @@ void	change_for_value(t_token *token)
 	j = 0;
 	while (current)
 	{
-		if (current->type == DOUBLE_QUOTE)
-		{
-			current->value = remove_quotes(current->value);
-			while (current->value[i] == ' ' || current->value[i] == '\t')
-				i++;
-			str2 = ft_substr(current->value, i, ft_strlen(current->value));
-			if (!ft_strncmp(str2, "$PATH", 6))
-			{
-				if (i)
-				{
-					str = ft_calloc(i + 2, sizeof(char));
-					while (j <= i)
-					{
-						str[j] = ' ';
-						j++;
-					}
-				}
-				else
-					str = ft_strdup(" ");	
-				free(current->value);
-				printf("str = '%s'\n", str);
-				// current->value = ft_strdup(str);
-				current->value = ft_strjoin(str, tmp);
-				free(str);
-			}
-		}
-		else if (current->type == CMD && !ft_strncmp(current->value, "$", 1))
+		if (current->type == CMD && !ft_strncmp(current->value, "$", 1))
 		{
 			if (!ft_strncmp(current->value, "$?", 2))
 			{
@@ -156,7 +221,14 @@ void	change_for_value(t_token *token)
 				current->value = ft_strdup("le chemion du path");
 			}
 		}
+		else if (current->type == CMD && !ft_strncmp(current->value, "~", 1))
+		{
+			// str = ft_strjoin("/Users/", current->value + 1);
+			free(current->value);
+			// current->value = ft_strdup(str);
+			free(str);
+		}
 		current = current->next;
 	}
 }
-
+*/

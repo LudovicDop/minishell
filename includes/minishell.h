@@ -12,9 +12,10 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-extern int	g_signal;
+// extern int	g_signal;
 
 # include "../libft/libft.h"
+// # include "./envp.h"
 # include "../srcs/minishell_parsing/includes/final_lexer.h"
 // # include "../srcs/minishell_parsing/includes/lexer.h"
 // # include "../srcs/minishell_parsing/includes/parser.h"
@@ -32,7 +33,6 @@ extern int	g_signal;
 # include <term.h>
 # include <time.h>
 # include <unistd.h>
-# include <stdbool.h>
 # define WRITE 1
 # define READ 0
 
@@ -45,13 +45,13 @@ typedef struct s_id
 	struct s_id *next;
 }	t_id;
 
-typedef struct s_envp
-{
-	char			*key;
-	char			*value;
-	struct s_envp	*next;
-	bool			hidden;
-}					t_envp;
+// typedef struct s_envp
+// {
+// 	char			*key;
+// 	char			*value;
+// 	struct s_envp	*next;
+// 	bool			hidden;
+// }					t_envp;
 
 typedef struct s_glob
 {
@@ -131,7 +131,7 @@ void				ft_env(t_envp **envp_list);
 char				*test_good_path_for_exec(char *exec_name, char *path);
 char				*search_path(t_envp *envp_list);
 char				**convert_envp(t_envp *envp_list);
-t_envp				*search_envp_key(t_envp **envp, char *key);
+// t_envp				*search_envp_key(t_envp **envp, char *key);
 
 void				init_envp(t_envp **envp_list, char **envp);
 void				print_envp(t_envp *list);
