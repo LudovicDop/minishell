@@ -6,18 +6,50 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/20 17:24:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:51:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*ft_echo_merge(char **string)
+{
+	char **tmp;
+	char	*new_string;
+	int		i;
+
+	i = 0;
+	new_string = NULL;
+	tmp = string;
+	if (!tmp)
+		return (NULL);
+	while (tmp[i])
+	{
+		new_string = ft_strjoin2(new_string, tmp[i]);
+		if (tmp[i + 1])
+			new_string = ft_strjoin2(new_string, " ");
+		i++;
+	}
+	return (new_string);
+}
+
 void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	if (token->value[1] && !ft_strcmp(token->value[1], "-n"))
-		ft_echo(token->value[2], true, &(envp_list), token);
+	{
+			tmp = ft_echo_merge(&token->value[2]);
+			ft_echo(tmp, true, &(envp_list), token);
+			free(tmp);
+	}
 	else
-		ft_echo(token->value[1], false, &(envp_list), token);
+	{
+			tmp = ft_echo_merge(&token->value[1]);
+			ft_echo(tmp, false, &(envp_list), token);
+			free(tmp);
+	}
 	return ;
 }
 
