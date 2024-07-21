@@ -6,11 +6,12 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:12:10 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/21 22:39:05 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/22 01:10:44 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/change_value.h"
+#include <stdio.h>
 
 char	*init_value(t_token	*token, t_index *a, t_envp **envp, char **s)
 {
@@ -28,8 +29,10 @@ char	*init_value(t_token	*token, t_index *a, t_envp **envp, char **s)
 		a->k++;
 	}
 	tmp = search_envp_key(envp, s2 + 1);
-	if (tmp && tmp->value && s2[0] == '$')
+	if (tmp && tmp->value)
 		*s = ft_strjoin2(*s, tmp->value);
+	else if (!tmp && s2[0] == '$' && s2[1] != '\0')
+		*s = ft_strjoin2(*s, "");
 	else
 		*s = ft_strjoin2(*s, s2);
 	free(s2);
@@ -60,7 +63,7 @@ void	replace_val(t_token	*token, t_envp **envp, t_index *a, char **s)
 	{
 		a->j = a->i + 1;
 		while (token->value[a->j] && token->value[a->j] != ' ' && \
-			token->value[a->j] != '$')
+			token->value[a->j] != '\'' && token->value[a->j] != '$')
 			a->j++;
 		*s = init_value(token, a, envp, s);
 	}

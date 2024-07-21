@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 22:58:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:42:47 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("Error: too many arguments\n");
 		return (1);
 	}
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	envp_list = NULL;
 	input_cmd = NULL;
 	g_signal = 0;

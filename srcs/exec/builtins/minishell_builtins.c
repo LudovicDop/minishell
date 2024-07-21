@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 23:24:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:59:28 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_echo_merge(char **string)
 	while (tmp[i])
 	{
 		new_string = ft_strjoin2(new_string, tmp[i]);
-		if (tmp[i + 1])
+		if (tmp[i + 1] && ft_strncmp(tmp[i], "", 1))
 			new_string = ft_strjoin2(new_string, " ");
 		i++;
 	}
