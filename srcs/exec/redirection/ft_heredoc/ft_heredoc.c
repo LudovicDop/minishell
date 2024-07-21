@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 22:54:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:40:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,21 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 	}
 }
 
-int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob,
-		char *full_string)
+int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 {
 	char	*tmp;
+	char	*full_string;
 
+	tmp = NULL;
+	full_string = NULL;
 	ft_heredoc_signal();
 	while (node && node->type == HEREDOC)
 	{
 		write(1, "> ", 2);
 		tmp = get_next_line(STDIN_FILENO);
-		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp) - 1) != 0 || ft_strcmp(tmp, "\n") == 0))
-		{
-			full_string = ft_strjoin2(full_string, tmp);
-			if (!full_string)
-				return (free(tmp), exit(EXIT_FAILURE), 1);
-			free(tmp);
-		}
+		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp) - 1) != 0
+				|| ft_strcmp(tmp, "\n") == 0))
+			ft_heredoc_stock_string(&tmp, &full_string);
 		else if (tmp == NULL || tmp[0] == '\0')
 			return (ft_norm(pipe_fd, tmp, full_string), ft_heredoc_free(node,
 					glob, true), exit(0), 1);
@@ -108,9 +106,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int		old_stdin;
 	pid_t	id;
-	char	*full_string;
 
-	full_string = NULL;
 	if (!node || node->type != HEREDOC)
 		return (0);
 	if (pipe(pipe_fd) < 0)
@@ -119,7 +115,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 	if (id < 0)
 		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 	if (id == 0)
-		ft_heredoc_child(node, pipe_fd, glob, full_string);
+		ft_heredoc_child(node, pipe_fd, glob);
 	else
 	{
 		old_stdin = dup(STDIN_FILENO);

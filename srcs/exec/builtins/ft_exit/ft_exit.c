@@ -6,14 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 19:28:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:26:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_free(t_glob *glob, t_envp *envp_list,
-		int *pipe_fd)
+void	exit_free(t_glob *glob, t_envp *envp_list, int *pipe_fd)
 {
 	free(glob->prompt);
 	free_lexer(glob->root);
@@ -25,6 +24,7 @@ void	exit_free(t_glob *glob, t_envp *envp_list,
 		close(glob->fd_in_old);
 	free(glob);
 }
+
 void	ft_exit(char *val, t_glob *glob, int *pipe_fd)
 {
 	unsigned int	convert_val;

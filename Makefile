@@ -45,6 +45,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/check/check_str.c \
 	  srcs/minishell_parsing/src/change_value.c \
 	  srcs/minishell_parsing/src/change_value2.c \
+	  srcs/exec/minishell_wait.c \
 
 CC = cc -Wall -Werror -Wextra
 LIB = #-I ./srcs/minishell_parsing/includes #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline

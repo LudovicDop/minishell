@@ -6,31 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:25:01 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:41:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
-{
-	if (!node || node->type == 1)
-	{
-		if (glob->root == NULL)
-		{
-			return (1);
-		}
-		ft_wait_everyone(glob);
-		if (how_many_cmd(glob->root) <= 1)
-		{
-			dup2(glob->fd_in_old, STDIN_FILENO);
-			return (close(glob->fd_in_old), 1);
-		}
-		return (close(pipe_fd[READ]), close(pipe_fd[WRITE]),
-			close(glob->fd_in_old), 1);
-	}
-	return (0);
-}
 
 int	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd)
 {
@@ -66,7 +46,7 @@ int	ft_command_after(t_lexer *node)
 
 int	ft_is_it_pipe(t_lexer *root)
 {
-	t_lexer *current;
+	t_lexer	*current;
 
 	if (!root)
 		return (0);

@@ -6,30 +6,12 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 23:09:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:45:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell_parsing/includes/parser.h"
 #include "minishell.h"
-
-void	execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list,
-		int *pipe_fd)
-{
-	ft_error_exec("command not found\n", token->value[0]);
-	free(glob->prompt);
-	free_lexer(glob->root);
-	free_envp(&envp_list);
-	ft_free_id_list(&glob->id_node);
-	if (pipe_fd[0])
-		close(pipe_fd[READ]);
-	if (pipe_fd[1])
-		close(pipe_fd[WRITE]);
-	if (glob->fd_in_old)
-		close(glob->fd_in_old);
-	free(glob);
-	exit(EXIT_FAILURE);
-}
 
 void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 		t_glob *glob)
@@ -47,6 +29,7 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 	}
 	exit(EXIT_SUCCESS);
 }
+
 void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		int *pipe_fd)
 {
@@ -61,8 +44,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	else if (token->next && (token->next->type >= 7 && token->next->type <= 8))
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
 	if (search_builtins_token(token, &envp_list, glob, pipe_fd))
-		return (execute_fail_builtins(glob, envp_list, pipe_fd),
-			exit(0));
+		return (execute_fail_builtins(glob, envp_list, pipe_fd), exit(0));
 	else
 	{
 		execute_exec(token, envp_list, pipe_fd, glob);
@@ -72,7 +54,6 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 		t_glob *glob)
 {
-	// int		status;
 	pid_t	id;
 
 	if (token->type != CMD)
@@ -101,10 +82,7 @@ int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 		t_glob *glob)
 {
-	int		fd_in;
-	// int		status;
-	// pid_t	id;
-	// pid_t	id2;
+	int	fd_in;
 
 	if (node->type != PIPE)
 		return (-1);

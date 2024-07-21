@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 21:07:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:40:24 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	ft_norm(int *pipe_fd, char *tmp, char *full_string)
 	free(full_string);
 	close(pipe_fd[READ]);
 	close(pipe_fd[WRITE]);
+}
+
+void	ft_heredoc_stock_string(char **tmp, char **full_string)
+{
+	*full_string = ft_strjoin2(*full_string, *tmp);
+	if (!*full_string)
+		return (free(*tmp), exit(EXIT_FAILURE));
+	free(*tmp);
 }
