@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **envp)
 		glob->id_node = NULL;
 		execute_ast(token, pipe_fd, &envp_list, glob);
 		ft_free_id_list(&glob->id_node);
-		//  print_lexer(token);
+		 // print_lexer(token);
 		if (token)
 			free_lexer(token);
 		free(glob->prompt);
