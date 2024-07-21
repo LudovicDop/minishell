@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:21:23 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:53:46 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_export(t_envp **envp_list, char *key_value)
 	exp_tmp.key = get_key_envp(key_value);
 	if (!exp_tmp.key)
 	{
+		free(exp_tmp.value);
 		search_key_and_replace_it(envp_list, key_value, "");
 		tmp = search_envp_key(envp_list, key_value);
 		tmp->hidden = true;

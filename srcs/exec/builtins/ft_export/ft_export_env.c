@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:24:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:53:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	search_key_and_replace_it(t_envp **envp, char *key, char *value)
 		{
 			free(envp_t->value);
 			envp_t->value = ft_strdup(value);
+			envp_t->hidden = false;
 			return ;
 		}
 		envp_t = envp_t->next;
