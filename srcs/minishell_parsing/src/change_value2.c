@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/change_value.h"
+#include "envp.h"
 
 char	*remove_quotes(char *str)
 {
@@ -105,4 +106,17 @@ void	change_cmd(t_token *token)
 		else
 			current = current->next;
 	}
+}
+
+void	change_wave(t_token *token, t_envp **envp)
+{
+	t_envp	*tmp;
+
+	tmp = search_envp_key(envp, "HOME");
+	if (tmp && tmp->value)
+	{
+		free(token->value);
+		token->value = ft_strdup(tmp->value);
+	}
+	token->type = CMD;
 }

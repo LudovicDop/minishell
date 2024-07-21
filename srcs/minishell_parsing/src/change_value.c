@@ -50,50 +50,41 @@ char	*give_value(char **s, t_index *a, int i)
 	return (*s);
 }
 
+void	replace_val(t_token	*token, t_envp **envp, t_index *a, char **s)
+{
+	if (token->value[a->i] == '$' && token->value[a->i + 1] == '?')
+		give_value(s, a, g_signal);
+	else if (token->value[a->i] == '$' && token->value[a->i + 1] == '$')
+		give_value(s, a, getpid());
+	else if (token->value[a->i])
+	{
+		a->j = a->i + 1;
+		while (token->value[a->j] && token->value[a->j] != ' ' && \
+			token->value[a->j] != '$')
+			a->j++;
+		*s = init_value(token, a, envp, s);
+	}
+	else if (token->type == DOUBLE_QUOTE)
+	{
+		a->j = a->i + 1;
+		while (token->value[a->j] && token->value[a->j] == ' ' && \
+		token->value[a->j] != '$')
+			a->j++;
+		*s = init_value(token, a, envp, s);
+	}
+}
+
 void	change_for_value(t_token *token, t_envp **envp)
 {
-	t_envp	*tmp;
 	t_index	a;
 	char	*s;
-	char	*s2;
 
 	a = (t_index){0, 0, 0};
 	s = NULL;
-	s2 = NULL;
-	tmp = NULL;
 	if (token->type == WAVE)
-	{
-		tmp = search_envp_key(envp, "HOME");
-		if (tmp && tmp->value)
-		{
-			free(token->value);
-			token->value = ft_strdup(tmp->value);
-		}
-		token->type = CMD;
-	}
+		change_wave(token, envp);
 	while (token->value[a.i])
-	{
-		if (token->value[a.i] == '$' && token->value[a.i + 1] == '?')
-			give_value(&s, &a, g_signal);
-		else if (token->value[a.i] == '$' && token->value[a.i + 1] == '$')
-			give_value(&s, &a, getpid());
-		else if (token->value[a.i])
-		{
-			a.j = a.i + 1;
-			while (token->value[a.j] && token->value[a.j] != ' ' && \
-				token->value[a.j] != '$')
-				a.j++;
-			s = init_value(token, &a, envp, &s);
-		}
-		else if (token->type == DOUBLE_QUOTE)
-		{
-			a.j = a.i + 1;
-			while (token->value[a.j] && token->value[a.j] == ' ' && \
-			token->value[a.j] != '$')
-				a.j++;
-			s = init_value(token, &a, envp, &s);
-		}
-	}
+		replace_val(token, envp, &a, &s);
 	if (s)
 	{
 		free(token->value);

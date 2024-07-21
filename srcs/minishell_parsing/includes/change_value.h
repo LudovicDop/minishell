@@ -20,7 +20,7 @@ char	*remove_quotes(char *str);
 void	remove_quote(t_token *token, t_envp **envp);
 void	change_red(t_token *token);
 void	change_cmd(t_token *token);
+void	change_wave(t_token *token, t_envp **envp);
 void	change_for_value(t_token *token, t_envp **envp);
-void	change_for_value2(t_token *token, t_envp **envp, char *str);
 
 #endif
