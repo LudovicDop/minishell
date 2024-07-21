@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:53:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 16:17:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:10:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		ft_red_append(node, i);
 		if (ft_red_in(node))
 		{
+			close(pipe_fd[READ]);
+			close(pipe_fd[WRITE]);
 			if (how_many_cmd(glob->root) > 1)
 				return (ft_red_in_result(pipe_fd, node, envp_list, glob));
 			else
