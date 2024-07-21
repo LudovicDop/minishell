@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 22:11:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:14:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_export(t_envp **envp_list, char *key_value)
 	t_envp		*tmp;
 	t_export	exp_tmp;
 
-	fprintf(stderr, "value : %s\n", key_value);
 	if (!key_value)
 		return (print_env_export(envp_list));
 	exp_tmp.value = ft_strdup(get_value(key_value));
