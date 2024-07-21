@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:12:00 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 15:09:46 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:05:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ void	free_tab(void **my_tab)
 
 void	free_everything(t_lexer **token, char *prompt)
 {
-	t_lexer	*current;
-
-	current = *token;
 	if (token)
 	{
 		free_cmd_list(token);

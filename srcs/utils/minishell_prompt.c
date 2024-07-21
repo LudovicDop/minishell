@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:21:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:06:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 char	*remove_users(char *string)
 {
-	int		i;
 	char	*s1;
 	char	*new_path;
 
-	i = 0;
 	s1 = string;
 	if (!*s1)
 		return (NULL);
@@ -76,15 +74,12 @@ char	*get_prompt(t_envp *envp_list)
 	char	*tmp_user;
 	char	*tmp_path;
 	char	*prompt;
-	int		i;
 	t_envp	*current;
 
 	tmp_user = NULL;
 	tmp_path = NULL;
 	prompt = NULL;
 	current = envp_list;
-	i = 0;
-
 	while (current)
 	{
 		if (current && !ft_strcmp(current->key, "USER"))

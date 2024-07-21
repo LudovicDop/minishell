@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 16:14:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:07:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end)
 
 int	ft_empty_after_heredoc(t_lexer *node)
 {
-	t_lexer	*current;
-
-	current = node;
 	if (!node)
 		return (1);
 	while (node)

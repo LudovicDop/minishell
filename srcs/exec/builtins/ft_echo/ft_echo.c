@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 19:25:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:07:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ void	ft_echo(char *string, bool without_ret)
 		return ;
 	}
 	if (!string && without_ret)
-	{
-		printf("");
 		return ;
-	}
 	if (without_ret)
 	{
 		printf("%s", string);

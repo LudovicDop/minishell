@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:38:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:05:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,9 @@ void	add_node_to_envp(t_envp **list, t_envp *new_node)
 void	init_envp(t_envp **envp_list, char **envp)
 {
 	int		i;
-	t_envp	*current;
 	t_envp	*new_node;
 
 	i = 0;
-	current = *envp_list;
 	while (envp[i])
 	{
 		new_node = ft_calloc(1, sizeof(t_envp));
