@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:12:10 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/21 19:29:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:39:05 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ void	replace_val(t_token	*token, t_envp **envp, t_index *a, char **s)
 	else if (token->type == DOUBLE_QUOTE)
 	{
 		a->j = a->i + 1;
-		while (token->value[a->j] && token->value[a->j] == ' ' && \
-		token->value[a->j] != '$')
+		while (token->value[a->j] && token->value[a->j] != '$')
 			a->j++;
 		*s = init_value(token, a, envp, s);
 	}
