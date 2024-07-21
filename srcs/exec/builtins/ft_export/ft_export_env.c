@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 17:53:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:04:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	create_new_key(t_envp **envp, char *key, char *value)
 {
 	t_envp	*new_node;
 
-	new_node = malloc(sizeof(t_envp));
+	new_node = ft_calloc(1, sizeof(t_envp));
 	if (!new_node)
 		return ;
 	new_node->key = ft_strdup(key);
