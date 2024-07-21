@@ -141,7 +141,6 @@ int	main(int argc, char **argv, char **envp)
 		glob->envp = envp_list;
 		glob->id_node = NULL;
 		execute_ast(token, pipe_fd, &envp_list, glob);
-		fprintf(stderr, "OUTSIDE\n");
 		ft_free_id_list(&glob->id_node);
 		 // print_lexer(token);
 		if (token)

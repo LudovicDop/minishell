@@ -80,14 +80,16 @@ void	change_for_value(t_token *token, t_envp **envp)
 		else if (token->value[a.i])
 		{
 			a.j = a.i + 1;
-			while (token->value[a.j] && token->value[a.j] != ' ' && token->value[a.j] != '$')
+			while (token->value[a.j] && token->value[a.j] != ' ' && \
+				token->value[a.j] != '$')
 				a.j++;
 			s = init_value(token, &a, envp, &s);
 		}
 		else if (token->type == DOUBLE_QUOTE)
 		{
 			a.j = a.i + 1;
-			while (token->value[a.j] && token->value[a.j] == ' ' && token->value[a.j] != '$')
+			while (token->value[a.j] && token->value[a.j] == ' ' && \
+			token->value[a.j] != '$')
 				a.j++;
 			s = init_value(token, &a, envp, &s);
 		}
