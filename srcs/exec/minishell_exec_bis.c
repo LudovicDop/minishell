@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 15:50:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:37:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd)
 		glob->fd_in_old = dup(STDIN_FILENO);
 		if (glob->fd_in_old == -1)
 			return (1);
-		if (how_many_cmd(glob->root) > 1)
+		if (ft_is_it_pipe(glob->root))
 		{
 			if (pipe(pipe_fd) < 0)
 				return (1);
@@ -64,10 +64,26 @@ int	ft_command_after(t_lexer *node)
 	return (0);
 }
 
+int	ft_is_it_pipe(t_lexer *root)
+{
+	t_lexer *current;
+
+	if (!root)
+		return (0);
+	current = root;
+	while (current)
+	{
+		if (current->type == PIPE)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
 int	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list)
 {
 	if (node->type == CMD && how_many_cmd(glob->root) == 1
-		&& ft_command_after(node))
+		&& ft_command_after(node) && !ft_is_it_pipe(glob->root))
 	{
 		if (!search_builtins_token(glob->root, envp_list, glob))
 			execute_command(node, pipe_fd, *envp_list, glob);

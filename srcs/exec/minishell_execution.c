@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 15:44:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:40:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	exit(EXIT_FAILURE);
 }
 
-void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd, t_glob *glob)
+void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
+		t_glob *glob)
 {
 	char	*path;
 	char	**tmp_envp;
@@ -64,7 +65,8 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	else if (token->next && (token->next->type >= 7 && token->next->type <= 8))
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
 	if (search_builtins_token(token, &envp_list, glob))
-		return (exit(EXIT_FAILURE));
+		return (execute_fail_builtins(glob, token, envp_list, pipe_fd),
+			exit(EXIT_FAILURE));
 	else
 	{
 		execute_exec(token, envp_list, pipe_fd, glob);
@@ -122,6 +124,7 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 
 int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
+	fprintf(stderr, "\033[31;1mEXEC\033[m\n");
 	if (ft_end_cmd(node, glob, pipe_fd))
 		return (1);
 	if (ft_first_node_init(node, glob, pipe_fd))
@@ -137,7 +140,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 	}
 	if (ft_single_cmd(node, glob, pipe_fd, envp_list))
 		return (1);
-	else if (node->type == CMD && how_many_cmd(glob->root) > 1)
+	else if (node->type == CMD && ft_is_it_pipe(glob->root))
 	{
 		execute_command(node, pipe_fd, *envp_list, glob);
 		dup2(glob->fd_in_old, STDIN_FILENO);

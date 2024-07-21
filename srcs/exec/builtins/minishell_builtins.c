@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/20 17:55:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:21:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_echo_merge(char **string)
 {
-	char **tmp;
+	char	**tmp;
 	char	*new_string;
 	int		i;
 
@@ -40,15 +40,15 @@ void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 	tmp = NULL;
 	if (token->value[1] && !ft_strcmp(token->value[1], "-n"))
 	{
-			tmp = ft_echo_merge(&token->value[2]);
-			ft_echo(tmp, true, &(envp_list), token);
-			free(tmp);
+		tmp = ft_echo_merge(&token->value[2]);
+		ft_echo(tmp, true, &(envp_list), token);
+		free(tmp);
 	}
 	else
 	{
-			tmp = ft_echo_merge(&token->value[1]);
-			ft_echo(tmp, false, &(envp_list), token);
-			free(tmp);
+		tmp = ft_echo_merge(&token->value[1]);
+		ft_echo(tmp, false, &(envp_list), token);
+		free(tmp);
 	}
 	return ;
 }
