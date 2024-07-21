@@ -6,17 +6,29 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:53:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/19 11:54:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:17:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_red_in_result(int *pipe_fd, t_lexer *node, t_envp *envp_list,
+		t_glob *glob)
+{
+	if (pipe(pipe_fd) == -1)
+		return (1);
+	close(pipe_fd[WRITE]);
+	if (dup2(pipe_fd[READ], STDIN_FILENO) < 0)
+		return (1);
+	return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, &envp_list, glob),
+		1);
+}
+
 int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int	i;
-	int test;
-	
+	int	test;
+
 	i = 0;
 	if (node->type >= 6 && node->type <= 9)
 	{
@@ -27,21 +39,14 @@ int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		if (ft_red_in(node))
 		{
 			if (how_many_cmd(glob->root) > 1)
-			{
-				if (pipe(pipe_fd) == -1)
-					return (1);
-				close(pipe_fd[WRITE]);
-				if (dup2(pipe_fd[READ], STDIN_FILENO) < 0)
-					return (1);
-				return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, &envp_list,
-					glob), 1);
-			}
+				return (ft_red_in_result(pipe_fd, node, envp_list, glob));
 			else
 				dup2(glob->fd_in_old, STDIN_FILENO);
 			return (execute_ast(ft_skip_to_next_cmd(node), pipe_fd, &envp_list,
 					glob), 1);
 		}
-		ft_heredoc(node, pipe_fd, glob, envp_list);
+		if (ft_heredoc(node, pipe_fd, glob, envp_list))
+			return (1);
 	}
 	return (0);
 }

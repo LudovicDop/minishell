@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/19 11:58:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:13:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,4 +210,8 @@ void    ft_wait_everyone(t_glob *glob);
 int 	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd);
 int 	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list);
 t_lexer	*ft_skip_to_next_cmd(t_lexer *node);
+void	ft_heredoc_signal(void);
+void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end);
+int		ft_empty_after_heredoc(t_lexer *node);
+void	ft_norm(int *pipe_fd, char *tmp, char *full_string);
 #endif
