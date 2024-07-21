@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:58:20 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/21 17:46:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:07:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_envp
 	char			*value;
 	struct s_envp	*next;
 	bool			hidden_bis;
+	bool			hidden;
 }					t_envp;
 
 t_envp	*search_envp_key(t_envp **envp, char *key);

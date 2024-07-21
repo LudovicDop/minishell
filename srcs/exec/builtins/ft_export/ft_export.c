@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 14:32:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:14:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	is_it_incrementation(char *key)
 
 void	ft_export(t_envp **envp_list, char *key_value)
 {
+	t_envp		*tmp;
 	t_export	exp_tmp;
 
 	if (!key_value)
@@ -89,7 +90,12 @@ void	ft_export(t_envp **envp_list, char *key_value)
 		return ;
 	exp_tmp.key = get_key_envp(key_value);
 	if (!exp_tmp.key)
-		return (free(exp_tmp.value));
+	{
+		search_key_and_replace_it(envp_list, key_value, "");
+		tmp = search_envp_key(envp_list, key_value);
+		tmp->hidden = true;
+		return ;
+	}
 	if (is_it_incrementation(exp_tmp.key))
 	{
 		search_key_and_increment_it(envp_list, exp_tmp.key, exp_tmp.value);

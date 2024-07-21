@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 21:59:05 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 17:41:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:12:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(t_envp **envp_list)
 	current = *envp_list;
 	while (current)
 	{
-		if (current->hidden_bis != true)
+		if (current->hidden_bis != true && current->hidden != true)
 		{
 			printf("%s=", current->key);
 			printf("%s\n", current->value);
