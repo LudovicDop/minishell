@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/06/24 11:01:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:53:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ void	search_key_and_replace_it(t_envp **envp, char *key, char *value)
 
 void	init_swap_value(char *tmp_key, char *tmp_value, t_envp *i, t_envp *j)
 {
+	bool	tmp_hidden_bis;
+
+	tmp_hidden_bis = i->hidden_bis;
 	tmp_value = i->value;
 	tmp_key = i->key;
+	i->hidden_bis = j->hidden_bis;
 	i->key = j->key;
 	i->value = j->value;
 	j->key = tmp_key;
 	j->value = tmp_value;
+	j->hidden_bis = tmp_hidden_bis;
 }
 
 void	sort_list(t_envp **envp)
@@ -93,7 +98,8 @@ void	print_env_export(t_envp **envp)
 	sort_list(&tmp);
 	while (tmp)
 	{
-		printf("declare -x %s=%s\n", tmp->key, tmp->value);
+		if (tmp->hidden_bis != true)
+			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }

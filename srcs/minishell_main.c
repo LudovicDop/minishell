@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:05:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:46:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_init_default_envp(t_envp **envp_list)
 	{
 		ft_export(envp_list, "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
 		current = ft_search_envp_node(envp_list, "PATH");
-		current->hidden = true;
+		current->hidden_bis = true;
 	}
 }
 

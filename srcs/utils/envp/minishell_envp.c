@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:05:55 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 13:56:29 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:55:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	init_envp(t_envp **envp_list, char **envp)
 	current = *envp_list;
 	while (envp[i])
 	{
-		new_node = malloc(sizeof(t_envp));
+		new_node = ft_calloc(1, sizeof(t_envp));
 		if (!new_node)
 		{
 			free_tab((void **)envp_list);
