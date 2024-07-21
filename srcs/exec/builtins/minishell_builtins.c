@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 16:21:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:18:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 	return ;
 }
 
-int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob)
+int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob, int *pipe_fd)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob)
 	else if (!ft_strcmp(token->value[0], "pwd"))
 		return (ft_pwd(*envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "exit"))
-		return (ft_exit(token, token->value[1], glob), 1);
+		return (ft_exit(token, token->value[1], glob, pipe_fd), 1);
 	else if (!ft_strcmp(token->value[0], "echo"))
 		return (ft_echo_bis(token, *envp_list), 1);
 	return (0);

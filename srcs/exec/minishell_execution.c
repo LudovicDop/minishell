@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 17:05:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:19:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	execute_fail(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	ft_error_exec("command not found\n", token->value[0]);
 	free(glob->prompt);
 	free_lexer(glob->root);
-	// free_everything(&glob->root, NULL);
 	free_envp(&envp_list);
 	ft_free_id_list(&glob->id_node);
 	if (pipe_fd[0])
@@ -64,7 +63,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	}
 	else if (token->next && (token->next->type >= 7 && token->next->type <= 8))
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
-	if (search_builtins_token(token, &envp_list, glob))
+	if (search_builtins_token(token, &envp_list, glob, pipe_fd))
 		return (execute_fail_builtins(glob, token, envp_list, pipe_fd),
 			exit(EXIT_FAILURE));
 	else
@@ -124,7 +123,6 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 
 int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
-	fprintf(stderr, "\033[31;1mEXEC\033[m\n");
 	if (ft_end_cmd(node, glob, pipe_fd))
 		return (1);
 	if (ft_first_node_init(node, glob, pipe_fd))
