@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 23:40:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:59:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,6 @@ void	ft_norm(int *pipe_fd, char *tmp, char *full_string);
 int		ft_is_it_pipe(t_lexer *root);
 void	execute_fail_builtins(t_glob *g, t_envp *e_list, int *p_fd);
 void	ft_heredoc_stock_string(char **tmp, char **full_string);
+char	*ft_empty_envp_prompt(char *tmp_path, char *prompt, char *tmp_user);
+char	*init_prompt_path2(void);
 #endif

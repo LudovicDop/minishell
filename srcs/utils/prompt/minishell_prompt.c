@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 21:06:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:59:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,6 @@ char	*get_prompt(t_envp *envp_list)
 	if (tmp_user && tmp_path)
 		prompt = ft_strjoin(tmp_user, tmp_path);
 	else
-	{
-		if (tmp_path)
-			free(tmp_path);
-		prompt = ft_strdup("\033[32;1m@?\033[m:");
-		if (!prompt)
-			return (free(tmp_user), free(tmp_path), NULL);
-		tmp_path = init_prompt_path2();
-		prompt = ft_strjoin2(prompt, tmp_path);
-		return (free(tmp_user), free(tmp_path), prompt);
-	}
+		return (ft_empty_envp_prompt(tmp_path, prompt, tmp_user));
 	return (free(tmp_user), free(tmp_path), prompt);
 }

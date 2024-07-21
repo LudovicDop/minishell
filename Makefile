@@ -9,7 +9,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/envp/minishell_envp.c	\
 	  srcs/utils/envp/minishell_envp_convert.c \
 	  srcs/utils/minishell_freeing.c \
-	  srcs/utils/minishell_prompt.c \
+	  srcs/utils/prompt/minishell_prompt_bis.c \
+	  srcs/utils/prompt/minishell_prompt.c \
 	  srcs/utils/signal/minishell_signal.c \
 	  srcs/exec/builtins/ft_export/ft_export.c \
 	  srcs/exec/builtins/ft_cd/ft_cd.c \
