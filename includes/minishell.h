@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:46:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:34:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_signal(void);
 char	*ft_strchr_reverse(char *s1, char c);
 
 void	ft_export(t_envp **envp_list, char *key_value);
-void	ft_cd(t_lexer *token, t_envp **envp, char *path);
+void	ft_cd(t_envp **envp, char *path);
 int		search_builtins_child(t_lexer *token, t_envp *envp_list);
 int		search_builtins_token(t_lexer *t, t_envp **e_lst, t_glob *g, int *p_fd);
 void	handler(int signal);
@@ -122,8 +122,8 @@ char	*pwd_until_slash(char *pwd);
 void	print_env_export(t_envp **envp);
 void	ft_pwd(t_envp *envp_list);
 void	ft_unset(t_envp **envp, char *key_to_remove);
-void	ft_exit(t_lexer *token, char *val, t_glob *glob, int *pipe_fd);
-void	ft_echo(char *string, bool without_ret, t_envp **envp, t_lexer *token);
+void	ft_exit(char *val, t_glob *glob, int *pipe_fd);
+void	ft_echo(char *string, bool without_ret);
 void	add_node_to_envp(t_envp **list, t_envp *new_node);
 void	increment_shlvl(t_envp **envp);
 void	ft_red_out(t_lexer *token, bool is_cmd);
@@ -142,5 +142,5 @@ void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end);
 int		ft_empty_after_heredoc(t_lexer *node);
 void	ft_norm(int *pipe_fd, char *tmp, char *full_string);
 int		ft_is_it_pipe(t_lexer *root);
-void	execute_fail_builtins(t_glob *g, t_lexer *t, t_envp *e_list, int *p_fd);
+void	execute_fail_builtins(t_glob *g, t_envp *e_list, int *p_fd);
 #endif

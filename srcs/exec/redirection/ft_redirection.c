@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:53:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:10:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:26:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_red_in_result(int *pipe_fd, t_lexer *node, t_envp *envp_list,
 int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 {
 	int	i;
-	int	test;
 
 	i = 0;
 	if (node->type >= 6 && node->type <= 9)

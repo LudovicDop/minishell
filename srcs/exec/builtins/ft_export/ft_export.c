@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:37:53 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:14:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:21:23 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*get_key_envp(const char *s1)
 {
 	int		i;
-	int		j;
 	char	*string;
 	char	*ret;
 

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 17:19:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:27:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		int *pipe_fd)
 {
-	char	**tmp_envp;
-	char	*path;
+	// char	**tmp_envp;
+	// char	*path;
 
 	signal(SIGINT, handler_heredoc);
 	if (pipe_fd[0])
@@ -64,7 +64,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	else if (token->next && (token->next->type >= 7 && token->next->type <= 8))
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
 	if (search_builtins_token(token, &envp_list, glob, pipe_fd))
-		return (execute_fail_builtins(glob, token, envp_list, pipe_fd),
+		return (execute_fail_builtins(glob, envp_list, pipe_fd),
 			exit(EXIT_FAILURE));
 	else
 	{
@@ -75,7 +75,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 		t_glob *glob)
 {
-	int		status;
+	// int		status;
 	pid_t	id;
 
 	if (token->type != CMD)
@@ -105,9 +105,9 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 		t_glob *glob)
 {
 	int		fd_in;
-	int		status;
-	pid_t	id;
-	pid_t	id2;
+	// int		status;
+	// pid_t	id;
+	// pid_t	id2;
 
 	if (node->type != PIPE)
 		return (-1);

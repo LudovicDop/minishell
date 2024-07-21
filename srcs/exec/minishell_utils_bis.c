@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 16:57:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:26:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_error_exec(char *error_msg, char *cmd_name)
 	ft_putstr_fd(error_msg, 2);
 }
 
-void	execute_fail_builtins(t_glob *glob, t_lexer *token, t_envp *envp_list,
+void	execute_fail_builtins(t_glob *glob, t_envp *envp_list,
 		int *pipe_fd)
 {
 	free(glob->prompt);

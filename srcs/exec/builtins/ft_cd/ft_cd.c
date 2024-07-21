@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:36:43 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/17 17:36:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:22:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	parse_pwd_bis(t_pwd **pwd_lst, char *pwd_value, int i)
 void	parse_pwd(t_pwd **pwd_lst, char *pwd_value)
 {
 	int		i;
-	char	*tmp;
 	t_pwd	*new_node;
 
 	i = 0;
@@ -109,9 +108,8 @@ int	update_old_pwd(char *current_pwd, t_envp **envp, char *path)
 	return (0);
 }
 
-void	ft_cd(t_lexer *token, t_envp **envp, char *path)
+void	ft_cd(t_envp **envp, char *path)
 {
-	char	*current_pwd;
 	char	*old_pwd;
 	char	*tmp;
 	t_pwd	*new_node;

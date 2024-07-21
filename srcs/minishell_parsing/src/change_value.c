@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <alphan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:12:10 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/20 21:05:21 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/21 19:29:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	change_for_value(t_token *token, t_envp **envp)
 	t_index	a;
 	char	*s;
 
-	a = (t_index){0, 0, 0};
+	a = (t_index){0, 0, 0, 0};
 	s = NULL;
 	if (token->type == WAVE)
 		change_wave(token, envp);

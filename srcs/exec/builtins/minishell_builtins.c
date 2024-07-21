@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 17:18:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:28:25 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_echo_merge(char **string)
 	return (new_string);
 }
 
-void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
+void	ft_echo_bis(t_lexer *token)
 {
 	char	*tmp;
 
@@ -41,13 +41,13 @@ void	ft_echo_bis(t_lexer *token, t_envp *envp_list)
 	if (token->value[1] && !ft_strcmp(token->value[1], "-n"))
 	{
 		tmp = ft_echo_merge(&token->value[2]);
-		ft_echo(tmp, true, &(envp_list), token);
+		ft_echo(tmp, true);
 		free(tmp);
 	}
 	else
 	{
 		tmp = ft_echo_merge(&token->value[1]);
-		ft_echo(tmp, false, &(envp_list), token);
+		ft_echo(tmp, false);
 		free(tmp);
 	}
 	return ;
@@ -63,7 +63,7 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob, int 
 	if (!ft_strcmp(token->value[0], "export"))
 		return (ft_export(envp_list, token->value[1]), 1);
 	else if (!ft_strcmp(token->value[0], "cd"))
-		return (ft_cd(token, envp_list, token->value[1]), 1);
+		return (ft_cd(envp_list, token->value[1]), 1);
 	else if (!ft_strcmp(token->value[0], "env"))
 		return (ft_env(envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "unset"))
@@ -75,8 +75,8 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob, int 
 	else if (!ft_strcmp(token->value[0], "pwd"))
 		return (ft_pwd(*envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "exit"))
-		return (ft_exit(token, token->value[1], glob, pipe_fd), 1);
+		return (ft_exit(token->value[1], glob, pipe_fd), 1);
 	else if (!ft_strcmp(token->value[0], "echo"))
-		return (ft_echo_bis(token, *envp_list), 1);
+		return (ft_echo_bis(token), 1);
 	return (0);
 }

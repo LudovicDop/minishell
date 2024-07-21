@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:46:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:39:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	t_envp	*envp_list;
 	static	int pipe_fd[2];
 
+	(void)argv;
 	if (argc != 1)
 	{
 		printf("Error: too many arguments\n");
@@ -135,7 +136,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			free_token(t);
 		}
-		t_id	*id_node;
+		// t_id	*id_node;
 
 		glob->root = token;
 		glob->envp = envp_list;

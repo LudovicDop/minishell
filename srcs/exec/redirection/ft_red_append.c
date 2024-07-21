@@ -6,13 +6,13 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:24:32 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 16:26:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:26:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_redirection_file(t_lexer *token, char *file_to_created,
+static void	ft_redirection_file(char *file_to_created,
 		bool is_cmd)
 {
 	int	fd;
@@ -44,5 +44,5 @@ void	ft_red_append(t_lexer *token, bool is_cmd)
 		close(fd);
 		i++;
 	}
-	ft_redirection_file(token, token->value[i], is_cmd);
+	ft_redirection_file(token->value[i], is_cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:17:12 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:04:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:24:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	search_key_and_replace_it(t_envp **envp, char *key, char *value)
 	return ;
 }
 
-void	init_swap_value(char *tmp_key, char *tmp_value, t_envp *i, t_envp *j)
+void	init_swap_value(t_envp *i, t_envp *j)
 {
+	char	*tmp_key;
+	char	*tmp_value;
 	bool	tmp_hidden_bis;
 
 	tmp_hidden_bis = i->hidden_bis;
@@ -67,8 +69,6 @@ void	sort_list(t_envp **envp)
 {
 	t_envp	*i;
 	t_envp	*j;
-	char	*tmp_key;
-	char	*tmp_value;
 
 	if (!envp)
 		return ;
@@ -80,7 +80,7 @@ void	sort_list(t_envp **envp)
 		{
 			if (ft_strncmp(i->key, j->key, ft_strlen(i->key)
 					+ ft_strlen(j->key)) > 0)
-				init_swap_value(tmp_key, tmp_value, i, j);
+				init_swap_value(i, j);
 			j = j->next;
 		}
 		i = i->next;

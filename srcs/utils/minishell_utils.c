@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 18:40:26 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/16 15:03:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:37:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ char	*ft_strchr_reverse(char *s1, char c)
 	int		j;
 	int		lenght;
 	char	*new_string;
-
+	
 	lenght = 0;
 	i = 0;
 	j = 0;
 	if (!s1)
 		return (NULL);
-	while (s1[i++] != '=')
+	while (s1[i++] != c)
 		lenght++;
 	new_string = malloc(sizeof(char) * lenght + 1);
 	i = 0;

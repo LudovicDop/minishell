@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:29:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:25:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*skip_dollar(char *string)
 	return (string);
 }
 
-char	*ft_check_dollar(char *string, t_envp **envp, t_lexer *token)
+char	*ft_check_dollar(char *string, t_envp **envp)
 {
 	t_envp	*node;
 
@@ -69,7 +69,7 @@ char	*ft_check_dollar(char *string, t_envp **envp, t_lexer *token)
 	return (ft_strdup(string));
 }
 
-void	ft_echo(char *string, bool without_ret, t_envp **envp, t_lexer *token)
+void	ft_echo(char *string, bool without_ret)
 {
 	g_signal = 0;
 	if (!string && !without_ret)

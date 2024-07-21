@@ -46,8 +46,8 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/change_value.c \
 	  srcs/minishell_parsing/src/change_value2.c \
 
-CC = cc
-LIB = -I ./srcs/minishell_parsing/includes -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
+CC = cc -Wall -Werror -Wextra
+LIB = #-I ./srcs/minishell_parsing/includes #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
 CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 NAME = minishell

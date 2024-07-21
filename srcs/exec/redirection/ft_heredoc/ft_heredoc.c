@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 18:34:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:17:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob,
 {
 	char	*tmp;
 
+	ft_heredoc_signal();
 	while (node && node->type == HEREDOC)
 	{
 		write(1, "> ", 2);

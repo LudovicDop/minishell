@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 11:15:46 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:03:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:21:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*remove_users(char *string)
 	int		i;
 	char	*s1;
 	char	*new_path;
-	int		lenght;
 
 	i = 0;
 	s1 = string;
