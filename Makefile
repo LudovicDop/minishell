@@ -29,13 +29,13 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/redirection/ft_red_out.c \
 	  srcs/exec/redirection/ft_red_append.c \
 	  srcs/exec/redirection/ft_red_in.c \
-	  srcs/exec/redirection/ft_heredoc.c \
 	  srcs/utils/id_linked_list/ft_add_node.c \
 	  srcs/utils/id_linked_list/ft_free_lst.c \
 	  srcs/exec/minishell_exec_bis.c \
 	  srcs/exec/redirection/ft_redirection.c \
 	  srcs/exec/minishell_utils_bis.c \
-	  \
+	  srcs/exec/redirection/ft_heredoc/ft_heredoc_utils.c \
+	  srcs/exec/redirection/ft_heredoc/ft_heredoc.c \
 	  srcs/minishell_parsing/src/lexer.c srcs/minishell_parsing/src/lexer2.c srcs/minishell_parsing/src/parser.c \
 	  srcs/minishell_parsing/src/check/chek_op.c srcs/minishell_parsing/src/check/check_quote.c srcs/minishell_parsing/src/check/check_par.c\
 	  srcs/minishell_parsing/src/print_test.c \
