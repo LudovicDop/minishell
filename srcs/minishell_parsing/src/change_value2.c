@@ -51,8 +51,8 @@ void	remove_quote(t_token *token, t_envp **envp)
 			current->type = CMD;
 		}
 		else if (current->type == CMD)
-				change_for_value(current, envp);
-		else if (current->type == WAVE) 
+			change_for_value(current, envp);
+		else if (current->type == WAVE)
 			change_for_value(current, envp);
 		current = current->next;
 	}
@@ -106,4 +106,3 @@ void	change_cmd(t_token *token)
 			current = current->next;
 	}
 }
-
