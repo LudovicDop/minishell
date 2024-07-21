@@ -6,12 +6,25 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 17:21:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:37:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	exit_free(t_glob *glob, t_lexer *token, t_envp *envp_list,
+		int *pipe_fd)
+{
+	free(glob->prompt);
+	free_lexer(glob->root);
+	free_envp(&envp_list);
+	ft_free_id_list(&glob->id_node);
+	close(pipe_fd[READ]);
+	close(pipe_fd[WRITE]);
+	if (glob->fd_in_old)
+		close(glob->fd_in_old);
+	free(glob);
+}
 void	ft_exit(t_lexer *token, char *val, t_glob *glob, int *pipe_fd)
 {
 	unsigned int	convert_val;
@@ -26,6 +39,6 @@ void	ft_exit(t_lexer *token, char *val, t_glob *glob, int *pipe_fd)
 	convert_val = ft_atoi(val);
 	convert_val %= 256;
 	printf("exit\n");
-	execute_fail_builtins(glob, token, glob->envp, pipe_fd);
+	exit_free(glob, token, glob->envp, pipe_fd);
 	exit(convert_val);
 }
