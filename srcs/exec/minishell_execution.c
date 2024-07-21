@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 19:27:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:09:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		int *pipe_fd)
 {
-	// char	**tmp_envp;
-	// char	*path;
-
 	signal(SIGINT, handler_heredoc);
 	if (pipe_fd[0])
 		close(pipe_fd[READ]);
@@ -65,7 +62,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		ft_redirection(token->next, pipe_fd, glob, envp_list);
 	if (search_builtins_token(token, &envp_list, glob, pipe_fd))
 		return (execute_fail_builtins(glob, envp_list, pipe_fd),
-			exit(EXIT_FAILURE));
+			exit(0));
 	else
 	{
 		execute_exec(token, envp_list, pipe_fd, glob);

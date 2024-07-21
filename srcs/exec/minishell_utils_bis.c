@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 19:26:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/21 23:10:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	execute_fail_builtins(t_glob *glob, t_envp *envp_list,
 {
 	free(glob->prompt);
 	free_lexer(glob->root);
-	// free_everything(&glob->root, NULL);
 	free_envp(&envp_list);
 	ft_free_id_list(&glob->id_node);
 	close(pipe_fd[READ]);
@@ -72,5 +71,5 @@ void	execute_fail_builtins(t_glob *glob, t_envp *envp_list,
 	if (glob->fd_in_old)
 		close(glob->fd_in_old);
 	free(glob);
-	exit(EXIT_FAILURE);
+	exit(0);
 }
