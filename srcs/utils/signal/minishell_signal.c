@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 16:54:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:22:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@ void	reset_signal(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+}
+
+void	handler2(int sig)
+{
+	int	pipe_fd[2];
+
+	if (sig == SIGINT)
+	{
+		if (pipe(pipe_fd) < 0)
+			return ;
+		close(pipe_fd[WRITE]);
+		dup2(pipe_fd[READ], STDIN_FILENO);
+		close(pipe_fd[READ]);
+		return ;
+	}
 }
 
 void	handler_heredoc(int sig)
@@ -29,6 +44,7 @@ void	handler_heredoc(int sig)
 		close(pipe_fd[WRITE]);
 		dup2(pipe_fd[READ], STDIN_FILENO);
 		close(pipe_fd[READ]);
+		printf("^C\n");
 		write(1, "\b\b  \b\b", 7);
 		write(1, "\n", 2);
 		return ;

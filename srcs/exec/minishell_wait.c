@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:44:03 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 15:31:17 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:21:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,10 @@ void	ft_wait_everyone(t_glob *glob)
 		tmp = tmp->next;
 	}
 	return ;
+}
+
+void	handler3(int sig)
+{
+	(void)sig;
+	printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 17:14:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:20:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,4 +175,5 @@ void				exit_free(t_glob *glob, t_envp *envp_list, int *pipe_fd);
 void				ft_exit_bis(t_lexer *token, t_envp **envp_list,
 						t_glob *glob, int *pipe_fd);
 void				handler2(int sig);
+void				handler3(int sig);
 #endif
