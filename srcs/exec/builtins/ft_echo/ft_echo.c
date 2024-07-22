@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:09:55 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 22:15:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:53:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,47 +26,6 @@ t_envp	*search_envp_value(t_envp **envp, char *key)
 		current = current->next;
 	}
 	return (NULL);
-}
-
-char	*skip_dollar(char *string)
-{
-	int	i;
-	int	j;
-	int	lenght;
-
-	j = 0;
-	i = 0;
-	lenght = ft_strlen(string);
-	while (i < lenght)
-	{
-		if (string[i] != '$')
-			string[j] = string[i];
-		else if (string[i] == '$')
-			j--;
-		j++;
-		i++;
-	}
-	string[j] = '\0';
-	return (string);
-}
-
-char	*ft_check_dollar(char *string, t_envp **envp)
-{
-	t_envp	*node;
-
-	if (!ft_strcmp(string, "$"))
-		return (ft_strdup("$"));
-	else if (!ft_strcmp(string, "$?"))
-		return (ft_itoa(g_signal));
-	if (string[0] == '$')
-	{
-		node = search_envp_value(envp, skip_dollar(string));
-		if (node)
-			return (ft_strdup(node->value));
-		else
-			return (ft_strdup(""));
-	}
-	return (ft_strdup(string));
 }
 
 void	ft_echo(char *string, bool without_ret)

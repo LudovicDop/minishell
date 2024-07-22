@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/21 23:45:20 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:49:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 		close(pipe_fd[READ]);
 	if (token->next && token->next->type == PIPE)
 	{
-		dup2(pipe_fd[WRITE], STDOUT_FILENO);
+		if (dup2(pipe_fd[WRITE], STDOUT_FILENO) == -1)
+			return (execute_fail_builtins(glob, envp_list, pipe_fd));
 		close(pipe_fd[WRITE]);
 	}
 	else if (token->next && (token->next->type >= 7 && token->next->type <= 8))
@@ -46,9 +47,7 @@ void	execute_child(t_glob *glob, t_lexer *token, t_envp *envp_list,
 	if (search_builtins_token(token, &envp_list, glob, pipe_fd))
 		return (execute_fail_builtins(glob, envp_list, pipe_fd), exit(0));
 	else
-	{
 		execute_exec(token, envp_list, pipe_fd, glob);
-	}
 }
 
 int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
@@ -62,7 +61,7 @@ int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 	signal(SIGQUIT, SIG_IGN);
 	id = fork();
 	if (id < 0)
-		return (-1);
+		return (1);
 	if (id == 0)
 		execute_child(glob, token, envp_list, pipe_fd);
 	else if (id > 0)
@@ -88,8 +87,9 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 		return (-1);
 	fd_in = pipe_fd[READ];
 	if (pipe(pipe_fd) < 0)
-		return (-1);
-	dup2(fd_in, STDIN_FILENO);
+		return (1);
+	if (dup2(fd_in, STDIN_FILENO) == -1)
+		return (close(pipe_fd[READ]), close(pipe_fd[WRITE]), 1);
 	if (fd_in)
 		close(fd_in);
 	execute_ast(node->next, pipe_fd, &envp_list, glob);
@@ -103,9 +103,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 	if (ft_first_node_init(node, glob, pipe_fd))
 		return (1);
 	if (node->type == PIPE)
-	{
 		return (execute_pipeline(node, pipe_fd, *envp_list, glob));
-	}
 	if ((node->type == 6 || node->type == 9))
 	{
 		if (ft_redirection(node, pipe_fd, glob, *envp_list))
@@ -116,8 +114,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 	else if (node->type == CMD && ft_is_it_pipe(glob->root))
 	{
 		execute_command(node, pipe_fd, *envp_list, glob);
-		dup2(glob->fd_in_old, STDIN_FILENO);
-		if (glob->fd_in_old == -1)
+		if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 			return (1);
 	}
 	execute_ast(node->next, pipe_fd, envp_list, glob);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:19:40 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/17 17:33:45 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:53:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	absolute_path(char *path, t_envp **envp)
 	t_pwd	*new_node;
 
 	old_pwd = getcwd(0, 0);
+	if (!old_pwd)
+		return ;
 	pwd_lst = NULL;
 	new_node = NULL;
 	if (ft_chdir(path) < 0)

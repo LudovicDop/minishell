@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:30:44 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/18 14:12:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:52:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ char	*pwd_until_slash(char *pwd)
 	while (pwd[j] && pwd[j] != '/')
 		j++;
 	ret = malloc(sizeof(char) * j + 2);
+	if (!ret)
+		return (NULL);
 	while (pwd[i])
 	{
 		ret[i] = pwd[i];
 		if (pwd[i] == '/')
 		{
-			i++;
-			ret[i] = '\0';
+			ret[++i] = '\0';
 			return (ret);
 		}
 		i++;

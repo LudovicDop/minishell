@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:24:32 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 19:26:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:43:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static void	ft_redirection_file(char *file_to_created,
 		if (fd < 0)
 			perror("open");
 		if (is_cmd == 0)
-			dup2(fd, STDOUT_FILENO);
+		{
+			if (dup2(fd, STDOUT_FILENO) == -1)
+				return ;
+		}
 		close(fd);
 	}
 }

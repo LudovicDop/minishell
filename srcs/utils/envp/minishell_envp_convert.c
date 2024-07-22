@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:52 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 15:02:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:57:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ char	**convert_envp(t_envp *envp_list)
 	while (current)
 	{
 		envp[i] = ft_strjoin(current->key, "=");
+		if (!envp[i])
+			return (NULL);
 		envp[i] = ft_strjoin2(envp[i], current->value);
+		if (!envp[i])
+			return (NULL);
 		current = current->next;
 		i++;
 	}
