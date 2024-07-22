@@ -57,6 +57,24 @@ void	tokenize(char *str, t_token **token, t_index *a, char c)
 	free(tmp);
 }
 
+void	tokenize_all(t_token **token, char *str, t_index *a)
+{
+	a->j = 0;
+	if (ft_strchr("|&<>", str[a->i]) && str[a->i + 1] == str[a->i])
+		tokenize(str, token, a, str[a->i]);
+	else if (ft_strchr("|<>&()~ \t*", str[a->i]) || !ft_isprint(str[a->i]))
+		tokenize(str, token, a, 0);
+	else if ((str[a->i + a->j] == '\'' || str[a->i + a->j] == '\"') && \
+	str[a->i + a->j + 1] == str[a->i + a->j])
+		a->i++;
+	else if (str[a->i + a->j] == '\'' || str[a->i + a->j] == '\"')
+		tokenize(str, token, a, 0);
+	else
+		tokenize_substr(str, token, a, "*\"' |&<>()~");
+	if (str[a->i])
+		a->i++;
+}
+
 t_token	*lexer(char *str)
 {
 	t_token	*token;
@@ -66,22 +84,9 @@ t_token	*lexer(char *str)
 		return (NULL);
 	a = (t_index){0, 0, 0, 0};
 	token = NULL;
+	while (str[a.i] && ft_strchr(" \t\b\n\v\f\r", str[a.i]))
+		a.i++;
 	while (str[a.i])
-	{
-		a.j = 0;
-		if (ft_strchr("|&<>", str[a.i]) && str[a.i + 1] == str[a.i])
-			tokenize(str, &token, &a, str[a.i]);
-		else if (ft_strchr("|<>&()~ \t*", str[a.i]) || !ft_isprint(str[a.i]))
-			tokenize(str, &token, &a, 0);
-		else if ((str[a.i + a.j] == '\'' || str[a.i + a.j] == '\"') && \
-		str[a.i + a.j + 1] == str[a.i + a.j])
-			a.i++;
-		else if (str[a.i + a.j] == '\'' || str[a.i + a.j] == '\"')
-			tokenize(str, &token, &a, 0);
-		else
-			tokenize_substr(str, &token, &a, "*\"' |&<>()~");
-		if (str[a.i])
-			a.i++;
-	}
+		tokenize_all(&token, str, &a);
 	return (token);
 }
