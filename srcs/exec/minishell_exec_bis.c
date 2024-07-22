@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 15:45:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:57:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	ft_is_it_pipe(t_lexer *root)
 	current = root;
 	while (current)
 	{
-		if (current->type == PIPE)
+		if (current->type == PIPE || current->type == REDIRECT_APPEND \
+		|| current->type == REDIRECT_OUT)
 			return (1);
 		current = current->next;
 	}
