@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 01:12:04 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/22 16:54:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	handler(int sig)
 		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
-	{
-		rl_replace_line("", 0);
 		rl_redisplay();
-	}
 }
 
 void	init_signal(int choice)
@@ -76,7 +73,6 @@ void	init_signal(int choice)
 	}
 	else if (choice == 2)
 	{
-		printf("\033[31;1mSecond signal mode\033[m\n");
 		action.sa_handler = &handler_heredoc;
 		sigemptyset(&action.sa_mask);
 		action.sa_flags = 0;

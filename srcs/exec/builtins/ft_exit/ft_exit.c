@@ -6,11 +6,44 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 23:26:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:37:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	ft_is_num(char *string)
+{
+	int	i;
+
+	i = 0;
+	if (!string)
+		return (true);
+	while (string[i])
+	{
+		if (!(string[i] >= 0 && string[i] < 9))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+void	ft_exit_bis(t_lexer *token, t_envp **envp_list, t_glob *glob,
+		int *pipe_fd)
+{
+	if (token->value[1] && token->value[2])
+	{
+		ft_putstr_fd("nemshell: exit: too many arguments", 2);
+		exit_free(glob, *envp_list, pipe_fd);
+		exit(1);
+	}
+	else if (ft_is_num(token->value[1]) == false)
+	{
+		ft_putstr_fd("nemshell: exit: numeric argument required", 2);
+		exit_free(glob, *envp_list, pipe_fd);
+		exit(2);
+	}
+}
 
 void	exit_free(t_glob *glob, t_envp *envp_list, int *pipe_fd)
 {

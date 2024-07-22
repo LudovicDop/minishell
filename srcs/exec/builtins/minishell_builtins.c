@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 15:55:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:37:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	search_builtins_token(t_lexer *token, t_envp **envp_list, t_glob *glob,
 	else if (!ft_strcmp(token->value[0], "pwd"))
 		return (ft_pwd(*envp_list), 1);
 	else if (!ft_strcmp(token->value[0], "exit"))
-		return (ft_exit(token->value[1], glob, pipe_fd), 1);
+		return (ft_exit_bis(token, envp_list, glob, pipe_fd),
+			ft_exit(token->value[1], glob, pipe_fd), 1);
 	else if (!ft_strcmp(token->value[0], "echo"))
 		return (ft_echo_bis(token), 1);
 	return (0);

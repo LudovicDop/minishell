@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 15:49:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:54:46 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_command(t_lexer *token, int *pipe_fd, t_envp *envp_list,
 	if (token->type != CMD)
 		return (-1);
 	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handler_heredoc);
 	id = fork();
 	if (id < 0)
 		return (1);

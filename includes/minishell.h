@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 16:11:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:44:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,8 @@ void	ft_minishell_free(t_lexer **token, t_glob **glob);
 void	ft_search_prompt_val(t_envp **current, char **tmp_path, char **tmp_user);
 char	*init_prompt_user(char *tmp_user, t_envp **envp_list);
 char	*init_prompt_path(char *tmp_path, t_envp **envp_list);
+void	exit_free(t_glob *glob, t_envp *envp_list, int *pipe_fd);
+void	ft_exit_bis(t_lexer *token, t_envp **envp_list, t_glob *glob,
+		int *pipe_fd);
+void	handler2(int sig);
 #endif
