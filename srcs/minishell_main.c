@@ -56,8 +56,6 @@ void	ft_parsing_check(t_glob *glob, t_envp *envp_list, t_lexer **token)
 		{
 			new_lexer(&t, &envp_list);
 			final_lexer(t, token);
-			print_token(t);
-			print_lexer(*token);
 		}
 		free_token(t);
 	}
