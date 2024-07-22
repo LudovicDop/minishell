@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:38 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/16 14:29:58 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/22 20:15:39 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	create_token(t_token **c, t_lexer **token)
 	{
 		*c = tmp;
 		create_red_value(token, c, a);
-		// if ((*c)->type == CMD && (*c)->next)
-		// 	*c = (*c)->next;
 	}
 }
 

@@ -57,6 +57,7 @@ void	new_lexer(t_token **token, t_envp **envp)
 	change_cmd(*token);
 	rm_space(*token);
 	change_red(*token);
+	push_stack(token, " ", SPACE);
 }
 
 void	del_null_value(t_token *token)

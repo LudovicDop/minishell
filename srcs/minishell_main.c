@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alphan <alphan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 17:05:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:10:25 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_parsing_check(t_glob *glob, t_envp *envp_list, t_lexer **token)
 		{
 			new_lexer(&t, &envp_list);
 			final_lexer(t, token);
+			print_token(t);
+			print_lexer(*token);
 		}
 		free_token(t);
 	}
@@ -97,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*(glob->input_cmd) != '\0')
 			add_history(glob->input_cmd);
 		ft_parsing_check(glob, envp_list, &token);
-		ft_init_glob(&glob, &token, &envp_list);
+ 		ft_init_glob(&glob, &token, &envp_list);
 		execute_ast(token, pipe_fd, &envp_list, glob);
 		ft_free_id_list(&glob->id_node);
 		ft_minishell_free(&token, &glob);
