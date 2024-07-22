@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 19:22:26 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:24:15 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	handler_heredoc(int sig)
 		close(pipe_fd[WRITE]);
 		dup2(pipe_fd[READ], STDIN_FILENO);
 		close(pipe_fd[READ]);
-		printf("^C\n");
+		ft_putstr_fd("^C\n", 2);
 		write(1, "\b\b  \b\b", 7);
-		write(1, "\n", 2);
 		return ;
 	}
 	if (sig == SIGQUIT)
