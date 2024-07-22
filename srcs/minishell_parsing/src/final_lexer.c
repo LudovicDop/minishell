@@ -31,6 +31,7 @@ void	create_token(t_token **c, t_lexer **token)
 	{
 		*c = tmp;
 		create_red_value(token, c, a);
+		*c = (*c)->next;
 	}
 }
 
