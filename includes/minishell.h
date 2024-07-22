@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 23:59:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:25:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <unistd.h>
 # define WRITE 1
 # define READ 0
-
+# define PATH_DEF "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 typedef struct s_id
 {
 	pid_t			id;
@@ -44,6 +44,7 @@ typedef struct s_glob
 	t_id			*id_node;
 	int				fd_in_old;
 	char			*prompt;
+	char			*input_cmd;
 }					t_glob;
 
 typedef struct s_export
@@ -146,4 +147,9 @@ void	execute_fail_builtins(t_glob *g, t_envp *e_list, int *p_fd);
 void	ft_heredoc_stock_string(char **tmp, char **full_string);
 char	*ft_empty_envp_prompt(char *tmp_path, char *prompt, char *tmp_user);
 char	*init_prompt_path2(void);
+void	ft_init_glob(t_glob **glob, t_lexer **token, t_envp **envp_list);
+void	free_token(t_token *token);
+void	free_lexer(t_lexer *lex);
+int		ft_exit_minishell(t_glob **glob, t_envp **envp_list);
+void	ft_minishell_free(t_lexer **token, t_glob **glob);
 #endif
