@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 20:15:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/23 08:07:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
 {
 	close(pipe_fd[WRITE]);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
 	if (waitpid(id, 0, 0) < 0)
 		return (1);
 	if (dup2(pipe_fd[READ], STDIN_FILENO) == -1)

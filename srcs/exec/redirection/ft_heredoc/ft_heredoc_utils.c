@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 20:31:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/23 08:11:02 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_heredoc_signal(void)
 
 void	ft_norm(int *pipe_fd, char *tmp, char *full_string)
 {
+	printf("\n");
 	free(tmp);
 	free(full_string);
 	close(pipe_fd[READ]);
