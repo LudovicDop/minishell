@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/23 08:11:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/23 08:41:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	ft_empty_after_heredoc(t_lexer *node)
 
 void	ft_heredoc_signal(void)
 {
-	signal(SIGQUIT, handler_heredoc);
 	signal(SIGINT, handler_heredoc);
+	signal(SIGQUIT, handler_heredoc);
 }
 
 void	ft_norm(int *pipe_fd, char *tmp, char *full_string)

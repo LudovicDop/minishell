@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/23 08:07:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/23 08:53:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 	{
 		write(1, "> ", 2);
 		tmp = get_next_line(STDIN_FILENO);
+		// fprintf(stderr, "\033[31;1m%s\033[m", tmp);
 		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp) - 1) != 0
 				|| ft_strcmp(tmp, "\n") == 0))
 			ft_heredoc_stock_string(&tmp, &full_string);
