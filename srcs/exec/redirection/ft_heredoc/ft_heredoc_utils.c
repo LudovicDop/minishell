@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 18:15:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:30:22 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end)
 		free_envp(&glob->envp);
 		ft_free_id_list(&glob->id_node);
 		free(glob);
-		// exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -51,7 +51,16 @@ void	ft_heredoc_signal(void)
 
 void	ft_norm(int *pipe_fd, char *tmp, char *full_string)
 {
-	printf("\b\b\b");
+	if (full_string)
+	{
+		printf("\b\b\b");
+	}
+	else
+	{
+		printf("\n");
+	}
+	// if (full_string)
+		// printf("\b\b\b");
 	free(tmp);
 	free(full_string);
 	close(pipe_fd[READ]);
