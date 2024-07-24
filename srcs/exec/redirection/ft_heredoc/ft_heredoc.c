@@ -6,27 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 22:17:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:27:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_lexer	*ft_skip_heredoc(t_lexer *node)
-{
-	t_lexer	*current;
-
-	if (!node)
-		return (NULL);
-	current = node;
-	while (current)
-	{
-		if (current->type != HEREDOC)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}
 
 void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 		char **tmp)
@@ -51,25 +35,24 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 
 void	ft_heredoc_init_exit(void)
 {
-		int	pipe_fd_bis[2];
+	int	pipe_fd_bis[2];
 
-		if (pipe(pipe_fd_bis) == -1)
-			return ;
-		close(pipe_fd_bis[WRITE]);
-		if (dup2(pipe_fd_bis[READ], STDIN_FILENO) == -1)
-		{
-			close(pipe_fd_bis[READ]);
-			return ;
-		}
+	if (pipe(pipe_fd_bis) == -1)
+		return ;
+	close(pipe_fd_bis[WRITE]);
+	if (dup2(pipe_fd_bis[READ], STDIN_FILENO) == -1)
+	{
 		close(pipe_fd_bis[READ]);
-		printf("\n");
+		return ;
+	}
+	close(pipe_fd_bis[READ]);
+	printf("\n");
 }
 
 int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 {
 	char	*tmp;
 	char	*full_string;
-	int		test;
 
 	tmp = NULL;
 	full_string = NULL;

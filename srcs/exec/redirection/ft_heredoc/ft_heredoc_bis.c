@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_heredoc_bis.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/24 22:24:48 by ldoppler          #+#    #+#             */
+/*   Updated: 2024/07/24 22:29:56 by ldoppler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_lexer	*ft_skip_heredoc(t_lexer *node)
+{
+	t_lexer	*current;
+
+	if (!node)
+		return (NULL);
+	current = node;
+	while (current)
+	{
+		if (current->type != HEREDOC)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
