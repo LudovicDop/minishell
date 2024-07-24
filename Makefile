@@ -49,7 +49,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/exec/minishell_wait.c \
 	  srcs/utils/minishell_freeing_bis.c \
 
-CC = cc -Wall -Werror -Wextra
+CC = cc #-Wall -Werror -Wextra
 LIB = #-I ./srcs/minishell_parsing/includes #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
 CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
 OBJ = $(SRC:.c=.o)

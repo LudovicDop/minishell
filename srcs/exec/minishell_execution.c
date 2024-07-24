@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/22 19:20:12 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:51:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 
 int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
+	fprintf(stderr, "EXEC\n");
 	if (ft_end_cmd(node, glob, pipe_fd))
 		return (1);
 	if (ft_first_node_init(node, glob, pipe_fd))

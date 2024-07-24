@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 15:28:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:31:26 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
 		ft_wait_everyone(glob);
 		if (how_many_cmd(glob->root) <= 1)
 		{
+			fprintf(stderr, "\033[31;1mRESET\033[m\n");
 			if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 				return (1);
 			return (close(glob->fd_in_old), 1);

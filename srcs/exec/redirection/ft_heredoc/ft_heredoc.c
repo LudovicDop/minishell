@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 09:56:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:34:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,35 @@ void	ft_heredoc_init(t_lexer *node, int *pipe_fd, char **full_string,
 	}
 }
 
+void	ft_heredoc_init_exit(t_glob **glob, int *pipe_fd, t_lexer **node)
+{
+	static	t_glob	*tmp_glob;
+	static	t_lexer	*tmp_node;
+	static	int		pipe_fd_tmp[2];
+
+	if (glob)
+	{
+		fprintf(stderr, "Init signal\n");
+		tmp_glob = *glob;
+		tmp_node = *node;
+		pipe_fd_tmp[READ] = pipe_fd[READ];
+		pipe_fd_tmp[WRITE] = pipe_fd[WRITE];
+	}
+	else
+	{
+		fprintf(stderr, "EASY\n");
+		printf("\n");
+		close(pipe_fd_tmp[READ]);
+		close(pipe_fd_tmp[WRITE]);
+		// if (pipe(pipe_fd_tmp) == -1)
+		// 	return ;
+		// close(pipe_fd_tmp[WRITE]);
+		// dup2(pipe_fd_tmp[READ], STDIN_FILENO);
+		ft_heredoc_free(tmp_node ,tmp_glob, true);
+	}
+	
+}
+
 int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 {
 	char	*tmp;
@@ -57,19 +86,19 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 	tmp = NULL;
 	full_string = NULL;
 	ft_heredoc_signal();
+	ft_heredoc_init_exit(&glob, pipe_fd, &node);
 	while (node && node->type == HEREDOC)
 	{
-		write(1, "> ", 2);
-		tmp = get_next_line(STDIN_FILENO);
-		// fprintf(stderr, "\033[31;1m%s\033[m", tmp);
-		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp) - 1) != 0
+		// write(1, "> ", 2);
+		tmp = readline("> ");
+		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp)) != 0
 				|| ft_strcmp(tmp, "\n") == 0))
 			ft_heredoc_stock_string(&tmp, &full_string);
-		else if (tmp == NULL || tmp[0] == '\0')
+		else if (tmp == NULL)
 			return (ft_norm(pipe_fd, tmp, full_string), ft_heredoc_free(node,
 					glob, true), exit(0), 1);
 		else if (ft_strlen(tmp) > 1 && ft_strncmp(node->value[0], tmp,
-				ft_strlen(tmp) - 1) == 0)
+				ft_strlen(tmp)) == 0)
 		{
 			ft_heredoc_init(node, pipe_fd, &full_string, &tmp);
 			ft_heredoc_free(node, glob, false);
@@ -84,6 +113,8 @@ int	ft_heredoc_parent(int *pipe_fd, int id, t_lexer *node, int old_stdin)
 	close(pipe_fd[WRITE]);
 	if (waitpid(id, 0, 0) < 0)
 		return (1);
+	fprintf(stderr, "\033[31;1mSTOP WAITING\033[m\n");
+	init_signal(1);
 	if (dup2(pipe_fd[READ], STDIN_FILENO) == -1)
 		return (close(pipe_fd[READ]), 1);
 	close(pipe_fd[READ]);

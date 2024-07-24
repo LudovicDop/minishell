@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/23 08:22:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:27:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,32 @@ void	handler2(int sig)
 
 void	handler_heredoc(int sig)
 {
-	int	pipe_fd[2];
+	// int	pipe_fd[2];
 
 	if (sig == SIGINT)
 	{
-		if (pipe(pipe_fd) < 0)
-			return ;
-		close(pipe_fd[WRITE]);
-		dup2(pipe_fd[READ], STDIN_FILENO);
-		close(pipe_fd[READ]);
-		// ft_putstr_fd("^C\n", 2);
-		// ft_putstr_fd("\n", 2);
-		write(2, "\b\b  \b\b", 7);
-		return ;
+		// if (pipe(pipe_fd) < 0)
+		// 	return ;
+		// close(pipe_fd[WRITE]);
+		// dup2(pipe_fd[READ], STDIN_FILENO);
+		// close(pipe_fd[READ]);
+		// // ft_putstr_fd("^C\n", 2);
+		// // ft_putstr_fd("\n", 2);
+		// write(2, "\b\b  \b\b", 7);
+		// return ;
+		ft_heredoc_init_exit(NULL, NULL, NULL);
 	}
 	if (sig == SIGQUIT)
 	{
-		if (pipe(pipe_fd) < 0)
-			return ;
-		close(pipe_fd[WRITE]);
-		dup2(pipe_fd[READ], STDIN_FILENO);
-		close(pipe_fd[READ]);
-		// write(2, "\n", 2);
-		write(2, "\b\b  \b\b", 7);
-		return ;
+		// if (pipe(pipe_fd) < 0)
+		// 	return ;
+		// close(pipe_fd[WRITE]);
+		// dup2(pipe_fd[READ], STDIN_FILENO);
+		// close(pipe_fd[READ]);
+		// // write(2, "\n", 2);
+		// write(2, "\b\b  \b\b", 7);
+		// return ;
+		ft_heredoc_init_exit(NULL, NULL, NULL);
 	}
 }
 

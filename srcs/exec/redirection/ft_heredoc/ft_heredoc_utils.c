@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/23 08:41:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:24:21 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end)
 	if (!node->next || (node->next && node->next->type != HEREDOC)
 		|| end == true)
 	{
+		fprintf(stderr, "SUCCES\n");
 		free(glob->prompt);
 		close(glob->fd_in_old);
 		free_lexer(glob->root);
@@ -59,6 +60,7 @@ void	ft_norm(int *pipe_fd, char *tmp, char *full_string)
 void	ft_heredoc_stock_string(char **tmp, char **full_string)
 {
 	*full_string = ft_strjoin2(*full_string, *tmp);
+	*full_string = ft_strjoin2(*full_string, "\n");
 	if (!*full_string)
 		return (free(*tmp), exit(EXIT_FAILURE));
 	free(*tmp);
