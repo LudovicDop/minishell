@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 09:53:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 09:56:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,8 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_IGN);
 	if (!ft_is_it_pipe(glob->root))
-	{
-		fprintf(stderr, "\033[31;1mStart pipe\033[m\n");
 		if (pipe(pipe_fd) < 0)
 			return (1);
-	}
 	id = fork();
 	if (id < 0)
 		return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
