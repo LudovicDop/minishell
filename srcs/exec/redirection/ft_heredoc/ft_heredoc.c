@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 18:24:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:17:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	ft_heredoc_init_exit(void)
 		if (pipe(pipe_fd_bis) == -1)
 			return ;
 		close(pipe_fd_bis[WRITE]);
-		// write(pipe_fd_bis[WRITE], "\n", ft_strlen("\n"));
 		if (dup2(pipe_fd_bis[READ], STDIN_FILENO) == -1)
 		{
 			close(pipe_fd_bis[READ]);
 			return ;
 		}
 		close(pipe_fd_bis[READ]);
+		printf("\n");
 }
 
 int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
