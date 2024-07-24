@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 15:55:27 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 12:24:21 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:15:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void	ft_heredoc_free(t_lexer *node, t_glob *glob, bool end)
 	if (!node->next || (node->next && node->next->type != HEREDOC)
 		|| end == true)
 	{
-		fprintf(stderr, "SUCCES\n");
 		free(glob->prompt);
 		close(glob->fd_in_old);
 		free_lexer(glob->root);
 		free_envp(&glob->envp);
 		ft_free_id_list(&glob->id_node);
 		free(glob);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
 	}
 }
 
@@ -44,13 +43,15 @@ int	ft_empty_after_heredoc(t_lexer *node)
 
 void	ft_heredoc_signal(void)
 {
-	signal(SIGINT, handler_heredoc);
-	signal(SIGQUIT, handler_heredoc);
+	rl_catch_signals = 1;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	init_signal(2);
 }
 
 void	ft_norm(int *pipe_fd, char *tmp, char *full_string)
 {
-	printf("\n");
+	printf("\b\b\b");
 	free(tmp);
 	free(full_string);
 	close(pipe_fd[READ]);

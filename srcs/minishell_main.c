@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/23 08:45:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:07:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	ft_parsing_check(t_glob *glob, t_envp *envp_list, t_lexer **token)
 		{
 			new_lexer(&t, &envp_list);
 			final_lexer(t, token);
-			print_token(t);
-			print_lexer(*token);
+			// print_token(t);
+			// print_lexer(*token);
 		}
 		free_token(t);
 	}

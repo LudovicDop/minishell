@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 11:08:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:52:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_glob
 	int				fd_in_old;
 	char			*prompt;
 	char			*input_cmd;
+	t_lexer			*current_node;
 }					t_glob;
 
 typedef struct s_export
@@ -176,5 +177,5 @@ void				ft_exit_bis(t_lexer *token, t_envp **envp_list,
 						t_glob *glob, int *pipe_fd);
 void				handler2(int sig);
 void				handler3(int sig);
-void				ft_heredoc_init_exit(t_glob **glob, int *pipe_fd, t_lexer **node);
+void				ft_heredoc_init_exit(void);
 #endif
