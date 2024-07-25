@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:53:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/24 15:31:58 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:52:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_redirection(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		ft_red_append(node, i);
 		if (ft_red_in(node))
 		{
+			// fprintf(stderr, "AXA\n");
 			close(pipe_fd[READ]);
 			close(pipe_fd[WRITE]);
 			if (how_many_cmd(glob->root) > 1)

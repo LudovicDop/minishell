@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/24 19:53:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:37:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,26 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 
 int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 {
+	fprintf(stderr, "\033[31;1mAGAIN\033[m\n");
 	if (ft_end_cmd(node, glob, pipe_fd))
 		return (1);
 	if (ft_first_node_init(node, glob, pipe_fd))
 		return (1);
+	if (node && node->type == 12)
+	{
+			ft_wait_last_cmd(glob);
+			if (g_signal == 0)
+			{
+				dup2(glob->fd_in_old, STDIN_FILENO);
+				execute_ast(node->next, pipe_fd, envp_list, glob);
+				return (1);
+			}
+			else if (g_signal > 0)
+			{
+				dup2(glob->fd_in_old, STDIN_FILENO);
+				return (1);
+			}
+	}
 	if (node->type == PIPE)
 		return (execute_pipeline(node, pipe_fd, *envp_list, glob));
 	if ((node->type == 6 || node->type == 9))
@@ -113,6 +129,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 		return (1);
 	else if (node->type == CMD && ft_is_it_pipe(glob->root))
 	{
+		// fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> normal_cmd\033[m\n", node->value[0]);
 		execute_command(node, pipe_fd, *envp_list, glob);
 		if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 			return (1);

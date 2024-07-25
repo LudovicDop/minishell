@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:46:54 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/24 10:32:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:26:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*freadline(int fd, char *fline)
 	while (!(ft_strchr(line, '\n')) && n)
 	{
 		n = read(fd, line, BUFFER_SIZE);
-		fprintf(stderr, "\033[31;1m%s\033[m\n", line);
 		if (n == -1)
 			return (free(line), line = NULL, free(fline), fline = NULL, NULL);
 		line[n] = 0;
@@ -96,7 +95,6 @@ char	*get_next_line(int fd)
 	static char	*fline;
 	char		*line;
 
-	fprintf(stderr, "\033[35;1mStart GNL!\033[m\n");
 	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) < 0)
 	{
 		free(fline);

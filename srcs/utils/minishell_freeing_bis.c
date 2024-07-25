@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:21:26 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 15:23:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:25:54 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_minishell_free(t_lexer **token, t_glob **glob)
 
 int	ft_exit_minishell(t_glob **glob, t_envp **envp_list)
 {
-	printf("exit\n");
 	free_envp(envp_list);
 	free((*glob)->prompt);
 	free((*glob)->input_cmd);

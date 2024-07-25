@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 19:57:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:34:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,17 @@ int	ft_is_it_pipe(t_lexer *root)
 
 int	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list)
 {
-	if (node->type == CMD && how_many_cmd(glob->root) == 1
+	if (node->type == CMD 
 		&& ft_command_after(node) && !ft_is_it_pipe(glob->root))
 	{
-		if (!search_builtins_token(glob->root, envp_list, glob, pipe_fd))
+		// fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> single_cmd\033[m\n", node->value[0]);
+		if (!search_builtins_token(node, envp_list, glob, pipe_fd))
 			execute_command(node, pipe_fd, *envp_list, glob);
 		if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 			return (1);
+		ft_wait_last_cmd(glob);
+		execute_ast(node->next, pipe_fd, envp_list, glob);
+		return (1);
 	}
 	return (0);
 }
