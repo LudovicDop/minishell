@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/25 16:31:18 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/26 00:53:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	ft_init_minishell(t_envp **envp_list, char **envp, t_glob **glob,
 		return (free_envp(envp_list), exit(EXIT_FAILURE));
 }
 
+
+// bug with > out cat fichier.txt then cat out (the prompt is bug)
 int	main(int argc, char **argv, char **envp)
 {
 	t_envp		*envp_list;

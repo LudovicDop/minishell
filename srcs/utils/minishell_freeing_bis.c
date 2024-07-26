@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:21:26 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/25 12:25:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:54:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	free_token(t_token *token)
 
 void	ft_init_glob(t_glob **glob, t_lexer **token, t_envp **envp_list)
 {
+	(*glob)->fd_out_old = dup(STDOUT_FILENO);
 	(*glob)->root = *token;
 	(*glob)->envp = *envp_list;
 	(*glob)->id_node = NULL;

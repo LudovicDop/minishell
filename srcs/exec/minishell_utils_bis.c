@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/25 16:52:55 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/26 12:15:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
 				return (1);
 			return (close(glob->fd_in_old), 1);
 		}
-		// fprintf(stderr, "ICII\n");
 		if (ft_is_it_pipe(glob->root))
 			return (close(pipe_fd[READ]), close(pipe_fd[WRITE]),
 				close(glob->fd_in_old), 1);

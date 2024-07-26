@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/25 17:29:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:43:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_glob
 	t_envp			*envp;
 	t_id			*id_node;
 	int				fd_in_old;
+	int				fd_out_old;
 	char			*prompt;
 	char			*input_cmd;
 	t_lexer			*current_node;
@@ -71,7 +72,7 @@ char				*search_and_replace(char *string, char c_to_replace,
 						char *insert);
 int					how_many_cmd(t_lexer *token);
 void				ft_error_exec(char *error_msg, char *cmd_name);
-int					execute_command(t_lexer *t, int *p_fd, t_envp *envp_list,
+int					execute_command(t_lexer **t, int *p_fd, t_envp *envp_list,
 						t_glob *g);
 int					execute_ast(t_lexer *n, int pipe[2], t_envp **envp_list,
 						t_glob *g);
