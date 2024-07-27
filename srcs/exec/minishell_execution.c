@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/27 15:34:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:39:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 	path = NULL;
 	path = test_good_path_for_exec(token->value[0], search_path(envp_list));
 	tmp_envp = convert_envp(envp_list);
+	fprintf(stderr, "path : %s && token->value : %s\n", path, token->value[0]);
 	if (!path || execve(path, token->value, tmp_envp) < 0)
 	{
 		perror("execve");
