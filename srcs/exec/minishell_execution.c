@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/26 12:17:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:34:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 	tmp_envp = convert_envp(envp_list);
 	if (!path || execve(path, token->value, tmp_envp) < 0)
 	{
+		perror("execve");
+		fprintf(stderr, "there is bug\n");
 		free_tab((void **)tmp_envp);
 		execute_fail(glob, token, envp_list, pipe_fd);
 	}
@@ -145,7 +147,7 @@ int	execute_ast(t_lexer *node, int pipe_fd[2], t_envp **envp_list, t_glob *glob)
 		return (1);
 	else if (node->type == CMD)
 	{
-		// fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> normal_cmd\033[m\n", node->value[0]);
+		fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> normal_cmd\033[m\n", node->value[0]);
 		execute_command(&node, pipe_fd, *envp_list, glob);
 		if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 			return (1);
