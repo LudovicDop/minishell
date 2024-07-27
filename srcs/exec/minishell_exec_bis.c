@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/26 12:15:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 00:32:20 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ int	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd)
 		glob->fd_in_old = dup(STDIN_FILENO);
 		if (glob->fd_in_old == -1)
 			return (1);
-		fprintf(stderr ,"glob->fd_in_old\n");
 		if (ft_is_it_pipe(glob->root))
+		{
+			if (pipe(pipe_fd) < 0)
+				return (1);
+		}
+	}
+	else if ((node && node->type == AND))
+	{
+		if (ft_is_it_pipe(node))
 		{
 			if (pipe(pipe_fd) < 0)
 				return (1);
@@ -52,7 +59,7 @@ int	ft_is_it_pipe(t_lexer *root)
 	if (!root)
 		return (0);
 	current = root;
-	while (current)
+	while (current && current->type != AND)
 	{
 		if (current->type == PIPE || current->type == REDIRECT_APPEND \
 		|| current->type == REDIRECT_OUT)
@@ -85,12 +92,11 @@ int	ft_is_it_pipe(t_lexer *root)
 
 int	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list)
 {
-	if (node->type == CMD && !ft_is_it_pipe(glob->root))
+	if (node->type == CMD && !ft_is_it_pipe(node))
 	{
 		// fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> single_cmd\033[m\n", node->value[0]);
 		if (search_builtins_token(node, envp_list, glob, pipe_fd))
-			return (1);
-		ft_wait_last_cmd(glob);
+			return (execute_ast(node->next, pipe_fd, envp_list, glob), 1);
 		return (0);
 	}
 	return (0);

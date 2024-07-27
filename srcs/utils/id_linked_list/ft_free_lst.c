@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 12:51:34 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/16 15:05:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 00:28:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	ft_free_id_list(t_id **my_list)
 		current = current->next;
 		free(to_free);
 	}
+	*my_list = NULL;
 	return ;
 }
