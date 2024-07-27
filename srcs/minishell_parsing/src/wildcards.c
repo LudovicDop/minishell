@@ -6,12 +6,11 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:40:00 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/28 00:56:28 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/28 01:50:39 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wildcards.h"
-#include "../includes/print_test.h"
 
 void	do_middle2(t_token *current, char **tmp, t_index *a)
 {
@@ -47,7 +46,6 @@ void	do_middle(t_token	*current, char **tmp)
 		(int)ft_strlen(current->value) - a.j - 1)
 		do_middle2(current, tmp, &a);
 }
-
 
 t_token	*do_wld(t_token *token)
 {

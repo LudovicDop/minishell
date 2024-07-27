@@ -6,12 +6,11 @@
 /*   By: alphan <alphan@student.42mulhouse.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 22:42:14 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/27 22:54:02 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/28 01:46:42 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wildcards.h"
-#include "../includes/print_test.h"
 
 char	*ft_strchr3(const char *s, int c, int end)
 {
@@ -64,7 +63,7 @@ int	ft_strncmp_reverse(const char *s1, const char *s2)
 	k = 0;
 	while (i > k && s1[k] && s2[k])
 	{
-		if ((i - k - 1) != (j - k - 1))
+		if (s1[i - k - 1] != s2[j - k - 1])
 			return ((unsigned char)s1[ft_strlen(s1) - k - 1] != \
 			(unsigned char)s2[ft_strlen(s2) - k - 1]);
 		k++;
@@ -98,5 +97,4 @@ void	init_wld(t_token *token)
 			current = current->next;
 		}
 	}
-	print_token(token);
 }
