@@ -6,7 +6,7 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:14:28 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/18 14:14:29 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/28 01:05:39 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	change_red(t_token *token);
 void	change_cmd(t_token *token);
 void	change_wave(t_token *token, t_envp **envp);
 void	change_for_value(t_token *token, t_envp **envp);
+void	change_wld(t_token *token);
 
 #endif

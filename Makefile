@@ -46,6 +46,9 @@ SRC = srcs/minishell_main.c \
 	  srcs/minishell_parsing/src/check/check_str.c \
 	  srcs/minishell_parsing/src/change_value.c \
 	  srcs/minishell_parsing/src/change_value2.c \
+	  srcs/minishell_parsing/src/wildcards.c \
+	  srcs/minishell_parsing/src/wildcards2.c \
+	  srcs/minishell_parsing/src/wildcards3.c \
 	  srcs/exec/minishell_wait.c \
 	  srcs/utils/minishell_freeing_bis.c \
 	  srcs/exec/redirection/ft_heredoc/ft_heredoc_bis.c \

@@ -6,7 +6,7 @@
 /*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:30:31 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/13 13:25:53 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/28 01:04:15 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,42 @@ void	rm_space(t_token *token)
 	}
 }
 
+void	rm_wave(t_token *token)
+{
+	t_token	*current;
+	t_token	*tmp;
+	t_token	*prec;
+
+	tmp = token;
+	current = token;
+	while (current)
+	{
+		while (current->next && current->type == WILDCARD && \
+			current->next->type == WILDCARD)
+		{
+			tmp = current->next;
+			if (current->value)
+				free(current->value);
+			free(current);
+			prec->next = tmp;
+			current = tmp;
+		}
+		prec = current;
+		current = current->next;
+	}
+}
+
 void	new_lexer(t_token **token, t_envp **envp)
 {
 	remove_quote(*token, envp);
-	if (!token)
-		printf("test");
+	rm_wave(*token);
+	init_wld(*token);
+	change_wld(*token);
 	change_cmd(*token);
 	rm_space(*token);
 	change_red(*token);
 	push_stack(token, " ", SPACE);
+	is_wld(token);
 }
 
 void	del_null_value(t_token *token)

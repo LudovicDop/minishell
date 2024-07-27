@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:12:10 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/22 01:10:44 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/28 01:05:28 by alphan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,31 @@ void	change_for_value(t_token *token, t_envp **envp)
 		free(token->value);
 		token->value = ft_strdup(s);
 		free(s);
+	}
+}
+
+void	change_wld(t_token *token)
+{
+	t_token	*current;
+	t_token	*tmp;
+	char	*str;
+
+	current = token;
+	while (current)
+	{
+		if (current->next && current->type == WILDCARD && \
+			current->next->type == WILDCARD)
+		{
+			str = ft_strjoin(current->value, current->next->value);
+			tmp = current->next->next;
+			free(current->value);
+			current->value = ft_strdup(str);
+			free(current->next->value);
+			free(current->next);
+			free(str);
+			current->next = tmp;
+		}
+		else
+			current = current->next;
 	}
 }
