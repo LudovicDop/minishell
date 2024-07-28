@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/27 22:51:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:27:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ typedef struct s_glob
 	t_envp			*envp;
 	t_id			*id_node;
 	int				fd_in_old;
-	int				fd_out_old;
+	// int				fd_out_old;
 	char			*prompt;
 	char			*input_cmd;
 	t_lexer			*current_node;
+	t_lexer			*last_cmd;
 }					t_glob;
 
 typedef struct s_export

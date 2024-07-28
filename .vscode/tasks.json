@@ -6,16 +6,36 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "re",
+                "re"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for compiling minishell using Makefile."
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: gcc générer le fichier actif",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "detail": "Generated task for compiling minishell using Makefile."
+            "detail": "Tâche générée par le débogueur."
         }
     ]
 }

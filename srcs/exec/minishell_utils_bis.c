@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 14:40:09 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:51:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	execute_fail_builtins(t_glob *glob, t_envp *envp_list,
 	ft_free_id_list(&glob->id_node);
 	close(pipe_fd[READ]);
 	close(pipe_fd[WRITE]);
-	if (glob->fd_in_old)
-		close(glob->fd_in_old);
+	close(glob->fd_in_old);
 	free(glob);
 	exit(0);
 }
@@ -61,20 +60,19 @@ int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
 	tmp = -1;
 	if (!node || node->type == 1)
 	{
-		fprintf(stderr, "WAIT_END");
+		fprintf(stderr, "\033[31;1mEXIT\033[m\n");
 		ft_wait_everyone(glob);
-		fprintf(stderr, "OUTSIDE\n");
 		if (!node || node->type == 1)
 		{
 			if (glob->root == NULL)
 				return (1);
-			if (how_many_cmd(glob->root) <= 1)
+			if (how_many_cmd(glob->last_cmd) <= 1)
 			{
 				if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 					return (1);
 				return (close(glob->fd_in_old), 1);
 			}
-			if (ft_is_it_pipe(glob->root))
+			if (ft_is_it_pipe(glob->last_cmd))
 			{
 				close(pipe_fd[READ]);
 				close(pipe_fd[WRITE]);
@@ -84,37 +82,25 @@ int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
 	}
 	else if (node->type == AND)
 	{
-		fprintf(stderr, "WAIT_and");
 		ft_wait_everyone(glob);
-		fprintf(stderr, "OUTSIDE_bro\n");
 		ft_free_id_list(&glob->id_node);
 		tmp = execute_and(node, glob);
 		if (tmp == 1)
+		{
 			return (close(glob->fd_in_old), ft_end_cmd(NULL, glob, pipe_fd), 1);
+		}
 		else if (tmp == 0)
 		{
-			fprintf(stderr, "\033[31;1mTHERE\033[m\n");
-			close(pipe_fd[READ]);
-			close(pipe_fd[WRITE]);
-			if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
+			glob->last_cmd = node->next;
+			if (ft_is_it_pipe(glob->last_cmd))
 			{
-				fprintf(stderr, "HHHH\n");
-				return (1);
+				fprintf(stderr, "CLOSE\n");
+				close(pipe_fd[WRITE]);
+				close(pipe_fd[READ]);
 			}
-			// close(glob->fd_in_old);
-			// close(glob->fd_out_old);
-			// if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
-			// {
-			// 	perror("dup2");
-			// 	return (1);
-			// }
-			// if (ft_is_it_pipe(node->next))
-			// {
-			// 	fprintf(stderr, "\033[31;1mPIPE\033[m\n");
-			// 	close(pipe_fd[READ]);
-			// 	close(pipe_fd[WRITE]);
-			// 	// pipe(pipe_fd);
-			// }
+			if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
+				return (1);
+			close(glob->fd_in_old);
 			return (0);
 		}
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/28 14:46:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:40:04 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	execute_command(t_lexer **token, int *pipe_fd, t_envp *envp_list,
 	else if (id > 0)
 	{
 		ft_add_lst_id_node(&(glob->id_node), id);
-		if (ft_is_it_pipe(glob->root))
+		if (ft_is_it_pipe(glob->last_cmd))
 			close(pipe_fd[WRITE]);
 		if ((*token)->next && ((*token)->next->type == 6 || (*token)->next->type == 9))
 			(*token) = (*token)->next;
@@ -112,26 +112,10 @@ int	execute_and(t_lexer *node, t_glob *glob)
 	{
 			if (g_signal == 0)
 			{
-				fprintf(stderr, "\033[31;1mAND OK\033[m\n");
-				// if (dup2(glob->fd_out_old, STDOUT_FILENO) == -1)
-				// {
-				// 	perror("dup2");
-				// 	return (0);
-				// }
-				// if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
-				// {
-				// 	perror("dup2");
-				// 	return (0);
-				// }
 				return (0);
 			}
 			else if (g_signal > 0)
 			{
-				if (dup2(glob->fd_out_old, STDOUT_FILENO) == -1)
-				{
-					perror("dup2");
-					return (1);
-				}
 				if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 				{
 					perror("dup2");

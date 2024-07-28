@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 14:46:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:29:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd)
 	}
 	else if ((node && node->type == AND))
 	{
-		fprintf(stderr, "ICI\n");
 		glob->fd_in_old = dup(STDIN_FILENO);
 		if (glob->fd_in_old == -1)
 		{
 			perror("dup");
 			return (1);
 		}
-		if (ft_is_it_pipe(node->next))
+		if (ft_is_it_pipe(glob->last_cmd))
 		{
 			if (pipe(pipe_fd) < 0)
 				return (1);
