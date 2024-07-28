@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 11:47:17 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/28 00:30:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:46:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	execute_pipeline(t_lexer *node, int *pipe_fd, t_envp *envp_list,
 	if (node->type != PIPE)
 		return (-1);
 	fd_in = pipe_fd[READ];
+	close(pipe_fd[WRITE]);
 	if (pipe(pipe_fd) < 0)
 		return (1);
 	if (dup2(fd_in, STDIN_FILENO) == -1)
@@ -111,16 +112,17 @@ int	execute_and(t_lexer *node, t_glob *glob)
 	{
 			if (g_signal == 0)
 			{
-				if (dup2(glob->fd_out_old, STDOUT_FILENO) == -1)
-				{
-					perror("dup2");
-					return (0);
-				}
-				if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
-				{
-					perror("dup2");
-					return (0);
-				}
+				fprintf(stderr, "\033[31;1mAND OK\033[m\n");
+				// if (dup2(glob->fd_out_old, STDOUT_FILENO) == -1)
+				// {
+				// 	perror("dup2");
+				// 	return (0);
+				// }
+				// if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
+				// {
+				// 	perror("dup2");
+				// 	return (0);
+				// }
 				return (0);
 			}
 			else if (g_signal > 0)
