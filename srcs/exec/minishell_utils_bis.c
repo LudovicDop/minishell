@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 00:31:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/28 12:39:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,12 @@ int	ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd)
 			return (close(glob->fd_in_old), ft_end_cmd(NULL, glob, pipe_fd), 1);
 		else if (tmp == 0)
 		{
+			fprintf(stderr, "\033[31;1mTHERE\033[m\n");
+			// close(glob->fd_in_old);
+			// close(glob->fd_out_old);
 			if (ft_is_it_pipe(node->next))
 			{
+				fprintf(stderr, "\033[31;1mPIPE\033[m\n");
 				close(pipe_fd[READ]);
 				close(pipe_fd[WRITE]);
 				pipe(pipe_fd);
