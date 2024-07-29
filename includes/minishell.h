@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 16:03:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:46:22 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int					ft_heredoc(t_lexer *n, int *p_fd, t_glob *g,
 						t_envp *envp_list);
 void				ft_add_lst_id_node(t_id **id_node, pid_t new_id_value);
 void				ft_free_id_list(t_id **my_list);
-int					ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd);
+int					ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
 void				ft_wait_everyone(t_glob *glob);
 int					ft_first_node_init(t_lexer *node, t_glob *glob,
 						int *pipe_fd);
@@ -185,4 +185,6 @@ void				ft_wait_last_cmd(t_glob *glob);
 int	execute_and(t_lexer *node, t_glob *glob);
 void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 		t_glob *glob);
+int	ft_and(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
+int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
 #endif
