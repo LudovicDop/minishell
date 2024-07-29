@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:44:03 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 16:05:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 00:39:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_wait_everyone(t_glob *glob)
 	tmp = glob->id_node;
 	while (tmp)
 	{
+		fprintf(stderr, "g_signal !: %d\n", g_signal);
 		if (waitpid(tmp->id, &g_signal, 0) == -1)
 			return ;
 		g_signal = WEXITSTATUS(g_signal);

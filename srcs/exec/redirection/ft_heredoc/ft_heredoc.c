@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 01:24:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 00:09:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_heredoc_init_exit(void)
 {
 	int	pipe_fd_bis[2];
 
+	g_signal = 130;
 	if (pipe(pipe_fd_bis) == -1)
 		return ;
 	close(pipe_fd_bis[WRITE]);
@@ -107,8 +108,8 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 
 	if (!node || node->type != HEREDOC)
 		return (0);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, ft_change_signal_exit);
+	signal(SIGINT, ft_change_signal_exit);
 	if (!ft_is_it_pipe(node))
 		if (pipe(pipe_fd) < 0)
 			return (1);
@@ -119,12 +120,16 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		ft_heredoc_child(node, pipe_fd, glob);
 	else
 	{
+		g_signal = 0;
 		old_stdin = dup(STDIN_FILENO);
 		if (old_stdin == -1)
 			return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 		ft_heredoc_parent(pipe_fd, id, node, old_stdin);
-		return (execute_ast(ft_skip_heredoc(node), pipe_fd, &envp_list, glob),
-			1);
+		if (g_signal == 0)
+			return (execute_ast(ft_skip_heredoc(node), pipe_fd, &envp_list, glob),
+				1);
+		else
+			return (execute_ast(skip_until_next_symbol(node), pipe_fd, &envp_list, glob), 1);
 	}
 	return (0);
 }

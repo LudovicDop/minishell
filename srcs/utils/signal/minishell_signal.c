@@ -6,16 +6,18 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 17:46:51 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/28 01:55:38 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/30 00:48:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	reset_signal(void)
+void	ft_change_signal_exit(int sig)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (sig == SIGINT || sig == SIGQUIT)
+	{
+		g_signal = 130;
+	}
 }
 
 void	handler2(int sig)
@@ -46,6 +48,7 @@ void	handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal = 130;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		printf("^C\n");

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 16:46:22 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 23:37:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,4 +187,6 @@ void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
 		t_glob *glob);
 int	ft_and(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
 int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
+void	ft_change_signal_exit(int sig);
+t_lexer	*skip_until_next_symbol(t_lexer *node);
 #endif
