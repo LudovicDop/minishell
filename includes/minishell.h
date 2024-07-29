@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 23:37:16 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 01:53:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ int					ft_heredoc(t_lexer *n, int *p_fd, t_glob *g,
 						t_envp *envp_list);
 void				ft_add_lst_id_node(t_id **id_node, pid_t new_id_value);
 void				ft_free_id_list(t_id **my_list);
-int					ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
+int					ft_end_cmd(t_lexer *node, t_glob *glob, int *pipe_fd,
+						t_envp **envp);
 void				ft_wait_everyone(t_glob *glob);
 int					ft_first_node_init(t_lexer *node, t_glob *glob,
 						int *pipe_fd);
@@ -182,11 +183,16 @@ void				handler3(int sig);
 void				ft_heredoc_init_exit(void);
 t_lexer				*ft_skip_heredoc(t_lexer *node);
 void				ft_wait_last_cmd(t_glob *glob);
-int	execute_and(t_lexer *node, t_glob *glob);
-void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
-		t_glob *glob);
-int	ft_and(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
-int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp);
-void	ft_change_signal_exit(int sig);
-t_lexer	*skip_until_next_symbol(t_lexer *node);
+int					execute_and(t_lexer *node, t_glob *glob);
+void				execute_exec(t_lexer *token, t_envp *envp_list,
+						int *pipe_fd, t_glob *glob);
+int					ft_and(t_lexer *node, t_glob *glob, int *pipe_fd,
+						t_envp **envp);
+int					ft_or(t_lexer *node, t_glob *glob, int *pipe_fd,
+						t_envp **envp);
+void				ft_change_signal_exit(int sig);
+t_lexer				*skip_until_next_symbol(t_lexer *node);
+int					ft_heredoc_ret(t_lexer *node, int *pipe_fd, t_glob *glob,
+						t_envp *envp_list);
+void				ft_close_norm(int *pipe_fd);
 #endif

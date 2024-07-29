@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alphan <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 15:40:00 by alphan            #+#    #+#             */
-/*   Updated: 2024/07/28 01:50:39 by alphan           ###   ########.fr       */
+/*   Updated: 2024/07/30 01:23:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void	is_wld(t_token **token)
 		else if (current && current->next && \
 		(current->next->type == REDIRECT_OUT || \
 		current->next->type == REDIRECT_IN || \
-		current->next->type == REDIRECT_APPEND))
+		current->next->type == REDIRECT_APPEND) && \
+		ft_strchr(current->next->value, '*'))
 			is_wld3(&current, tmp);
 		else
 			current = current->next;

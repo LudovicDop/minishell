@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 18:18:06 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/20 14:54:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 01:26:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_red_in_bis(t_lexer *token, int i)
 		if (ft_strchr(token->value[i], '*'))
 			ft_error_exec("ambiguous redirect\n", token->value[i]);
 		else
-			ft_error_exec("no such file or directory2\n", token->value[i]);
+			ft_error_exec("no such file or directory\n", token->value[i]);
 		return (1);
 	}
 	if (!token->next || token->next->type != CMD)
@@ -53,7 +53,7 @@ int	ft_red_in(t_lexer *token)
 			if (ft_strchr(token->value[i], '*'))
 				ft_error_exec("ambiguous redirect\n", token->value[i]);
 			else
-				ft_error_exec("no such file or directory1\n", token->value[i]);
+				ft_error_exec("no such file or directory\n", token->value[i]);
 			return (1);
 		}
 		close(fd);

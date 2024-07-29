@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 00:09:14 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 01:37:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 		if (old_stdin == -1)
 			return (close(pipe_fd[WRITE]), close(pipe_fd[READ]), 1);
 		ft_heredoc_parent(pipe_fd, id, node, old_stdin);
-		if (g_signal == 0)
-			return (execute_ast(ft_skip_heredoc(node), pipe_fd, &envp_list, glob),
-				1);
-		else
-			return (execute_ast(skip_until_next_symbol(node), pipe_fd, &envp_list, glob), 1);
+		return (ft_heredoc_ret(node, pipe_fd, glob, envp_list));
 	}
 	return (0);
 }
