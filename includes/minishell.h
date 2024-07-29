@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 16:27:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:03:50 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,4 +183,6 @@ void				ft_heredoc_init_exit(void);
 t_lexer				*ft_skip_heredoc(t_lexer *node);
 void				ft_wait_last_cmd(t_glob *glob);
 int	execute_and(t_lexer *node, t_glob *glob);
+void	execute_exec(t_lexer *token, t_envp *envp_list, int *pipe_fd,
+		t_glob *glob);
 #endif

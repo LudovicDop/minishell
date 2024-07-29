@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:27:41 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/28 16:29:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:04:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,17 @@ int	ft_first_node_init(t_lexer *node, t_glob *glob, int *pipe_fd)
 		if (glob->fd_in_old == -1)
 			return (1);
 		if (ft_is_it_pipe(glob->root))
-		{
 			if (pipe(pipe_fd) < 0)
 				return (1);
-		}
 	}
 	else if ((node && node->type == AND))
 	{
 		glob->fd_in_old = dup(STDIN_FILENO);
 		if (glob->fd_in_old == -1)
-		{
-			perror("dup");
 			return (1);
-		}
 		if (ft_is_it_pipe(glob->last_cmd))
-		{
 			if (pipe(pipe_fd) < 0)
 				return (1);
-		}
 	}
 	return (0);
 }
@@ -67,40 +60,18 @@ int	ft_is_it_pipe(t_lexer *root)
 	current = root;
 	while (current && current->type != AND)
 	{
-		if (current->type == PIPE || current->type == REDIRECT_APPEND \
-		|| current->type == REDIRECT_OUT)
+		if (current->type == PIPE || current->type == REDIRECT_APPEND
+			|| current->type == REDIRECT_OUT)
 			return (1);
 		current = current->next;
 	}
 	return (0);
 }
 
-// int	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list)
-// {
-// 	if (node->type == CMD 
-// 		&& ft_command_after(node) && !ft_is_it_pipe(glob->root))
-// 	{
-// 		fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> single_cmd\033[m\n", node->value[0]);
-// 		if (!search_builtins_token(node, envp_list, glob, pipe_fd))
-// 			execute_command(node, pipe_fd, *envp_list, glob);
-// 		if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
-// 		{
-// 			perror("dup2");
-// 			fprintf(stderr, "JUST BEFORE\n");
-// 			return (1);
-// 		}
-// 		ft_wait_last_cmd(glob);
-// 		execute_ast(node->next, pipe_fd, envp_list, glob);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
 int	ft_single_cmd(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp_list)
 {
 	if (node->type == CMD && !ft_is_it_pipe(node))
 	{
-		// fprintf(stderr, "\033[31;1mExecute CMD (cmd : %s) --> single_cmd\033[m\n", node->value[0]);
 		if (search_builtins_token(node, envp_list, glob, pipe_fd))
 			return (execute_ast(node->next, pipe_fd, envp_list, glob), 1);
 		return (0);
