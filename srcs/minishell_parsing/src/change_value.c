@@ -94,29 +94,3 @@ void	change_for_value(t_token *token, t_envp **envp)
 		free(s);
 	}
 }
-
-void	change_wld(t_token *token)
-{
-	t_token	*current;
-	t_token	*tmp;
-	char	*str;
-
-	current = token;
-	while (current)
-	{
-		if (current->next && current->type == WILDCARD && \
-			current->next->type == WILDCARD)
-		{
-			str = ft_strjoin(current->value, current->next->value);
-			tmp = current->next->next;
-			free(current->value);
-			current->value = ft_strdup(str);
-			free(current->next->value);
-			free(current->next);
-			free(str);
-			current->next = tmp;
-		}
-		else
-			current = current->next;
-	}
-}

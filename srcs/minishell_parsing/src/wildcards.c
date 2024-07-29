@@ -12,7 +12,7 @@
 
 #include "../includes/wildcards.h"
 
-void	do_middle2(t_token *current, char **tmp, t_index *a)
+void	init_tmp2(t_token *current, char **tmp, t_index *a)
 {
 	if (current->value[a->i] == '*')
 		a->i++;
@@ -22,12 +22,12 @@ void	do_middle2(t_token *current, char **tmp, t_index *a)
 	tmp[3] = ft_substr(current->value, a->k, a->i - a->k);
 	if (!tmp[3])
 		return ;
-	tmp[2] = ft_strjoin(tmp[2], tmp[3]);
+	tmp[2] = ft_strjoin2(tmp[2], tmp[3]);
 	free(tmp[3]);
 	a->k = a->i;
 }
 
-void	do_middle(t_token	*current, char **tmp)
+void	init_tmp(t_token	*current, char **tmp)
 {
 	t_index	a;
 
@@ -44,7 +44,7 @@ void	do_middle(t_token	*current, char **tmp)
 	a.k = a.i;
 	while (current->value[a.i] && a.i < \
 		(int)ft_strlen(current->value) - a.j - 1)
-		do_middle2(current, tmp, &a);
+		init_tmp2(current, tmp, &a);
 }
 
 t_token	*do_wld(t_token *token)
@@ -62,7 +62,7 @@ t_token	*do_wld(t_token *token)
 	if (!tmp[2])
 		return (NULL);
 	tmp[3] = NULL;
-	do_middle(current, tmp);
+	init_tmp(current, tmp);
 	new = create_wld(tmp, &new, current);
 	if (tmp[0])
 		free(tmp[0]);
@@ -80,7 +80,6 @@ void	is_wld(t_token **token)
 	t_token	*next;
 
 	current = *token;
-	tmp = NULL;
 	while (current)
 	{
 		if (current && current->next && current->next->type == WILDCARD)
@@ -89,8 +88,9 @@ void	is_wld(t_token **token)
 			if (tmp)
 			{
 				next = NULL;
-				if (current->next->next)
-					next = current->next->next;
+				next = current->next->next;
+				free(current->next->value);
+				free(current->next);
 				current->next = tmp;
 				while (current->next)
 					current = current->next;

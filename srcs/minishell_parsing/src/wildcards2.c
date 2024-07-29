@@ -26,17 +26,24 @@ char	*ft_strchr3(const char *s, int c, int end)
 	return (NULL);
 }
 
-int	ft_strinstr(const char *s1, const char *s2, int end)
+int	ft_strinstr(const char *s1, const char *s2)
 {
+	int	i;
 	int	j;
 
+	i = 0;
 	j = 0;
-	while (s2[j])
+	while (s1[i])
 	{
-		if (!ft_strchr3(s1, s2[j], end))
-			return (0);
-		j++;
+		if (s1[i] == s2[j])
+		{
+			i++;
+			j++;
+		}
+		i++;
 	}
+	if (s2[j])
+		return (0);
 	return (1);
 }
 
@@ -69,32 +76,4 @@ int	ft_strncmp_reverse(const char *s1, const char *s2)
 		k++;
 	}
 	return (0);
-}
-
-void	init_wld(t_token *token)
-{
-	t_token	*current;
-	t_token	*prev;
-
-	current = token;
-	prev = NULL;
-	while (current)
-	{
-		if (current->type == WILDCARD && \
-			ft_strncmp(current->value, "*", 1) == 0)
-		{
-			if (prev && prev->type == CMD)
-				prev->type = WILDCARD;
-			else if (!prev)
-				token = current->next;
-			current = current->next;
-			if (current && current->type == CMD)
-				current->type = WILDCARD;
-		}
-		else
-		{
-			prev = current;
-			current = current->next;
-		}
-	}
 }

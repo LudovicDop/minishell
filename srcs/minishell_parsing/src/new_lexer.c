@@ -78,8 +78,6 @@ void	new_lexer(t_token **token, t_envp **envp)
 {
 	remove_quote(*token, envp);
 	rm_wave(*token);
-	init_wld(*token);
-	change_wld(*token);
 	change_cmd(*token);
 	rm_space(*token);
 	change_red(*token);

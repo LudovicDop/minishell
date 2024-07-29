@@ -16,10 +16,9 @@
 # include "../includes/change_value.h"
 
 char	*ft_strchr3(const char *s, int c, int end);
-int		ft_strinstr(const char *s1, const char *s2, int end);
+int		ft_strinstr(const char *s1, const char *s2);
 int		ft_strcmp2(const char *s1, const char *s2);
 int		ft_strncmp_reverse(const char *s1, const char *s2);
-void	init_wld(t_token *token);
 t_token	*do_wld(t_token *token);
 void	is_wld(t_token **current);
 t_token	*create_wld(char **tmp, t_token **new, t_token *current);

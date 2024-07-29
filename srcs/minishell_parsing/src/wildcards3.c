@@ -19,11 +19,10 @@ void	pre_wld(char **tmp, struct dirent *entree, t_token **new)
 	{
 		if (tmp[1] && !ft_strncmp(tmp[0], entree->d_name, ft_strlen(tmp[0])) \
 		&& !ft_strncmp_reverse(tmp[1], entree->d_name) && \
-		ft_strinstr(entree->d_name + ft_strlen(tmp[0]), tmp[2], \
-		ft_strlen(entree->d_name) - ft_strlen(tmp[1]) - 1))
+		ft_strinstr(entree->d_name + ft_strlen(tmp[0]), tmp[2]))
 			push_stack(new, entree->d_name, CMD);
 		else if (!tmp[1] && ft_strinstr(entree->d_name + ft_strlen(tmp[0]), \
-		tmp[2], ft_strlen(entree->d_name) - 1))
+		tmp[2]))
 			push_stack(new, entree->d_name, CMD);
 	}
 	else if (tmp[2] && !ft_strncmp(tmp[2], "", 2) && tmp[1] && \
@@ -37,12 +36,25 @@ void	middle_wld(char **tmp, struct dirent *entree, t_token **new)
 {
 	if (tmp[1] && \
 	!ft_strncmp_reverse(tmp[1], entree->d_name) && \
-	ft_strinstr(entree->d_name, tmp[2], \
-	ft_strlen(entree->d_name) - ft_strlen(tmp[1])))
+	ft_strinstr(entree->d_name, tmp[2]))
 		push_stack(new, entree->d_name, CMD);
 	else if (!tmp[1] && entree->d_name[0] != '.' && \
-	ft_strinstr(entree->d_name, tmp[2], ft_strlen(entree->d_name)))
+	ft_strinstr(entree->d_name, tmp[2]))
 		push_stack(new, entree->d_name, CMD);
+}
+
+int	only_wld(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '*')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 t_token	*create_wld(char **tmp, t_token **new, t_token *current)
@@ -60,7 +72,7 @@ t_token	*create_wld(char **tmp, t_token **new, t_token *current)
 			pre_wld(tmp, entree, new);
 		else if (!tmp[0] && tmp[2] && ft_strncmp(tmp[2], "", 2))
 			middle_wld(tmp, entree, new);
-		else if (!ft_strncmp(current->value, "*", 2) || \
+		else if (only_wld(current->value) || \
 		(!tmp[0] && tmp[1] && !ft_strncmp_reverse(entree->d_name, tmp[1])))
 		{
 			if (entree->d_name[0] != '.')
