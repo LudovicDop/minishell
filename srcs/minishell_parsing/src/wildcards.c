@@ -12,41 +12,6 @@
 
 #include "../includes/wildcards.h"
 
-void	init_tmp2(t_token *current, char **tmp, t_index *a)
-{
-	if (current->value[a->i] == '*')
-		a->i++;
-	a->k = a->i;
-	while (current->value[a->i] && current->value[a->i] != '*')
-		a->i++;
-	tmp[3] = ft_substr(current->value, a->k, a->i - a->k);
-	if (!tmp[3])
-		return ;
-	tmp[2] = ft_strjoin2(tmp[2], tmp[3]);
-	free(tmp[3]);
-	a->k = a->i;
-}
-
-void	init_tmp(t_token	*current, char **tmp)
-{
-	t_index	a;
-
-	a = (t_index){0, 0, 0, 0};
-	while (current->value[a.i] != '*')
-		a.i++;
-	if (a.i > 0)
-		tmp[0] = ft_substr(current->value, 0, a.i);
-	while (current->value[ft_strlen(current->value) - a.j - 1] != '*')
-		a.j++;
-	if (a.j > 0)
-		tmp[1] = ft_substr(current->value, \
-		ft_strlen(current->value) - a.j, a.j);
-	a.k = a.i;
-	while (current->value[a.i] && a.i < \
-		(int)ft_strlen(current->value) - a.j - 1)
-		init_tmp2(current, tmp, &a);
-}
-
 t_token	*do_wld(t_token *token)
 {
 	char			*tmp[4];
@@ -73,11 +38,53 @@ t_token	*do_wld(t_token *token)
 	return (new);
 }
 
+void	free_token2(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp->value);
+		free(tmp);
+	}
+}
+
+void	is_wld2(t_token *current, t_token *tmp)
+{
+	t_token	*next;
+
+	next = NULL;
+	next = current->next->next;
+	free(current->next->value);
+	free(current->next);
+	current->next = tmp;
+	while (current->next)
+		current = current->next;
+	current->next = next;
+}
+
+void	is_wld3(t_token **current, t_token *tmp)
+{
+	if (ft_strchr((*current)->next->value, '*'))
+	{
+		tmp = do_wld((*current)->next);
+		if (tmp && !tmp->next)
+			is_wld2(*current, tmp);
+		else
+		{
+			free_token2(tmp);
+			(*current)->next->type = REDIRECT_IN;
+			*current = (*current)->next;
+		}
+	}
+}
+
 void	is_wld(t_token **token)
 {
 	t_token	*current;
 	t_token	*tmp;
-	t_token	*next;
 
 	current = *token;
 	while (current)
@@ -86,17 +93,15 @@ void	is_wld(t_token **token)
 		{
 			tmp = do_wld(current->next);
 			if (tmp)
-			{
-				next = NULL;
-				next = current->next->next;
-				free(current->next->value);
-				free(current->next);
-				current->next = tmp;
-				while (current->next)
-					current = current->next;
-				current->next = next;
-			}
+				is_wld2(current, tmp);
+			else
+				free_token2(tmp);
 		}
+		else if (current && current->next && \
+		(current->next->type == REDIRECT_OUT || \
+		current->next->type == REDIRECT_IN || \
+		current->next->type == REDIRECT_APPEND))
+			is_wld3(&current, tmp);
 		else
 			current = current->next;
 	}

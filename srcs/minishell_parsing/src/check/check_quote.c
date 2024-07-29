@@ -36,6 +36,7 @@ int	check_quotes(char *input_cmd)
 			a.i++;
 	}
 	if (a.j == 1)
-		return (ft_printf("syntax error near unexpected token quote\n"), 1);
+		return (ft_putstr_fd("syntax error near unexpected token quote\n", \
+		2), 1);
 	return (0);
 }

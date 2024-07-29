@@ -77,3 +77,17 @@ int	ft_strncmp_reverse(const char *s1, const char *s2)
 	}
 	return (0);
 }
+
+int	only_wld(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '*')
+			return (0);
+		i++;
+	}
+	return (1);
+}

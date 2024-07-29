@@ -43,20 +43,6 @@ void	middle_wld(char **tmp, struct dirent *entree, t_token **new)
 		push_stack(new, entree->d_name, CMD);
 }
 
-int	only_wld(char	*str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != '*')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 t_token	*create_wld(char **tmp, t_token **new, t_token *current)
 {
 	DIR				*dossier;
@@ -83,4 +69,39 @@ t_token	*create_wld(char **tmp, t_token **new, t_token *current)
 	if (closedir(dossier) == -1)
 		return (NULL);
 	return (*new);
+}
+
+void	init_tmp2(t_token *current, char **tmp, t_index *a)
+{
+	if (current->value[a->i] == '*')
+		a->i++;
+	a->k = a->i;
+	while (current->value[a->i] && current->value[a->i] != '*')
+		a->i++;
+	tmp[3] = ft_substr(current->value, a->k, a->i - a->k);
+	if (!tmp[3])
+		return ;
+	tmp[2] = ft_strjoin2(tmp[2], tmp[3]);
+	free(tmp[3]);
+	a->k = a->i;
+}
+
+void	init_tmp(t_token *current, char **tmp)
+{
+	t_index	a;
+
+	a = (t_index){0, 0, 0, 0};
+	while (current->value[a.i] != '*')
+		a.i++;
+	if (a.i > 0)
+		tmp[0] = ft_substr(current->value, 0, a.i);
+	while (current->value[ft_strlen(current->value) - a.j - 1] != '*')
+		a.j++;
+	if (a.j > 0)
+		tmp[1] = ft_substr(current->value, \
+		ft_strlen(current->value) - a.j, a.j);
+	a.k = a.i;
+	while (current->value[a.i] && a.i < \
+		(int)ft_strlen(current->value) - a.j - 1)
+		init_tmp2(current, tmp, &a);
 }

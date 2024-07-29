@@ -12,6 +12,11 @@
 
 #include "../../includes/check.h"
 
+void	print_error(void)
+{
+	ft_putstr_fd("syntax error near unexpected token \n", 2);
+}
+
 int	check_red(t_token *token)
 {
 	while (token)
@@ -23,10 +28,7 @@ int	check_red(t_token *token)
 				token = token->next;
 			if (token == NULL || \
 				(token->type >= REDIRECT_IN && token->type <= HEREDOC))
-			{
-				ft_printf("syntax error near unexpected token 1\n");
-				return (1);
-			}
+				return (print_error(), 1);
 		}
 		token = token->next;
 	}
@@ -35,13 +37,12 @@ int	check_red(t_token *token)
 
 int	check_op(t_token *token)
 {
+	if (token->type >= PIPE && token->type <= SEP)
+		return (print_error(), 1);
 	while (token)
 	{
 		if (token->type == SEP)
-		{
-			ft_printf("syntax error near unexpected token \n");
-			return (1);
-		}
+			return (print_error(), 1);
 		if (token->type >= PIPE && token->type <= AND)
 		{
 			token = token->next;

@@ -54,7 +54,7 @@ int	check_par(char *input_cmd)
 	}
 	if (a.j || a.k)
 	{
-		ft_printf("syntax error near unexpected token par\n");
+		ft_putstr_fd("syntax error near unexpected token par\n", 2);
 		return (1);
 	}
 	return (0);
@@ -67,7 +67,7 @@ void	check_token_close_par(t_token *token)
 	if (token->type != CLOSE_PAR && \
 		(token->type < REDIRECT_IN || token->type > AND))
 	{
-		ft_printf("syntax error near unexpected par2\n");
+		ft_putstr_fd("syntax error near unexpected par\n", 2);
 		return ;
 	}
 	return ;
@@ -84,7 +84,7 @@ int	check_token_par(t_token *token)
 				token = token->next;
 			if (token->type == CLOSE_PAR || token->type != CMD)
 			{
-				ft_printf("syntax error near unexpected par3\n");
+				ft_putstr_fd("syntax error near unexpected par\n", 2);
 				return (1);
 			}
 		}

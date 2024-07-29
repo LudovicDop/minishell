@@ -15,11 +15,12 @@
 
 # include "../includes/parser.h"
 
-int	check_quotes(char *input_cmd);
-int	check_red(t_token *token);
-int	check_op(t_token *token);
-int	check_par(char *input_cmd);
-int	check_token_par(t_token *token);
-int	check_str(char *str);
+int		check_quotes(char *input_cmd);
+int		check_red(t_token *token);
+int		check_op(t_token *token);
+int		check_par(char *input_cmd);
+int		check_token_par(t_token *token);
+int		check_str(char *str);
+void	print_error(void);
 
 #endif

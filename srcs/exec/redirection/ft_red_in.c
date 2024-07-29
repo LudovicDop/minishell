@@ -20,7 +20,10 @@ int	ft_red_in_bis(t_lexer *token, int i)
 	if (fd < 0)
 	{
 		g_signal = 1;
-		ft_error_exec("no such file or directory\n", token->value[i]);
+		if (ft_strchr(token->value[i], '*'))
+			ft_error_exec("ambiguous redirect\n", token->value[i]);
+		else
+			ft_error_exec("no such file or directory2\n", token->value[i]);
 		return (1);
 	}
 	if (!token->next || token->next->type != CMD)
@@ -47,7 +50,10 @@ int	ft_red_in(t_lexer *token)
 		if (fd < 0)
 		{
 			g_signal = 1;
-			ft_error_exec("no such file or directory\n", token->value[i]);
+			if (ft_strchr(token->value[i], '*'))
+				ft_error_exec("ambiguous redirect\n", token->value[i]);
+			else
+				ft_error_exec("no such file or directory1\n", token->value[i]);
 			return (1);
 		}
 		close(fd);
