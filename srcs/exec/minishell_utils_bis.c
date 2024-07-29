@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 18:02:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 22:59:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,9 @@ t_lexer	*skip_until_next_symbol(t_lexer *node)
 	while (node)
 	{
 		if (node->type == AND || node->type == OR)
-			return (node->next);
+			return (node);
 		node = node->next;
 	}
-	fprintf(stderr, "RET\n");
 	return (node);
 }
 
@@ -92,7 +91,6 @@ int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp)
 	int	tmp;
 
 	tmp = -1;
-	fprintf(stderr, "START OR\n");
 	if (node->type == OR)
 	{
 		ft_wait_everyone(glob);
@@ -100,9 +98,8 @@ int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp)
 		tmp = execute_and(node, glob);
 		if (tmp == 0)
 		{
-			fprintf(stderr, "THERE\n");
-			close(glob->fd_in_old);
-			execute_ast(skip_until_next_symbol(node), pipe_fd, envp, glob);
+			// close(glob->fd_in_old);
+			execute_ast(skip_until_next_symbol(node->next), pipe_fd, envp, glob);
 			return (1);
 		}
 		else if (tmp == 1)
@@ -115,7 +112,7 @@ int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp)
 			}
 			if (dup2(glob->fd_in_old, STDIN_FILENO) == -1)
 				return (1);
-			close(glob->fd_in_old);
+			// close(glob->fd_in_old);
 			return (0);
 		}
 	}
