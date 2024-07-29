@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:54:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/29 16:49:49 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:02:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_lexer	*skip_until_next_symbol(t_lexer *node)
 			return (node->next);
 		node = node->next;
 	}
+	fprintf(stderr, "RET\n");
 	return (node);
 }
 
@@ -91,13 +92,19 @@ int	ft_or(t_lexer *node, t_glob *glob, int *pipe_fd, t_envp **envp)
 	int	tmp;
 
 	tmp = -1;
-	if (node->type == AND)
+	fprintf(stderr, "START OR\n");
+	if (node->type == OR)
 	{
 		ft_wait_everyone(glob);
 		ft_free_id_list(&glob->id_node);
 		tmp = execute_and(node, glob);
 		if (tmp == 0)
-			return (close(glob->fd_in_old), execute_ast(skip_until_next_symbol(node), pipe_fd, envp, glob), 1);
+		{
+			fprintf(stderr, "THERE\n");
+			close(glob->fd_in_old);
+			execute_ast(skip_until_next_symbol(node), pipe_fd, envp, glob);
+			return (1);
+		}
 		else if (tmp == 1)
 		{
 			glob->last_cmd = node->next;
