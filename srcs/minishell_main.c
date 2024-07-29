@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 01:22:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 01:57:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	ft_parsing_check(t_glob *glob, t_envp *envp_list, t_lexer **token)
 		{
 			new_lexer(&t, &envp_list);
 			final_lexer(t, token);
-			print_lexer(*token);
 		}
 		free_token(t);
 	}
@@ -77,7 +76,6 @@ void	ft_init_minishell(t_envp **envp_list, char **envp, t_glob **glob,
 		return (free_envp(envp_list), exit(EXIT_FAILURE));
 }
 
-// bug with > out cat fichier.txt then cat out (the prompt is bug)
 int	main(int argc, char **argv, char **envp)
 {
 	t_envp		*envp_list;

@@ -1,0 +1,15 @@
+compile_flags.txt
+fichier2.txt
+fichier3.txt
+fichier.txt
+ignore_readline.supp
+includes
+intermediate_output.txt
+libft
+Makefile
+minishell
+out
+README
+run_with_valgrind.sh
+srcs
+valgrind.supp
