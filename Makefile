@@ -1,6 +1,4 @@
-#MAKEFLAGS+=silent
 HEADER = ./includes/ 
-# HEADER2 = ./srcs/minishell_parsing/includes/
 LIBFT = -lreadline -ltermcap ./libft/libft.a
 SRC = srcs/minishell_main.c \
 	  srcs/exec/minishell_execution.c \
@@ -56,7 +54,7 @@ SRC = srcs/minishell_main.c \
 
 CC = cc -Wall -Werror -Wextra
 LIB = #-I ./srcs/minishell_parsing/includes #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
-CFLAGS = -g3 -I $(HEADER) $(LIB) #-fsanitize=address
+CFLAGS = -g3 -I $(HEADER) $(LIB)
 OBJ = $(SRC:.c=.o)
 NAME = minishell
 
