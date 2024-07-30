@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:16:18 by ludovicdopp       #+#    #+#             */
-/*   Updated: 2024/07/30 19:25:04 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:09:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,27 @@ int	ft_check_after_n(char *string)
 void	ft_echo_bis(t_lexer *token)
 {
 	char	*tmp;
+	int		i;
 
+	i = 1;
 	tmp = NULL;
 	if (token->value[1] && !ft_strncmp(token->value[1], "-n", 2))
 	{
-		if (ft_check_after_n(token->value[1] + 1))
+		while (token->value[i] && !ft_strncmp(token->value[i], "-n", 2))
 		{
-			tmp = ft_echo_merge(&token->value[1]);
-			ft_echo(tmp, false);
-			free(tmp);
-			return ;
+			if (!ft_check_after_n(token->value[i] + 1))
+				i++;
+			else
+				break ;
 		}
-		tmp = ft_echo_merge(&token->value[2]);
-		ft_echo(tmp, true);
-		free(tmp);
+		if (token->value[i])
+			ft_echo_bis2(tmp, token, i);
+		else
+			ft_echo("", true);
+		return ;
 	}
 	else
-	{
-		tmp = ft_echo_merge(&token->value[1]);
-		ft_echo(tmp, false);
-		free(tmp);
-	}
+		ft_echo_bis2(tmp, token, 1);
 	return ;
 }
 

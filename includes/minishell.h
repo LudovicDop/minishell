@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:11:00 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 19:11:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:09:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,4 +197,6 @@ int					ft_heredoc_ret(t_lexer *node, int *pipe_fd, t_glob *glob,
 						t_envp *envp_list);
 void				ft_close_norm(int *pipe_fd);
 void				ft_heredoc_normmm(t_glob *glob);
+void				ft_echo_bis2(char *tmp, t_lexer *token, int i);
+char				*ft_echo_merge(char **string);
 #endif

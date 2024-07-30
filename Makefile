@@ -51,6 +51,7 @@ SRC = srcs/minishell_main.c \
 	  srcs/utils/minishell_freeing_bis.c \
 	  srcs/exec/redirection/ft_heredoc/ft_heredoc_bis.c \
 	  srcs/exec/minishell_symbol.c \
+	  srcs/exec/builtins/ft_echo/ft_echo_bis.c \
 
 CC = cc -Wall -Werror -Wextra
 LIB = #-I ./srcs/minishell_parsing/includes #-I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -lreadline
