@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 17:28:10 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:11:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int	ft_heredoc(t_lexer *node, int *pipe_fd, t_glob *glob, t_envp *envp_list)
 
 	if (!node || node->type != HEREDOC)
 		return (0);
-	signal(SIGQUIT, ft_change_signal_exit);
-	signal(SIGINT, ft_change_signal_exit);
+	ft_heredoc_normmm(glob);
 	if (!ft_is_it_pipe(node))
 		if (pipe(pipe_fd) < 0)
 			return (1);
