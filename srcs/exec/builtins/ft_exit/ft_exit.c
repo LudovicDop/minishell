@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:51:18 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/22 16:37:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:32:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	ft_is_num(char *string)
 		return (true);
 	while (string[i])
 	{
-		if (!(string[i] >= 0 && string[i] < 9))
+		if (!(string[i] >= 48 && string[i] <= 57))
 			return (false);
 		i++;
 	}
@@ -33,13 +33,13 @@ void	ft_exit_bis(t_lexer *token, t_envp **envp_list, t_glob *glob,
 {
 	if (token->value[1] && token->value[2])
 	{
-		ft_putstr_fd("nemshell: exit: too many arguments", 2);
+		ft_putstr_fd("nemshell: exit: too many arguments\n", 2);
 		exit_free(glob, *envp_list, pipe_fd);
 		exit(1);
 	}
 	else if (ft_is_num(token->value[1]) == false)
 	{
-		ft_putstr_fd("nemshell: exit: numeric argument required", 2);
+		ft_putstr_fd("nemshell: exit: numeric argument required\n", 2);
 		exit_free(glob, *envp_list, pipe_fd);
 		exit(2);
 	}
