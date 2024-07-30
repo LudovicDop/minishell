@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:03:33 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/21 22:15:28 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:39:29 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ char	*search_key_value(t_envp *envp_list, char *key)
 
 void	ft_pwd(t_envp *envp_list)
 {
+	char	*tmp;
+
+	tmp = search_key_value(envp_list, "PWD");
 	g_signal = 0;
-	printf("%s\n", search_key_value(envp_list, "PWD"));
+	if (tmp)
+		printf("%s\n", search_key_value(envp_list, "PWD"));
+	else
+	{
+		tmp = getcwd(0, 0);
+		if (!tmp)
+			return ;
+		printf("%s\n", tmp);
+		free(tmp);
+	}
 }
