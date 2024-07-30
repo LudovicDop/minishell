@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 18:10:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 01:57:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:00:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		glob->prompt = get_prompt(envp_list);
 		glob->input_cmd = readline(glob->prompt);
 		if (!glob->input_cmd)
-			return (ft_exit_minishell(&glob, &envp_list));
+			return (ft_exit_minishell(&glob, &envp_list, pipe_fd));
 		if (*(glob->input_cmd) != '\0')
 			add_history(glob->input_cmd);
 		ft_parsing_check(glob, envp_list, &token);
