@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:08:25 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/07/30 01:37:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:28:10 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_heredoc_init_exit(void)
 	printf("\n");
 }
 
+//ft_strcmp(tmp, "\n") == 0)
 int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 {
 	char	*tmp;
@@ -61,8 +62,8 @@ int	ft_heredoc_child(t_lexer *node, int *pipe_fd, t_glob *glob)
 	while (node && node->type == HEREDOC)
 	{
 		tmp = readline("> ");
-		if (tmp && (ft_strncmp(node->value[0], tmp, ft_strlen(tmp)) != 0
-				|| ft_strcmp(tmp, "\n") == 0))
+		if (tmp && (!ft_strncmp(tmp, "\n", ft_strlen(tmp)) || \
+		ft_strcmp(node->value[0], tmp) != 0))
 			ft_heredoc_stock_string(&tmp, &full_string);
 		else if (tmp == NULL)
 			return (ft_norm(pipe_fd, tmp, full_string), ft_heredoc_free(node,
