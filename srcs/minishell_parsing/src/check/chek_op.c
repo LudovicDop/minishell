@@ -49,7 +49,8 @@ int	check_op(t_token *token)
 			while (token && token->type == SPACE)
 				token = token->next;
 			if (token == NULL || \
-				(token->type >= PIPE && token->type <= SEP))
+				(token->type >= PIPE && token->type <= SEP) || \
+				token->type == OPEN_PAR || token->type == CLOSE_PAR)
 			{
 				ft_printf("syntax error near unexpected token \n");
 				return (1);
