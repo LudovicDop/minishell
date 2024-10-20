@@ -1,8 +1,11 @@
 # Minishell Project
 
-*Description :*
-
-None.
+The Minishell project recreates a basic UNIX shell in C. It handles:
+- Command parsing and execution
+- Built-in commands (`cd`, `echo`, etc.)
+- Process control using `fork` and `execve`
+- Redirection, pipes, and environment variables
+This shell replicates key functionalities of a real shell with minimalistic design.
 
 ## Commandes utiles pour la compilation :
 
